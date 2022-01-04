@@ -9,3 +9,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Agenda {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  meeting   Meeting @relation(fields: [meetingId], references: [id])
+  meetingId Int
+}
+
+model Meeting {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  agendas   Agenda[]
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  meetings   Meeting[]
+}
