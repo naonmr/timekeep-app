@@ -7,9 +7,7 @@ import { AuthProvider } from "./provider/AuthProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
