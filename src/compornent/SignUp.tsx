@@ -17,6 +17,8 @@ const SignUp = () => {
     <>
       <h1>🔑Sign Up</h1>
       <h1>ユーザ登録 </h1>
+      {console.log(user)}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>メールアドレス</label>

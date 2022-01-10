@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const { email, password } = event.target.elemants;
+    const { email, password } = event.target.elements;
+    console.log(email.value, password.value);
     auth.signInWithEmailAndPassword(email.value, password.value);
   };
 
