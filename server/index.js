@@ -16,6 +16,10 @@ app.get("/users", async (req, res) => {
   res.json(allUsers);
 });
 
+app.get("/meetig/:uuid", async (req, res) => {
+  // uuidで情報とってくる
+});
+
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server ready at ${PORT}`);
