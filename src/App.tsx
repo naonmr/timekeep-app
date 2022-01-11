@@ -1,26 +1,22 @@
+import { type } from "os";
 import React from "react";
 import "./App.css";
-import SignUp from "./compornent/SignUp";
-import Home from "./compornent/Home";
-import Login from "./compornent/Login";
+import { LoginButton, LogoutButton } from "./component/Button";
 
-import { AuthProvider } from "./provider/AuthProvider";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
 
-const App = () => {
+const App: React.FC = () => {
+  const { currentUser } = useAuthContext();
   return (
-    <div className="App">
-      <AuthProvider>
+    <>
+      <div className="App">
         <p>firebase setup</p>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-            <Route path="/" component={Home} />
-          </Switch>
-        </BrowserRouter>
-      </AuthProvider>
-    </div>
+        <AuthProvider>
+          <p>はろー！！</p>
+          {currentUser ? <LogoutButton /> : <LoginButton />}
+        </AuthProvider>
+      </div>
+    </>
   );
 };
 
