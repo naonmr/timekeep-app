@@ -14,7 +14,6 @@ const App: React.FC = () => {
   return (
     <>
       <div className="App">
-        <p>firebase setup</p>
         <AuthProvider>
           <BrowserRouter>
             <Switch>

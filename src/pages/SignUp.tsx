@@ -2,6 +2,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { BaseButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const { currentUser } = useAuthContext();
@@ -37,9 +38,9 @@ const SignUp = () => {
         <div>
           <BaseButton text="SIGN UP" onclick={() => handleSubmit} />
         </div>
-        {/* <div>
-          ユーザー登録は<Link to={"/signup"}>こちら</Link>から
-        </div> */}
+        <div>
+          <Link to={"/login"}>Login</Link>
+        </div>
       </form>
     </>
   );
