@@ -38,7 +38,6 @@ const MeetingList = () => {
         <TableCaption>Your Meeting is here</TableCaption>
         <Thead>
           <Tr>
-            <Th>No</Th>
             <Th>Meeting Title</Th>
             <Th> </Th>
             <Th> </Th>
@@ -48,7 +47,6 @@ const MeetingList = () => {
           {datas.map((data) => {
             return (
               <Tr>
-                <Td>{data.No}</Td>
                 <Td>{data.meetingTitle}</Td>
                 <Td>
                   <Button>Fix</Button>
