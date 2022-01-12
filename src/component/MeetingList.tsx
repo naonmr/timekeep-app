@@ -1,5 +1,5 @@
 import { useHistory, Redirect } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import firebase from "../firebase/firebaseConfig";
 import { useAuthContext } from "../firebase/AuthContext";
@@ -16,8 +16,19 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+type data = {
+  No: number;
+  meetingTitle: string;
+};
+
 const MeetingList = () => {
-  const data = [{ No: 1, meetingTitle: "example" }];
+  const datas = [
+    { No: 1, meetingTitle: "example1" },
+    { No: 2, meetingTitle: "example2" },
+    { No: 3, meetingTitle: "example3" },
+  ];
+
+  const [meetingList, setMeetindList] = useState<any>([]);
 
   return (
     <>
@@ -34,36 +45,20 @@ const MeetingList = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td>
-              <Button>Fix</Button>
-            </Td>
-            <Td>
-              <Button>Start</Button>
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td>
-              <Button>Fix</Button>
-            </Td>
-            <Td>
-              <Button>Start</Button>
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td>
-              <Button>Fix</Button>
-            </Td>
-            <Td>
-              <Button>Start</Button>
-            </Td>
-          </Tr>
+          {datas.map((data) => {
+            return (
+              <Tr>
+                <Td>{data.No}</Td>
+                <Td>{data.meetingTitle}</Td>
+                <Td>
+                  <Button>Fix</Button>
+                </Td>
+                <Td>
+                  <Button>Start</Button>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
     </>
