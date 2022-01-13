@@ -13,6 +13,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import { PrimaryButton, SubButton } from "../component/Button";
 
 type Contents = {
   meetingTitle: string;
@@ -118,37 +119,26 @@ const InputComponent: React.VFC = () => {
 
           <Center>
             <Stack spacing={2} direction="row" align="center">
-              <Button
-                colorScheme="teal"
-                variant="outline"
+              <SubButton
+                text="add"
                 type="button"
-                onClick={() => {
+                onclick={() => {
                   append({ agenda: "", time: 0 });
                 }}
-              >
-                add
-              </Button>
-              <Button
-                colorScheme="teal"
-                variant="outline"
+              />
+              <SubButton
+                text="insert"
                 type="button"
-                onClick={() => insert(focusIndex, { agenda: "", time: 0 })}
-              >
-                insert
-              </Button>
-              <Button
-                colorScheme="teal"
-                variant="outline"
+                onclick={() => insert(focusIndex, { agenda: "", time: 0 })}
+              />
+              <SubButton
+                text="move"
                 type="button"
-                onClick={() => move(focusIndex, focusIndex + 1)}
-              >
-                move
-              </Button>
+                onclick={() => move(focusIndex, focusIndex + 1)}
+              />
             </Stack>
           </Center>
-          <Button colorScheme="teal" variant="solid" type="submit" m={2}>
-            そうしん！
-          </Button>
+          <PrimaryButton text="save" type="submit" />
         </form>
       </Center>
     </>

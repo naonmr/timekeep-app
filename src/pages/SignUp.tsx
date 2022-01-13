@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { BaseButton } from "../component/Button";
+import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 import { Link } from "react-router-dom";
@@ -37,7 +37,7 @@ const SignUp = () => {
           <input name="password" type="password" placeholder="password" />
         </div>
         <div>
-          <BaseButton text="SIGN UP" onclick={() => handleSubmit} />
+          <PrimaryButton text="SIGN UP" onclick={() => handleSubmit} />
         </div>
         <div>
           <Link to={"/login"}>Login</Link>

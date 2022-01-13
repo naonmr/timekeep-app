@@ -1,19 +1,36 @@
-import { login, logout } from "../firebase/auth";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
-type BaseButtonProps = {
+type ButtonProps = {
   text: string;
-  onclick(): void;
+  type?: any;
+  onclick?(): any | null;
 };
 
-export const BaseButton: React.VFC<BaseButtonProps> = (props) => (
-  <button style={{ backgroundColor: "#FF8A80", padding: "20px" }}>
-    {props.text}
-  </button>
-);
-
-export const LoginButton = () => (
-  <BaseButton onclick={() => login()} text="LOGIN"></BaseButton>
-);
-export const LogoutButton = () => (
-  <BaseButton onclick={() => logout()} text="LOGOUT"></BaseButton>
+export const PrimaryButton: React.VFC<ButtonProps> = (props) => {
+  return (
+    <Button
+      colorScheme="teal"
+      size="sm"
+      w={65}
+      variant="solid"
+      type={props.type}
+      onClick={props.onclick}
+    >
+      {props.text}
+    </Button>
+  );
+};
+export const SubButton: React.VFC<ButtonProps> = (props) => (
+  <>
+    <Button
+      colorScheme="teal"
+      size="sm"
+      w={65}
+      variant="outline"
+      type={props.type}
+      onClick={props.onclick}
+    >
+      {props.text}
+    </Button>
+  </>
 );
