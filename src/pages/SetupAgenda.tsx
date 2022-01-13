@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import InputComponent from "../component/InputComponent";
 
-const SetAgenda = () => {
+const SetupAgenda = () => {
   return (
     <>
       <InputComponent />
@@ -9,4 +9,4 @@ const SetAgenda = () => {
   );
 };
 
-export default SetAgenda;
+export default SetupAgenda;

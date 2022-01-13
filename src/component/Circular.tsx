@@ -1,5 +1,4 @@
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
-import { type } from "os";
 
 type Props = {
   value: number;
