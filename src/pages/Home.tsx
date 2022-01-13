@@ -11,9 +11,9 @@ const Home = () => {
   const history = useHistory();
   const { currentUser } = useAuthContext();
 
-  // if (!currentUser?.email) {
-  //   return <Redirect to="/login" />;
-  // }
+  if (!currentUser?.email) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <>

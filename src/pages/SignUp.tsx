@@ -18,6 +18,7 @@ const SignUp = () => {
         const user = userCredential.user;
       })
       .catch((error) => {
+        // TODO : エラーコードを表示
         const errorCode = error.code;
         const errorMessage = error.message;
       });

@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 
 import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import SetAgenda from "./pages/SetAgenda";
 
 const App: React.FC = () => {
   const { currentUser } = useAuthContext();
@@ -19,7 +20,8 @@ const App: React.FC = () => {
             <Switch>
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
-              <Route path="/" component={Home} />
+              <Route path="/home" component={Home} />
+              <Route path="/setup" component={SetAgenda} />
             </Switch>
           </BrowserRouter>
           {console.log(currentUser)}

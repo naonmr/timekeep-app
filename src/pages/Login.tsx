@@ -13,7 +13,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
-      history.push("/");
+      history.push("/home");
     } catch (error) {
       console.log(error);
       const errorMessage = error;
