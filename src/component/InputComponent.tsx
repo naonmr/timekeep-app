@@ -9,9 +9,10 @@ import {
   Stack,
   Center,
   Flex,
-  InputGroup,
-  InputRightAddon,
+  Spacer,
+  IconButton,
 } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 
 type Contents = {
   meetingTitle: string;
@@ -31,7 +32,7 @@ const InputComponent: React.VFC = () => {
     formState: { errors },
   } = useForm<Contents>({
     defaultValues: {
-      agendas: [{ agenda: "please", time: 1 }],
+      agendas: [{ agenda: "", time: 1 }],
     },
     mode: "onBlur",
   });
@@ -48,33 +49,48 @@ const InputComponent: React.VFC = () => {
   return (
     <>
       <Center>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* input部分 */}
-          <div className="agendaForm">
-            <Input
-              variant="filled"
-              {...register("meetingTitle")}
-              placeholder="Meeting title"
-            />
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
+          <FormControl isRequired>
+            <FormLabel>
+              {/* input部分 */}
+              <Input
+                variant="filled"
+                {...register("meetingTitle")}
+                placeholder="Meeting title"
+              />
+            </FormLabel>
+          </FormControl>
+          <Flex>
+            <p>Agenda</p>
+            <Spacer />
+            <p>time</p>
+          </Flex>
 
-            {fields.map((field, index) => {
-              return (
-                <div key={field.id}>
-                  <section className={"section"} key={field.id}>
-                    <Flex>
-                      <Input
-                        variant="outline"
-                        placeholder="name"
-                        {...register(`agendas.${index}.agenda` as const, {
-                          required: true,
-                        })}
-                        className={
-                          errors?.agendas?.[index]?.agenda ? "error" : ""
-                        }
-                        defaultValue={field.agenda}
-                        onFocus={() => setFocusIndex(index)}
-                      />
-                      <InputGroup>
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id}>
+                <section className={"section"} key={field.id}>
+                  <Flex>
+                    <FormControl isRequired>
+                      <FormLabel>
+                        <Input
+                          variant="outline"
+                          placeholder="agenda title"
+                          {...register(`agendas.${index}.agenda` as const, {
+                            required: true,
+                          })}
+                          className={
+                            errors?.agendas?.[index]?.agenda ? "error" : ""
+                          }
+                          defaultValue={field.agenda}
+                          errorBorderColor="red.300"
+                          onFocus={() => setFocusIndex(index)}
+                        />
+                      </FormLabel>
+                    </FormControl>
+
+                    <FormControl isRequired>
+                      <FormLabel>
                         <Input
                           variant="outline"
                           placeholder="time"
@@ -87,19 +103,18 @@ const InputComponent: React.VFC = () => {
                             errors?.agendas?.[index]?.time ? "error" : ""
                           }
                           defaultValue={field.time}
+                          errorBorderColor="red.300"
                           onFocus={() => setFocusIndex(index)}
                         />
-                        <InputRightAddon children="min" />
-                      </InputGroup>
-                      <Button type="button" onClick={() => remove(index)}>
-                        Delete
-                      </Button>
-                    </Flex>
-                  </section>
-                </div>
-              );
-            })}
-          </div>
+                      </FormLabel>
+                    </FormControl>
+
+                    <CloseIcon type="button" onClick={() => remove(index)} />
+                  </Flex>
+                </section>
+              </div>
+            );
+          })}
 
           <Center>
             <Stack spacing={2} direction="row" align="center">
