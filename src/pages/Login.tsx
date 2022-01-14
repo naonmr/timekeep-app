@@ -7,6 +7,18 @@ import { Link, useHistory, withRouter } from "react-router-dom";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Box,
+  Center,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { PrimaryButton } from "../component/Button";
+
 const Login = () => {
   const history = useHistory();
   const { setCurrentUser } = useAuthContext();
@@ -28,23 +40,34 @@ const Login = () => {
 
   return (
     <>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>メールアドレス</label>
-          <input name="email" type="email" placeholder="email" />
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input name="password" type="password" placeholder="password" />
-        </div>
-        <div>
-          <button>ログイン</button>
-        </div>
-        <div>
-          ユーザー登録は<Link to={"/signup"}>こちら</Link>から
-        </div>
-      </form>
+      <Center p={3}>
+        <Box
+          maxW="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+          p={2}
+        >
+          <h1>Login</h1>
+          <Center m={4}>
+            <form onSubmit={handleSubmit}>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="email">Your Name</FormLabel>
+                <Input name="userName" type="text" placeholder="your name" />
+              </FormControl>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input name="email" type="email" placeholder="email" />
+              </FormControl>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input name="password" type="password" placeholder="password" />
+              </FormControl>
+              <PrimaryButton text="Login" type="submit" mt={2} />
+            </form>
+          </Center>
+        </Box>
+      </Center>
     </>
   );
 };
