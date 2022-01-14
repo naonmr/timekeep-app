@@ -10,7 +10,7 @@ import {
   Center,
   Flex,
   Spacer,
-  IconButton,
+  HStack,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "../component/Button";
@@ -50,7 +50,10 @@ const InputComponent: React.VFC = () => {
   return (
     <>
       <Center>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{ width: "500px", marginTop: "20px" }}
+        >
           <FormControl isRequired>
             <FormLabel>
               {/* input部分 */}
@@ -61,11 +64,11 @@ const InputComponent: React.VFC = () => {
               />
             </FormLabel>
           </FormControl>
-          <Flex>
+          {/* <Flex>
             <p>Agenda</p>
             <Spacer />
             <p>time</p>
-          </Flex>
+          </Flex> */}
 
           {fields.map((field, index) => {
             return (
@@ -110,7 +113,11 @@ const InputComponent: React.VFC = () => {
                       </FormLabel>
                     </FormControl>
 
-                    <CloseIcon type="button" onClick={() => remove(index)} />
+                    <CloseIcon
+                      type="button"
+                      onClick={() => remove(index)}
+                      mt={2.5}
+                    />
                   </Flex>
                 </section>
               </div>
@@ -138,7 +145,8 @@ const InputComponent: React.VFC = () => {
               />
             </Stack>
           </Center>
-          <PrimaryButton text="save" type="submit" />
+
+          <PrimaryButton text="save" type="submit" mt={2} />
         </form>
       </Center>
     </>

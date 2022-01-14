@@ -6,7 +6,7 @@ import { useAuthContext } from "../firebase/AuthContext";
 
 import MeetingList from "../component/MeetingList";
 import Header from "../component/Header";
-
+// import { TimerProvider } from "../component/timerContext";
 const Home = () => {
   const history = useHistory();
   const { currentUser } = useAuthContext();
@@ -17,8 +17,10 @@ const Home = () => {
 
   return (
     <>
+      {/* <TimerProvider> */}
       <Header />
       <MeetingList />
+      {/* </TimerProvider> */}
     </>
   );
 };

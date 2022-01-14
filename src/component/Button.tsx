@@ -4,6 +4,7 @@ type ButtonProps = {
   text: string;
   type?: any;
   onclick?(): any | null;
+  mt?: any;
 };
 
 export const PrimaryButton: React.VFC<ButtonProps> = (props) => {
@@ -15,6 +16,7 @@ export const PrimaryButton: React.VFC<ButtonProps> = (props) => {
       variant="solid"
       type={props.type}
       onClick={props.onclick}
+      mt={props.mt}
     >
       {props.text}
     </Button>
@@ -29,6 +31,7 @@ export const SubButton: React.VFC<ButtonProps> = (props) => (
       variant="outline"
       type={props.type}
       onClick={props.onclick}
+      mt={props.mt}
     >
       {props.text}
     </Button>
