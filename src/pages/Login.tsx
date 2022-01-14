@@ -40,6 +40,7 @@ const Login = () => {
 
   return (
     <>
+      {/* TODO 左右対称にする */}
       <Center p={3}>
         <Box
           maxW="sm"
@@ -51,10 +52,6 @@ const Login = () => {
           <h1>Login</h1>
           <Center m={4}>
             <form onSubmit={handleSubmit}>
-              <FormControl isRequired m={2}>
-                <FormLabel htmlFor="email">Your Name</FormLabel>
-                <Input name="userName" type="text" placeholder="your name" />
-              </FormControl>
               <FormControl isRequired m={2}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input name="email" type="email" placeholder="email" />

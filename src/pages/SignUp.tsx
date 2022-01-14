@@ -6,10 +6,20 @@ import {
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Box,
+  Center,
+} from "@chakra-ui/react";
 const SignUp = () => {
   const { currentUser, setCurrentUser } = useAuthContext();
+  const history = useHistory();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -21,30 +31,44 @@ const SignUp = () => {
       onAuthStateChanged(auth, (user) => {
         setCurrentUser(user);
       });
+      history.push("/login");
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
   return (
     <>
-      <h1>SignUp {console.log("今ログインしてるのは", currentUser)}</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>メールアドレス</label>
-          <input name="email" type="email" placeholder="email" />
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input name="password" type="password" placeholder="password" />
-        </div>
-        <div>
-          <PrimaryButton text="SIGN UP" onclick={() => handleSubmit} />
-        </div>
-        <div>
-          <Link to={"/login"}>Login</Link>
-        </div>
-      </form>
+      {/* TODO 左右対称にする */}
+      {/* TODO バリデーション */}
+      <Center p={3}>
+        <Box
+          maxW="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+          p={2}
+        >
+          <h1>SignUp</h1>
+          <Center m={4}>
+            <form onSubmit={handleSubmit}>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="email">Your Name</FormLabel>
+                <Input name="userName" type="text" placeholder="your name" />
+              </FormControl>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input name="email" type="email" placeholder="email" />
+              </FormControl>
+              <FormControl isRequired m={2}>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input name="password" type="password" placeholder="password" />
+              </FormControl>
+              <PrimaryButton text="Sign Up" type="submit" mt={2} />
+            </form>
+          </Center>
+        </Box>
+      </Center>
     </>
   );
 };
