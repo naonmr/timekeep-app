@@ -19,9 +19,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const auth = getAuth(firebase);
 
     const unsubscribe = onAuthStateChanged((firebaseUser) => {
-      console.log("useEffectの中", firebaseUser);
       setCurrentUser(firebaseUser);
-      console.log("useEffectの中 current", currentUser);
     });
 
     return unsubscribe;

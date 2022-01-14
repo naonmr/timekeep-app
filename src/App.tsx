@@ -8,6 +8,7 @@ import SetAgenda from "./pages/SetupAgenda";
 import Tiemr from "./pages/Timer";
 
 import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
+import { TimerProvider } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App: React.FC = () => {
@@ -22,7 +23,9 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
               <Route path="/agenda" component={SetAgenda} />
-              <Route path="/timer" component={Tiemr} />
+              <TimerProvider>
+                <Route path="/timer" component={Tiemr} />
+              </TimerProvider>
             </Switch>
           </BrowserRouter>
           {console.log(currentUser)}
