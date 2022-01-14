@@ -2,7 +2,6 @@ import Circular from "../component/Circular";
 import { SubButton } from "../component/Button";
 import { useTimerContext } from "../component/timerContext";
 import { useEffect, useRef } from "react";
-import { cookieStorageManager } from "@chakra-ui/react";
 
 // TODO: timer関数を修正
 const Tiemr = () => {

@@ -1,27 +1,29 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const { currentUser } = useAuthContext();
+  const { currentUser, setCurrentUser } = useAuthContext();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
-    console.log(email.value, password.value);
     const auth = getAuth(firebase);
 
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-      .then((userCredential) => {
-        const user = userCredential.user;
-      })
-      .catch((error) => {
-        // TODO : エラーコードを表示
-        const errorCode = error.code;
-        const errorMessage = error.message;
+    try {
+      await createUserWithEmailAndPassword(auth, email.value, password.value);
+      onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user);
       });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

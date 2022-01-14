@@ -12,14 +12,19 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import { useHistory } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import firebase from "../firebase/firebaseConfig";
 
 const Header = () => {
   const history = useHistory();
   const handleLogout = async () => {
     const auth = getAuth(firebase);
-    history.push("/login");
+    try {
+      signOut(auth);
+      history.push("/login");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

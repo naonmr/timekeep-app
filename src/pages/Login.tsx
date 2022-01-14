@@ -1,23 +1,28 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { Link, useHistory, withRouter } from "react-router-dom";
+import { useAuthContext } from "../firebase/AuthContext";
+import firebase from "../firebase/firebaseConfig";
 
 const Login = () => {
   const history = useHistory();
-  const [error, setError] = useState("");
+  const { setCurrentUser } = useAuthContext();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
     console.log(email.value, password.value);
-    const auth = getAuth();
+    const auth = getAuth(firebase);
 
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
+      onAuthStateChanged(auth, (user) => setCurrentUser(user));
       history.push("/home");
     } catch (error) {
       console.log(error);
-      const errorMessage = error;
-      // setError();
+      alert(error);
     }
   };
 
@@ -44,4 +49,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
