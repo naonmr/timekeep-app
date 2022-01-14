@@ -5,7 +5,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import SetAgenda from "./pages/SetupAgenda";
-import Tiemr from "./pages/Timer";
+import TiemerPage from "./pages/TimerPage";
 
 import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
 import { TimerProvider } from "./component/timerContext";
@@ -24,7 +24,7 @@ const App: React.FC = () => {
               <Route path="/home" component={Home} />
               <Route path="/agenda" component={SetAgenda} />
               <TimerProvider>
-                <Route path="/timer" component={Tiemr} />
+                <Route path="/timer" component={TiemerPage} />
               </TimerProvider>
             </Switch>
           </BrowserRouter>
