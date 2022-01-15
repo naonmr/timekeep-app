@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
-import InputComponent from "../component/InputComponent";
+import Header from "../component/Header";
+import InputAgenda from "../component/InputAgenda";
 
 const SetupAgenda = () => {
   return (
     <>
-      <InputComponent />
+      <Header />
+      <InputAgenda />
     </>
   );
 };

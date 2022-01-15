@@ -1,9 +1,12 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import InputComponent from "../component/InputComponent";
+import InputAgenda from "../component/InputAgenda";
 
-const FixAgenda = () => {
-  return;
+const SetupAgenda = () => {
+  return (
+    <>
+      <InputAgenda />
+    </>
+  );
 };
 
-export default FixAgenda;
+export default SetupAgenda;

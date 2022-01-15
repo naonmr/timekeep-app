@@ -1,8 +1,7 @@
 import { useHistory, Redirect } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import firebase from "../firebase/firebaseConfig";
-import { useAuthContext } from "../firebase/AuthContext";
+import { PrimaryButton, SubButton } from "../component/Button";
+import axios from "axios";
 
 import {
   Table,
@@ -15,25 +14,48 @@ import {
   TableCaption,
   Button,
 } from "@chakra-ui/react";
+import { useAuthContext } from "../firebase/AuthContext";
 
-type data = {
-  No: number;
-  meetingTitle: string;
+type Meetings = {
+  authorId: string;
+  id: number;
+  title: string;
 };
 
-const MeetingList = () => {
-  const datas = [
-    { No: 1, meetingTitle: "example1" },
-    { No: 2, meetingTitle: "example2" },
-    { No: 3, meetingTitle: "example3" },
-  ];
+const MeetingList = (props: any) => {
+  const { setCurrentPage } = props;
+  const [meetings, setMeetings] = useState<Meetings[]>([
+    { authorId: "", id: 1, title: "" },
+  ]);
+  const { currentUser } = useAuthContext();
+  const history = useHistory();
 
   const [meetingList, setMeetindList] = useState<any>([]);
 
+  const getMeetingList = async () => {
+    try {
+      const res = await axios.get(`/api/meetings/${currentUser?.uid}`);
+      await setMeetings(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getMeetingList();
+
+    console.log(meetings);
+  }, []);
+  const deleteMeeting = async (id: number) => {
+    try {
+      await axios.delete(`/api/meetings/${currentUser?.uid}?meetingId=${id}`);
+      await getMeetingList();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
-      <h1>Meeting Lists</h1>
-
+      <PrimaryButton text="new" onclick={() => history.push("/agenda")} />
       <Table variant="simple">
         <TableCaption>Your Meeting is here</TableCaption>
         <Thead>
@@ -41,18 +63,28 @@ const MeetingList = () => {
             <Th>Meeting Title</Th>
             <Th> </Th>
             <Th> </Th>
+            <Th> </Th>
           </Tr>
         </Thead>
         <Tbody>
-          {datas.map((data) => {
+          {meetings.map((meeting: Meetings) => {
             return (
-              <Tr key={data.No}>
-                <Td>{data.meetingTitle}</Td>
+              <Tr key={meeting.id}>
+                <Td>{meeting.title}</Td>
                 <Td>
-                  <Button>Fix</Button>
+                  <SubButton
+                    text="Fix"
+                    // onclick={() => history.push("/agenda")}
+                  />
                 </Td>
                 <Td>
-                  <Button>Start</Button>
+                  <SubButton text="Start" />
+                </Td>
+                <Td>
+                  <SubButton
+                    text="Delete"
+                    onclick={() => deleteMeeting(meeting.id)}
+                  />
                 </Td>
               </Tr>
             );

@@ -13,7 +13,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { PrimaryButton, SubButton } from "../component/Button";
+import { PrimaryButton, SubButton } from "./Button";
 import axios from "axios";
 import { useAuthContext } from "../firebase/AuthContext";
 import { useHistory } from "react-router-dom";
@@ -26,7 +26,7 @@ type Contents = {
   }[];
 };
 
-const InputComponent: React.VFC = () => {
+const InputAgenda: React.VFC = () => {
   const [focusIndex, setFocusIndex] = useState(0);
   const history = useHistory();
   const { currentUser } = useAuthContext();
@@ -37,7 +37,10 @@ const InputComponent: React.VFC = () => {
     formState: { errors },
   } = useForm<Contents>({
     defaultValues: {
-      agendas: [{ title: "", time: 1 }],
+      agendas: [
+        { title: "", time: 1 },
+        { title: "", time: 1 },
+      ],
     },
     mode: "onBlur",
   });
@@ -162,4 +165,4 @@ const InputComponent: React.VFC = () => {
   );
 };
 
-export default InputComponent;
+export default InputAgenda;
