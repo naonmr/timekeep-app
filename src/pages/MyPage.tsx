@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SubButton } from "../component/Button";
+import { PrimaryButton, SubButton } from "../component/Button";
 // import { TimerProvider } from "../component/timerContext";
 type Meetings = {
   authorId: string;
@@ -52,6 +52,8 @@ const MyPage = () => {
   return (
     <>
       <Header />
+      <br></br>
+      <PrimaryButton text="new" onclick={() => history.push("/agenda")} />
       <Table variant="simple">
         <TableCaption>Your Meeting is here</TableCaption>
         <Thead>

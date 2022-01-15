@@ -1,5 +1,6 @@
 const { Prisma, PrismaClient } = require("@prisma/client");
 const express = require("express");
+const { request } = require("http");
 const morgan = require("morgan");
 const path = require("path");
 const { json } = require("stream/consumers");
@@ -27,6 +28,13 @@ app.get("/meetig/:uid", async (req, res) => {
     },
   });
   res.json(meetings);
+});
+
+app.post("/new/meetings", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const newMeeting = await prisma.meeting.create({ data: data });
+  res.json(data);
 });
 
 const PORT = process.env.PORT || 8000;

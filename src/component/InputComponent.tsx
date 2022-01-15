@@ -14,18 +14,22 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "../component/Button";
+import axios from "axios";
+import { useAuthContext } from "../firebase/AuthContext";
+import { useHistory } from "react-router-dom";
 
 type Contents = {
-  meetingTitle: string;
+  title: string;
   agendas: {
-    agenda: string;
+    title: string;
     time: number;
   }[];
 };
 
 const InputComponent: React.VFC = () => {
   const [focusIndex, setFocusIndex] = useState(0);
-
+  const history = useHistory();
+  const { currentUser } = useAuthContext();
   const {
     register,
     control,
@@ -33,7 +37,7 @@ const InputComponent: React.VFC = () => {
     formState: { errors },
   } = useForm<Contents>({
     defaultValues: {
-      agendas: [{ agenda: "", time: 1 }],
+      agendas: [{ title: "", time: 1 }],
     },
     mode: "onBlur",
   });
@@ -43,8 +47,18 @@ const InputComponent: React.VFC = () => {
     control,
   });
 
+  //　postして、mypageに戻る
   const onSubmit = (data: Contents) => {
-    console.log(data);
+    let newMeeting: any = {
+      title: data.title,
+      authorId: currentUser?.uid,
+      agendas: {
+        create: data.agendas,
+      },
+    };
+    axios.post("/new/meetings", newMeeting);
+
+    history.push("/mypage");
   };
 
   return (
@@ -59,16 +73,11 @@ const InputComponent: React.VFC = () => {
               {/* input部分 */}
               <Input
                 variant="filled"
-                {...register("meetingTitle")}
-                placeholder="Meeting title"
+                {...register("title")}
+                placeholder="title"
               />
             </FormLabel>
           </FormControl>
-          {/* <Flex>
-            <p>Agenda</p>
-            <Spacer />
-            <p>time</p>
-          </Flex> */}
 
           {fields.map((field, index) => {
             return (
@@ -80,13 +89,13 @@ const InputComponent: React.VFC = () => {
                         <Input
                           variant="outline"
                           placeholder="agenda title"
-                          {...register(`agendas.${index}.agenda` as const, {
+                          {...register(`agendas.${index}.title` as const, {
                             required: true,
                           })}
                           className={
-                            errors?.agendas?.[index]?.agenda ? "error" : ""
+                            errors?.agendas?.[index]?.title ? "error" : ""
                           }
-                          defaultValue={field.agenda}
+                          defaultValue={field.title}
                           errorBorderColor="red.300"
                           onFocus={() => setFocusIndex(index)}
                         />
@@ -130,13 +139,13 @@ const InputComponent: React.VFC = () => {
                 text="add"
                 type="button"
                 onclick={() => {
-                  append({ agenda: "", time: 0 });
+                  append({ title: "", time: 0 });
                 }}
               />
               <SubButton
                 text="insert"
                 type="button"
-                onclick={() => insert(focusIndex, { agenda: "", time: 0 })}
+                onclick={() => insert(focusIndex, { title: "", time: 0 })}
               />
               <SubButton
                 text="move"
