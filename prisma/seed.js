@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 const userData = [
   {
-    email: "test_xxx@test.com",
+    uid: "d0n4OWQHCfVVmHPApeNUZ1yU3672",
     name: "test",
     meetings: {
       create: {

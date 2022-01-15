@@ -21,14 +21,14 @@ model Agenda {
 model Meeting {
   id        Int      @id @default(autoincrement())
   title     String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  author    User     @relation(fields: [authorId], references: [uid])
+  authorId  String
   agendas   Agenda[]
 }
 
 model User {
   id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+  uid     String   @unique
+  name    String
   meetings   Meeting[]
 }
