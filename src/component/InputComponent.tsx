@@ -48,7 +48,7 @@ const InputComponent: React.VFC = () => {
   });
 
   //　postして、mypageに戻る
-  const onSubmit = (data: Contents) => {
+  const onSubmit = async (data: Contents) => {
     let newMeeting: any = {
       title: data.title,
       authorId: currentUser?.uid,
@@ -56,7 +56,7 @@ const InputComponent: React.VFC = () => {
         create: data.agendas,
       },
     };
-    axios.post("/new/meetings", newMeeting);
+    await axios.post("/api/meetings", newMeeting);
 
     history.push("/mypage");
   };

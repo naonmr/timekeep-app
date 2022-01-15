@@ -18,10 +18,9 @@ app.get("/users", async (req, res) => {
   res.json(allUsers);
 });
 
-app.get("/meetig/:uid", async (req, res) => {
+app.get("/api/meetings/:uid", async (req, res) => {
   // uuidで情報とってくる
   const uid = req.params.uid;
-  console.log("👧", uid);
   const meetings = await prisma.meeting.findMany({
     where: {
       authorId: uid,
@@ -30,11 +29,29 @@ app.get("/meetig/:uid", async (req, res) => {
   res.json(meetings);
 });
 
-app.post("/new/meetings", async (req, res) => {
+app.post("/api/meetings", async (req, res) => {
   const data = req.body;
   console.log(data);
   const newMeeting = await prisma.meeting.create({ data: data });
   res.json(data);
+});
+
+app.delete("/api/meetings/:uid", async (req, res) => {
+  const meetingId = Number(req.query.meetingId);
+  console.log("👧", meetingId);
+
+  const deleteAgenda = await prisma.agenda.deleteMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
+  const deleteMeeting = await prisma.meeting.delete({
+    where: {
+      id: meetingId,
+    },
+  });
+
+  res.json(deleteAgenda);
 });
 
 const PORT = process.env.PORT || 8000;

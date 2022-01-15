@@ -1,10 +1,7 @@
 import { useHistory, Redirect, Link } from "react-router-dom";
 
-import { getAuth } from "firebase/auth";
-import firebase from "../firebase/firebaseConfig";
 import { useAuthContext } from "../firebase/AuthContext";
 
-import MeetingList from "../component/MeetingList";
 import Header from "../component/Header";
 
 import {
@@ -21,7 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { PrimaryButton, SubButton } from "../component/Button";
-// import { TimerProvider } from "../component/timerContext";
+
 type Meetings = {
   authorId: string;
   id: number;
@@ -35,19 +32,28 @@ const MyPage = () => {
     { authorId: "", id: 1, title: "" },
   ]);
 
+  const getMeetingList = async () => {
+    try {
+      const res = await axios.get(`/api/meetings/${currentUser?.uid}`);
+      await setMeetings(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetch = async function () {
-      const res = await axios.get(`/meetig/${currentUser?.uid}`);
+    getMeetingList();
 
-      try {
-        setMeetings(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
     console.log(meetings);
   }, []);
+
+  const deleteMeeting = async (id: number) => {
+    try {
+      await axios.delete(`/api/meetings/${currentUser?.uid}?meetingId=${id}`);
+      await getMeetingList();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -61,6 +67,7 @@ const MyPage = () => {
             <Th>Meeting Title</Th>
             <Th> </Th>
             <Th> </Th>
+            <Th> </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -71,11 +78,17 @@ const MyPage = () => {
                 <Td>
                   <SubButton
                     text="Fix"
-                    onclick={() => history.push("/agenda")}
+                    // onclick={() => history.push("/agenda")}
                   />
                 </Td>
                 <Td>
                   <SubButton text="Start" />
+                </Td>
+                <Td>
+                  <SubButton
+                    text="Delete"
+                    onclick={() => deleteMeeting(meeting.id)}
+                  />
                 </Td>
               </Tr>
             );
