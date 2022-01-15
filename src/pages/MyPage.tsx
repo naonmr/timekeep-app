@@ -1,4 +1,4 @@
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 
 import { getAuth } from "firebase/auth";
 import firebase from "../firebase/firebaseConfig";
@@ -18,22 +18,36 @@ import {
   TableCaption,
   Button,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { SubButton } from "../component/Button";
 // import { TimerProvider } from "../component/timerContext";
+type Meetings = {
+  authorId: string;
+  id: number;
+  title: string;
+};
+
 const MyPage = () => {
   const history = useHistory();
   const { currentUser } = useAuthContext();
+  const [meetings, setMeetings] = useState<Meetings[]>([
+    { authorId: "", id: 1, title: "" },
+  ]);
 
-  const datas = [
-    { No: 1, meetingTitle: "example1" },
-    { No: 2, meetingTitle: "example2" },
-    { No: 3, meetingTitle: "example3" },
-  ];
+  useEffect(() => {
+    const fetch = async function () {
+      const res = await axios.get(`/meetig/${currentUser?.uid}`);
 
-  // useEffect(async() => {
-  //   await
-
-  // }, []);
+      try {
+        setMeetings(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetch();
+    console.log(meetings);
+  }, []);
 
   return (
     <>
@@ -48,15 +62,18 @@ const MyPage = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {datas.map((data) => {
+          {meetings.map((meeting) => {
             return (
-              <Tr key={data.No}>
-                <Td>{data.meetingTitle}</Td>
+              <Tr key={meeting.id}>
+                <Td>{meeting.title}</Td>
                 <Td>
-                  <Button>Fix</Button>
+                  <SubButton
+                    text="Fix"
+                    onclick={() => history.push("/agenda")}
+                  />
                 </Td>
                 <Td>
-                  <Button>Start</Button>
+                  <SubButton text="Start" />
                 </Td>
               </Tr>
             );
