@@ -8,7 +8,7 @@ const userData = [
     name: "test",
     meetings: {
       create: {
-        title: "example",
+        title: "test",
         agendas: {
           create: {
             title: "agenda1",
@@ -19,15 +19,26 @@ const userData = [
             time: 2,
           },
         },
+        title: "test2",
+        agendas: {
+          create: {
+            title: "agenda2-1",
+            time: 1,
+          },
+          create: {
+            title: "agenda2-2",
+            time: 2,
+          },
+        },
       },
     },
   },
   {
-    email: "test_xxx2@test.com",
-    name: "test2",
+    uid: "61Q9QHo01HNJ66IP0MCOHSbIvd43",
+    name: "testdesu",
     meetings: {
       create: {
-        title: "example2",
+        title: "testedsu1",
         agendas: {
           create: {
             title: "agenda1",
@@ -35,6 +46,17 @@ const userData = [
           },
           create: {
             title: "agenda2",
+            time: 2,
+          },
+        },
+        title: "testedsu2",
+        agendas: {
+          create: {
+            title: "agenda2-1",
+            time: 1,
+          },
+          create: {
+            title: "agenda2-1",
             time: 2,
           },
         },
