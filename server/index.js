@@ -1,7 +1,9 @@
 const { Prisma, PrismaClient } = require("@prisma/client");
 const express = require("express");
+const { request } = require("http");
 const morgan = require("morgan");
 const path = require("path");
+const { json } = require("stream/consumers");
 
 const prisma = new PrismaClient();
 
@@ -16,8 +18,16 @@ app.get("/users", async (req, res) => {
   res.json(allUsers);
 });
 
-app.get("/meetig/:uuid", async (req, res) => {
+app.get("/meetig/:uid", async (req, res) => {
   // uuidで情報とってくる
+  const uid = req.params.uid;
+  console.log("👧", uid);
+  const meetings = await prisma.meeting.findMany({
+    where: {
+      authorId: uid,
+    },
+  });
+  res.json(meetings);
 });
 
 const PORT = process.env.PORT || 8000;

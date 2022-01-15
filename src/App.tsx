@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+import MyPage from "./pages/MyPage";
 import SetAgenda from "./pages/SetupAgenda";
 import TiemerPage from "./pages/TimerPage";
 
@@ -25,7 +25,7 @@ const App: React.FC = () => {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
 
-              <PrivateRoute path="/home" component={Home} />
+              <PrivateRoute path="/mypage" component={MyPage} />
               <PrivateRoute path="/agenda" component={SetAgenda} />
               <TimerProvider>
                 <PrivateRoute path="/timer" component={TiemerPage} />

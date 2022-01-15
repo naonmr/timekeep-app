@@ -22,7 +22,7 @@ model Meeting {
   id        Int      @id @default(autoincrement())
   title     String?
   author    User     @relation(fields: [authorId], references: [uid])
-  authorId  String
+  authorId  String  
   agendas   Agenda[]
 }
 

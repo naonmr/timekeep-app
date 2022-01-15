@@ -31,7 +31,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
       onAuthStateChanged(auth, (user) => setCurrentUser(user));
-      history.push("/home");
+      history.push("/mypage");
     } catch (error) {
       console.log(error);
       alert(error);
