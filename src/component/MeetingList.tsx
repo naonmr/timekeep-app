@@ -23,14 +23,11 @@ type Meetings = {
 };
 
 const MeetingList = (props: any) => {
-  const { setCurrentPage } = props;
   const [meetings, setMeetings] = useState<Meetings[]>([
     { authorId: "", id: 1, title: "" },
   ]);
   const { currentUser } = useAuthContext();
   const history = useHistory();
-
-  const [meetingList, setMeetindList] = useState<any>([]);
 
   const getMeetingList = async () => {
     try {

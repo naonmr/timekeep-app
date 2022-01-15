@@ -4,7 +4,8 @@ import "./App.css";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
-import SetAgenda from "./pages/SetupAgenda";
+import SetupAgenda from "./pages/SetupAgenda";
+import FixAgenda from "./pages/FixAgenda";
 import TiemerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
@@ -26,7 +27,8 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <PrivateRoute path="/mypage" component={MyPage} />
-              <PrivateRoute path="/agenda" component={SetAgenda} />
+              <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
+              <PrivateRoute path="/fix/agenda" component={FixAgenda} />
               <TimerProvider>
                 <PrivateRoute path="/timer" component={TiemerPage} />
               </TimerProvider>
