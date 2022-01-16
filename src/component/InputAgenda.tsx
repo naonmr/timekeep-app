@@ -1,12 +1,16 @@
 import { useForm, useFieldArray } from "react-hook-form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
+  Button,
   Stack,
   Center,
   Flex,
+  Spacer,
+  HStack,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
@@ -23,23 +27,29 @@ const InputAgenda: React.VFC<any> = (props) => {
   const [focusIndex, setFocusIndex] = useState(0);
   const { defaultAgenda, defaultMtgTitle, onSubmit } = props;
 
-  console.log("🥳", props);
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Contents>({
-    defaultValues: {
-      title: defaultMtgTitle,
-      agendas: defaultAgenda,
-    },
+    // defaultValues: {
+    //   title: defaultMtgTitle,
+    //   agendas: defaultAgenda,
+    // },
     mode: "onBlur",
   });
+
   const { fields, append, remove, insert, move } = useFieldArray({
     name: "agendas",
     control,
   });
+
+  useEffect(() => {
+    setValue("title", defaultMtgTitle);
+    setValue("agendas", defaultAgenda);
+  }, []);
 
   return (
     <>
@@ -55,7 +65,6 @@ const InputAgenda: React.VFC<any> = (props) => {
                 variant="filled"
                 {...register("title")}
                 placeholder="Meeting title"
-                defaultValues="あ"
               />
             </FormLabel>
           </FormControl>

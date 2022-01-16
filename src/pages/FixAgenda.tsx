@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
@@ -16,6 +17,7 @@ type Contents = {
 const FixAgenda = () => {
   const { currentUser } = useAuthContext();
   const { meetingId, defaultAgenda, defaultMtgTitle } = useTimerContext();
+
   const history = useHistory();
 
   const onSubmit = async (data: Contents) => {
@@ -38,6 +40,7 @@ const FixAgenda = () => {
     );
     // TODO historyが遷移しない問題を解決する
     history.push("/mypage");
+    console.log("tesuto");
   };
 
   return (

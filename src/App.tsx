@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -8,9 +8,10 @@ import FixAgenda from "./pages/FixAgenda";
 import TimerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
-import { AuthProvider } from "./firebase/AuthContext";
-import { TimerProvider } from "./component/timerContext";
+import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
+import { TimerProvider, useTimerContext } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import axios from "axios";
 
 const App: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const App: React.FC = () => {
 
               <TimerProvider>
                 <PrivateRoute path="/mypage" component={MyPage} />
-                <PrivateRoute path="/setup/agenda" children={SetupAgenda} />
+                <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
                 <PrivateRoute path="/fix/agenda" component={FixAgenda} />
                 <PrivateRoute path="/timer" component={TimerPage} />
               </TimerProvider>

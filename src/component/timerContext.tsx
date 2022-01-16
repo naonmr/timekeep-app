@@ -26,7 +26,9 @@ type TimerContextProps = {
   meetingId?: number;
   setMeetingId?: any;
   defaultAgenda?: any;
+  setDefaultAgenda?: any;
   defaultMtgTitle?: any;
+  setDefaultMtgTitle?: any;
 };
 const TimerContext = React.createContext<TimerContextProps>({});
 
@@ -72,29 +74,6 @@ export const TimerProvider: React.FC = ({ children }) => {
   const [isPaused, setIsPaused] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  useEffect(() => {
-    console.log(meetingId);
-    const getAgendasList = async () => {
-      try {
-        const res = await axios.get(
-          `/api/agendas/${currentUser?.uid}?meetingId=${meetingId}`
-        );
-
-        const agendas = res.data.agendas.map((agenda: any) => {
-          return { title: agenda.title, time: agenda.time };
-        });
-
-        setDefaultMtgTitle(() => res.data.title);
-        setDefaultAgenda(() => agendas);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (meetingId) {
-      getAgendasList();
-    }
-  }, [meetingId]);
-
   return (
     <TimerContext.Provider
       value={{
@@ -122,7 +101,9 @@ export const TimerProvider: React.FC = ({ children }) => {
         setMeetingId,
 
         defaultAgenda,
+        setDefaultAgenda,
         defaultMtgTitle,
+        setDefaultMtgTitle,
       }}
     >
       {children}
