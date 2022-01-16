@@ -29,7 +29,7 @@ app.get("/api/meetings/:uid", async (req, res) => {
   res.json(meetings);
 });
 
-app.post("/api/meetings", async (req, res) => {
+app.post("/api/meetings/:uid", async (req, res) => {
   const data = req.body;
   console.log(data);
   const newMeeting = await prisma.meeting.create({ data: data });
@@ -52,6 +52,23 @@ app.delete("/api/meetings/:uid", async (req, res) => {
   });
 
   res.json(deleteAgenda);
+});
+
+app.put("/api/meetings/:uid", async (req, res) => {
+  const meetingId = Number(req.query.meetingId);
+  const data = req.body;
+  const putMeeting = await prisma.meeting.update({
+    where: {
+      id: meetingId,
+    },
+    data: { title: data.title },
+  });
+  const deleteAgenda = await prisma.agenda.deleteMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
+  const createAgenda = await prisma.agenda.createMany({ data: data.agendas });
 });
 
 const PORT = process.env.PORT || 8000;

@@ -26,10 +26,10 @@ const App: React.FC = () => {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
 
-              <PrivateRoute path="/mypage" component={MyPage} />
-              <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
-              <PrivateRoute path="/fix/agenda" component={FixAgenda} />
               <TimerProvider>
+                <PrivateRoute path="/mypage" component={MyPage} />
+                <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
+                <PrivateRoute path="/fix/agenda" component={FixAgenda} />
                 <PrivateRoute path="/timer" component={TiemerPage} />
               </TimerProvider>
             </Switch>

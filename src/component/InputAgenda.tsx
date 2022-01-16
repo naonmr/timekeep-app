@@ -14,8 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
-import axios from "axios";
-import { useAuthContext } from "../firebase/AuthContext";
 import { useHistory } from "react-router-dom";
 
 type Contents = {
@@ -26,10 +24,10 @@ type Contents = {
   }[];
 };
 
-const InputAgenda: React.VFC = () => {
+const InputAgenda: React.VFC<any> = (props) => {
   const [focusIndex, setFocusIndex] = useState(0);
+  const { defaultAgenda, defaultMtgTitle, onSubmit } = props;
   const history = useHistory();
-  const { currentUser } = useAuthContext();
   const {
     register,
     control,
@@ -37,10 +35,8 @@ const InputAgenda: React.VFC = () => {
     formState: { errors },
   } = useForm<Contents>({
     defaultValues: {
-      agendas: [
-        { title: "", time: 1 },
-        { title: "", time: 1 },
-      ],
+      title: defaultMtgTitle,
+      agendas: defaultAgenda,
     },
     mode: "onBlur",
   });
@@ -49,20 +45,6 @@ const InputAgenda: React.VFC = () => {
     name: "agendas",
     control,
   });
-
-  //　postして、mypageに戻る
-  const onSubmit = async (data: Contents) => {
-    let newMeeting: any = {
-      title: data.title,
-      authorId: currentUser?.uid,
-      agendas: {
-        create: data.agendas,
-      },
-    };
-    await axios.post("/api/meetings", newMeeting);
-
-    history.push("/mypage");
-  };
 
   return (
     <>
@@ -77,7 +59,7 @@ const InputAgenda: React.VFC = () => {
               <Input
                 variant="filled"
                 {...register("title")}
-                placeholder="title"
+                placeholder="Meeting title"
               />
             </FormLabel>
           </FormControl>

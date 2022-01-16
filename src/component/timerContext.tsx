@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { ids } from "webpack";
 
 type TimerContextProps = {
   agendaList?: any;
@@ -20,6 +21,8 @@ type TimerContextProps = {
   setIsPaused?: any;
   isEnd?: any;
   setIsEnd?: any;
+  meetingId?: number;
+  setMeetingId?: any;
 };
 const TimerContext = React.createContext<TimerContextProps>({});
 
@@ -27,7 +30,7 @@ export const TimerProvider: React.FC = ({ children }) => {
   /////
   // TT = Total Timer, AT = Agenda Timer
   /////
-
+  const [meetingId, setMeetingId] = useState();
   const [agendaList, setAgendaList] = useState([
     {
       id: 1,
@@ -87,6 +90,9 @@ export const TimerProvider: React.FC = ({ children }) => {
         setIsPaused,
         isEnd,
         setIsEnd,
+
+        meetingId,
+        setMeetingId,
       }}
     >
       {children}

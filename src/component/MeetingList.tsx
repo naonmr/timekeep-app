@@ -15,6 +15,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
+import { useTimerContext } from "./timerContext";
 
 type Meetings = {
   authorId: string;
@@ -23,6 +24,8 @@ type Meetings = {
 };
 
 const MeetingList = (props: any) => {
+  const { meetingId, setMeetingId } = useTimerContext();
+
   const [meetings, setMeetings] = useState<Meetings[]>([
     { authorId: "", id: 1, title: "" },
   ]);
@@ -52,7 +55,6 @@ const MeetingList = (props: any) => {
   };
   return (
     <>
-      <PrimaryButton text="new" onclick={() => history.push("/agenda")} />
       <Table variant="simple">
         <TableCaption>Your Meeting is here</TableCaption>
         <Thead>
@@ -60,7 +62,12 @@ const MeetingList = (props: any) => {
             <Th>Meeting Title</Th>
             <Th> </Th>
             <Th> </Th>
-            <Th> </Th>
+            <Th>
+              <PrimaryButton
+                text="new"
+                onclick={() => history.push("/setup/agenda")}
+              />
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -71,7 +78,10 @@ const MeetingList = (props: any) => {
                 <Td>
                   <SubButton
                     text="Fix"
-                    // onclick={() => history.push("/agenda")}
+                    onclick={() => {
+                      setMeetingId(meeting.id);
+                      history.push("fix/agenda");
+                    }}
                   />
                 </Td>
                 <Td>

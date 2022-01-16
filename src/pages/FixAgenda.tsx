@@ -1,12 +1,58 @@
-import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
+import { useTimerContext } from "../component/timerContext";
+import { useAuthContext } from "../firebase/AuthContext";
 
-const SetupAgenda = () => {
+type Contents = {
+  title: string;
+  agendas: {
+    title: string;
+    time: number;
+    meetingId?: number;
+  }[];
+};
+const FixAgenda = () => {
+  const [defaultAgenda, setDefaultAgenda] = useState([{ title: "", time: 1 }]);
+
+  const [defaultMtgTitle, setDefaultMtgTitle] = useState("");
+  const { currentUser } = useAuthContext();
+  const { meetingId } = useTimerContext();
+  const history = useHistory();
+
+  const onSubmit = async (data: Contents) => {
+    const agendas = data.agendas.map((agenda) => {
+      agenda.meetingId = meetingId;
+      return agenda;
+    });
+    const newMeeting: any = {
+      title: data.title,
+      authorId: currentUser?.uid,
+      agendas: agendas,
+    };
+
+    console.log(newMeeting);
+    // putの処理をする
+    await axios.put(
+      `/api/meetings/${currentUser?.uid}?meetingId=${meetingId}`,
+      newMeeting
+    );
+
+    history.push("/mypage");
+  };
+
   return (
     <>
-      <InputAgenda />
+      <Header />
+      <InputAgenda
+        defaultAgenda={defaultAgenda}
+        defaultMtgTitle={defaultMtgTitle}
+        onSubmit={onSubmit}
+      />
     </>
   );
 };
 
-export default SetupAgenda;
+export default FixAgenda;
