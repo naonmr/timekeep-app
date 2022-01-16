@@ -1,4 +1,3 @@
-import { type } from "os";
 import React from "react";
 import "./App.css";
 import SignUp from "./pages/SignUp";
@@ -6,17 +5,14 @@ import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import SetupAgenda from "./pages/SetupAgenda";
 import FixAgenda from "./pages/FixAgenda";
-import TiemerPage from "./pages/TimerPage";
+import TimerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
-import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
+import { AuthProvider } from "./firebase/AuthContext";
 import { TimerProvider } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App: React.FC = () => {
-  const { currentUser } = useAuthContext();
-
-  console.log(currentUser);
   return (
     <>
       <div className="App">
@@ -28,13 +24,12 @@ const App: React.FC = () => {
 
               <TimerProvider>
                 <PrivateRoute path="/mypage" component={MyPage} />
-                <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
+                <PrivateRoute path="/setup/agenda" children={SetupAgenda} />
                 <PrivateRoute path="/fix/agenda" component={FixAgenda} />
-                <PrivateRoute path="/timer" component={TiemerPage} />
+                <PrivateRoute path="/timer" component={TimerPage} />
               </TimerProvider>
             </Switch>
           </BrowserRouter>
-          {console.log(currentUser)}
         </AuthProvider>
       </div>
     </>

@@ -19,7 +19,6 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/api/meetings/:uid", async (req, res) => {
-  // uuidで情報とってくる
   const uid = req.params.uid;
   const meetings = await prisma.meeting.findMany({
     where: {
@@ -69,6 +68,25 @@ app.put("/api/meetings/:uid", async (req, res) => {
     },
   });
   const createAgenda = await prisma.agenda.createMany({ data: data.agendas });
+});
+
+app.get("/api/agendas/:uid", async (req, res) => {
+  const meetingId = Number(req.query.meetingId);
+
+  const meetingInfo = await prisma.meeting.findUnique({
+    where: {
+      id: meetingId,
+    },
+  });
+
+  const agendaInfo = await prisma.agenda.findMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
+  const resData = { title: meetingInfo.title, agendas: agendaInfo };
+
+  res.json(resData);
 });
 
 const PORT = process.env.PORT || 8000;

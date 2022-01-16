@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 const Tiemr = () => {
   const {
     agendaList,
-    setAgendaList,
+    // setAgendaList,
 
     timeOfAT,
     setTimeOfAT,
@@ -17,7 +17,7 @@ const Tiemr = () => {
     setCurrentIndex,
 
     timeOfTT,
-    setTimeOfTT,
+    // setTimeOfTT,
     leftTimeOfTT,
     setLeftTimeOfTT,
 

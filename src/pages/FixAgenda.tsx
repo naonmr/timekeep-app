@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
@@ -15,11 +14,8 @@ type Contents = {
   }[];
 };
 const FixAgenda = () => {
-  const [defaultAgenda, setDefaultAgenda] = useState([{ title: "", time: 1 }]);
-
-  const [defaultMtgTitle, setDefaultMtgTitle] = useState("");
   const { currentUser } = useAuthContext();
-  const { meetingId } = useTimerContext();
+  const { meetingId, defaultAgenda, defaultMtgTitle } = useTimerContext();
   const history = useHistory();
 
   const onSubmit = async (data: Contents) => {
@@ -27,6 +23,7 @@ const FixAgenda = () => {
       agenda.meetingId = meetingId;
       return agenda;
     });
+
     const newMeeting: any = {
       title: data.title,
       authorId: currentUser?.uid,
@@ -39,7 +36,7 @@ const FixAgenda = () => {
       `/api/meetings/${currentUser?.uid}?meetingId=${meetingId}`,
       newMeeting
     );
-
+    // TODO historyが遷移しない問題を解決する
     history.push("/mypage");
   };
 

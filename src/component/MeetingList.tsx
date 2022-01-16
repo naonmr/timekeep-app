@@ -1,5 +1,5 @@
-import { useHistory, Redirect } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { PrimaryButton, SubButton } from "../component/Button";
 import axios from "axios";
 
@@ -7,12 +7,10 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
-  Button,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
 import { useTimerContext } from "./timerContext";
@@ -23,8 +21,8 @@ type Meetings = {
   title: string;
 };
 
-const MeetingList = (props: any) => {
-  const { meetingId, setMeetingId } = useTimerContext();
+const MeetingList = () => {
+  const { setMeetingId } = useTimerContext();
 
   const [meetings, setMeetings] = useState<Meetings[]>([
     { authorId: "", id: 1, title: "" },
@@ -40,11 +38,11 @@ const MeetingList = (props: any) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getMeetingList();
-
-    console.log(meetings);
   }, []);
+
   const deleteMeeting = async (id: number) => {
     try {
       await axios.delete(`/api/meetings/${currentUser?.uid}?meetingId=${id}`);

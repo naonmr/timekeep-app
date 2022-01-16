@@ -1,20 +1,15 @@
-import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import React, { useState } from "react";
 import {
-  FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
-  Button,
   Stack,
   Center,
   Flex,
-  Spacer,
-  HStack,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
-import { useHistory } from "react-router-dom";
 
 type Contents = {
   title: string;
@@ -27,7 +22,8 @@ type Contents = {
 const InputAgenda: React.VFC<any> = (props) => {
   const [focusIndex, setFocusIndex] = useState(0);
   const { defaultAgenda, defaultMtgTitle, onSubmit } = props;
-  const history = useHistory();
+
+  console.log("🥳", props);
   const {
     register,
     control,
@@ -40,7 +36,6 @@ const InputAgenda: React.VFC<any> = (props) => {
     },
     mode: "onBlur",
   });
-
   const { fields, append, remove, insert, move } = useFieldArray({
     name: "agendas",
     control,
@@ -60,6 +55,7 @@ const InputAgenda: React.VFC<any> = (props) => {
                 variant="filled"
                 {...register("title")}
                 placeholder="Meeting title"
+                defaultValues="あ"
               />
             </FormLabel>
           </FormControl>

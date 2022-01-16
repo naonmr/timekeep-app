@@ -1,11 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "./User";
 import firebase from "./firebaseConfig";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 type AuthContextProps = {
   currentUser?: User | null | undefined;
@@ -18,7 +14,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined
   );
-  const auth = getAuth(firebase);
 
   useEffect(() => {
     const auth = getAuth(firebase);
@@ -30,7 +25,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             uid: user?.uid,
           }
         : null;
-      setCurrentUser(user);
+      setCurrentUser(userInfo);
     });
   }, []);
 

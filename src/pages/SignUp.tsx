@@ -6,19 +6,11 @@ import {
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Box,
-  Center,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box, Center } from "@chakra-ui/react";
 const SignUp = () => {
-  const { currentUser, setCurrentUser } = useAuthContext();
+  const { setCurrentUser } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (event: any) => {

@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { ids } from "webpack";
+import axios from "axios";
+import React, { useContext, useState, useEffect } from "react";
+import { useAuthContext } from "../firebase/AuthContext";
 
 type TimerContextProps = {
   agendaList?: any;
@@ -21,16 +22,28 @@ type TimerContextProps = {
   setIsPaused?: any;
   isEnd?: any;
   setIsEnd?: any;
+
   meetingId?: number;
   setMeetingId?: any;
+  defaultAgenda?: any;
+  defaultMtgTitle?: any;
 };
 const TimerContext = React.createContext<TimerContextProps>({});
 
 export const TimerProvider: React.FC = ({ children }) => {
+  const { currentUser } = useAuthContext();
+
+  const [defaultAgenda, setDefaultAgenda] = useState<any[]>([
+    { title: "", time: 1 },
+  ]);
+
+  const [defaultMtgTitle, setDefaultMtgTitle] = useState("");
+
   /////
   // TT = Total Timer, AT = Agenda Timer
   /////
   const [meetingId, setMeetingId] = useState();
+
   const [agendaList, setAgendaList] = useState([
     {
       id: 1,
@@ -48,7 +61,7 @@ export const TimerProvider: React.FC = ({ children }) => {
   const [timeOfAT, setTimeOfAT] = useState(0);
   const [leftTimeOfAT, setLeftTimeOfAT] = useState(1);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentAgenda, setCurrentAgenda] = useState("");
+  // const [currentAgenda, setCurrentAgenda] = useState("");
 
   // total timer関連のstate
   // TODO stateの初期値の見直し
@@ -59,14 +72,28 @@ export const TimerProvider: React.FC = ({ children }) => {
   const [isPaused, setIsPaused] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  // useEffect(() => {
-  //   let total: number = 0;
-  //   agendaList.map((agenda: any) => {
-  //     total = total + Number(agenda.time);
-  //   });
+  useEffect(() => {
+    console.log(meetingId);
+    const getAgendasList = async () => {
+      try {
+        const res = await axios.get(
+          `/api/agendas/${currentUser?.uid}?meetingId=${meetingId}`
+        );
 
-  //   setTimeOfTT(total);
-  // }, []);
+        const agendas = res.data.agendas.map((agenda: any) => {
+          return { title: agenda.title, time: agenda.time };
+        });
+
+        setDefaultMtgTitle(() => res.data.title);
+        setDefaultAgenda(() => agendas);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (meetingId) {
+      getAgendasList();
+    }
+  }, [meetingId]);
 
   return (
     <TimerContext.Provider
@@ -93,6 +120,9 @@ export const TimerProvider: React.FC = ({ children }) => {
 
         meetingId,
         setMeetingId,
+
+        defaultAgenda,
+        defaultMtgTitle,
       }}
     >
       {children}

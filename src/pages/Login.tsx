@@ -3,20 +3,11 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Link, useHistory, withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Box,
-  Center,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { FormControl, FormLabel, Input, Box, Center } from "@chakra-ui/react";
 import { PrimaryButton } from "../component/Button";
 
 const Login = () => {
