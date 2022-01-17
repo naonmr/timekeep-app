@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
 import { useTimerContext } from "./timerContext";
-import { async } from "@firebase/util";
 
 type Meetings = {
   authorId: string;
@@ -23,7 +22,7 @@ type Meetings = {
 };
 
 const MeetingList = () => {
-  const { setMeetingId, setDefaultMtgTitle, setDefaultAgenda } =
+  const { setMtgTitle, setAgendas, setMtgTotalTime, setMeetingId } =
     useTimerContext();
 
   const [meetings, setMeetings] = useState<Meetings[] | []>([
@@ -56,7 +55,6 @@ const MeetingList = () => {
 
   const getAgendaList = async (meetingId: number) => {
     setMeetingId(meetingId);
-
     try {
       const res = await axios.get(
         `/api/agendas/${currentUser?.uid}?meetingId=${meetingId}`
@@ -66,8 +64,8 @@ const MeetingList = () => {
         return { title: agenda.title, time: agenda.time };
       });
 
-      setDefaultMtgTitle(res.data.title);
-      setDefaultAgenda(agendas);
+      setMtgTitle(res.data.title);
+      setAgendas(agendas);
     } catch (error) {
       console.log(error);
     }
@@ -99,12 +97,18 @@ const MeetingList = () => {
                     text="Fix"
                     onclick={async () => {
                       await getAgendaList(meeting.id);
-                      history.push("fix/agenda");
+                      history.push("/fix/agenda");
                     }}
                   />
                 </Td>
                 <Td>
-                  <SubButton text="Start" />
+                  <SubButton
+                    text="Start"
+                    onclick={async () => {
+                      await getAgendaList(meeting.id);
+                      history.push("/timer");
+                    }}
+                  />
                 </Td>
                 <Td>
                   <SubButton

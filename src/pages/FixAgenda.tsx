@@ -16,7 +16,7 @@ type Contents = {
 };
 const FixAgenda = () => {
   const { currentUser } = useAuthContext();
-  const { meetingId, defaultAgenda, defaultMtgTitle } = useTimerContext();
+  const { meetingId, agendas, mtgTitle } = useTimerContext();
 
   const history = useHistory();
 
@@ -47,8 +47,8 @@ const FixAgenda = () => {
     <>
       <Header />
       <InputAgenda
-        defaultAgenda={defaultAgenda}
-        defaultMtgTitle={defaultMtgTitle}
+        defaultAgenda={agendas}
+        defaultMtgTitle={mtgTitle}
         onSubmit={onSubmit}
       />
     </>

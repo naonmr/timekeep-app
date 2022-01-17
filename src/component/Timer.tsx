@@ -1,149 +1,76 @@
-import Circular from "../component/Circular";
-import { SubButton } from "../component/Button";
-import { useTimerContext } from "../component/timerContext";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-// TODO: timer関数を修正
-const Tiemr = () => {
-  const {
-    agendaList,
-    // setAgendaList,
+type TimerProps = {
+  currentIndex: number;
+  setCurrentIndex: any;
+  timeList: number[];
+};
 
-    timeOfAT,
-    setTimeOfAT,
-    leftTimeOfAT,
-    setLeftTimeOfAT,
-    currentIndex,
-    setCurrentIndex,
+export default function Timer(props: TimerProps) {
+  const { currentIndex, setCurrentIndex, timeList } = props;
+  const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+  const [isWorking, setIsWorking] = useState(false);
 
-    timeOfTT,
-    // setTimeOfTT,
-    leftTimeOfTT,
-    setLeftTimeOfTT,
-
-    isPaused,
-    setIsPaused,
-    isEnd,
-    setIsEnd,
-  } = useTimerContext();
-
-  const leftTimeOfATRef = useRef(leftTimeOfAT);
-  const leftTimeOfTTRef = useRef(leftTimeOfTT);
-
-  const isPausedRef = useRef(isPaused);
+  const isWorkingRef = useRef(isWorking);
   const currentIndexRef = useRef(currentIndex);
+  const secondsLeftRef = useRef(secondsLeft);
+
+  const start = () => {
+    isWorkingRef.current = true;
+    setIsWorking(() => true);
+    console.log(isWorking);
+  };
+  const pause = () => {
+    isWorkingRef.current = false;
+    setIsWorking(() => false);
+    console.log(isWorking);
+  };
 
   const initTimer = () => {
-    setTimeOfAT(agendaList[currentIndex].time);
-    leftTimeOfATRef.current = agendaList[currentIndex].time * 60;
-    setLeftTimeOfAT(leftTimeOfATRef.current);
-
-    // TTの初期化
-    leftTimeOfTTRef.current = timeOfTT * 60;
-
-    // TODO:現在のagendaの設定
+    secondsLeftRef.current = timeList[currentIndexRef.current] * 60;
+    setSecondsLeft(() => secondsLeftRef.current);
+    console.log("initTimer");
   };
-
   const tick = () => {
-    leftTimeOfATRef.current--;
-    console.log("残り", leftTimeOfATRef.current);
-    setLeftTimeOfAT(leftTimeOfATRef.current);
-
-    leftTimeOfTTRef.current--;
-
-    setLeftTimeOfTT(leftTimeOfTTRef.current);
+    secondsLeftRef.current = secondsLeftRef.current - 1;
+    setSecondsLeft(() => secondsLeftRef.current);
+    console.log("tick", secondsLeftRef.current, secondsLeft);
   };
 
-  // const switchNextAgenda = () => {
-  //   const nextIndex = currentIndexRef.current + 1;
-  //   currentIndexRef.current = nextIndex;
-  //   setCurrentIndex(currentIndexRef.current);
-  //   console.log(currentIndexRef.current, "🌸");
-  //   if (agendaList[currentIndexRef.current] === undefined) {
-  //     // TODO:agendaをendと表示？
-  //     console.log("いふアンディファインド");
-  //     return setIsEnd(true);
-  //   }
-  //   console.log("nextIndex", nextIndex);
-  //   setTimeOfAT(agendaList[currentIndexRef.current].time);
-  // };
+  const switchNextAgenda = () => {
+    console.log("🌸", timeList.length, currentIndexRef.current + 1);
+    if (timeList.length <= currentIndexRef.current + 1) {
+      console.log("next");
+
+      return;
+    }
+    currentIndexRef.current = currentIndexRef.current + 1;
+    setCurrentIndex(() => currentIndexRef.current);
+    secondsLeftRef.current = timeList[currentIndexRef.current] * 60;
+    setSecondsLeft(() => secondsLeftRef.current);
+  };
 
   useEffect(() => {
     initTimer();
+
     const interval = setInterval(() => {
-      if (isPausedRef.current) {
+      if (!isWorkingRef.current) {
         return;
       }
-      if (leftTimeOfATRef.current === 0) {
-        const nextIndex = currentIndexRef.current + 1;
-        currentIndexRef.current = nextIndex;
-        setCurrentIndex(currentIndexRef.current);
-        console.log(currentIndexRef.current, "🌸");
-        if (agendaList[currentIndexRef.current] === undefined) {
-          return setIsEnd(true);
-        }
-        console.log("nextIndex", nextIndex);
-
-        setTimeOfAT(agendaList[currentIndexRef.current].time);
-        initTimer();
+      if (secondsLeftRef.current === 0) {
+        return switchNextAgenda();
       }
-
       tick();
     }, 100);
     return () => clearInterval(interval);
   }, []);
 
-  //　綺麗に時間を表示するための設定 about AT
-  const totalSecondsOfAT = timeOfAT * 60;
-  const parcentageOfAT = (leftTimeOfAT / totalSecondsOfAT) * 100;
-  const minutesOfAT = Math.floor(leftTimeOfAT / 60);
-  let seconsdsOfAT: any = leftTimeOfAT % 60;
-  if (seconsdsOfAT < 10) seconsdsOfAT = "0" + String(seconsdsOfAT);
-
-  const displayOfAT = `${minutesOfAT}m${seconsdsOfAT}s`;
-
-  //　綺麗に時間を表示するための設定 about TT
-  const totalSecondsOfTT = timeOfTT * 60;
-  const parcentageOfTT = (leftTimeOfTT / totalSecondsOfTT) * 100;
-
-  const hoursOfTT = Math.floor(leftTimeOfTT / 3600);
-  let minutesOfTT: any = Math.floor(leftTimeOfTT / 60) % 60;
-  if (minutesOfTT < 10) minutesOfTT = "0" + minutesOfTT;
-  let seconsdsOfTT: any = leftTimeOfTT % 60;
-  if (seconsdsOfTT < 10) seconsdsOfTT = "0" + seconsdsOfTT;
-
-  let displayOfTT = `${hoursOfTT}h${minutesOfTT}m${seconsdsOfTT}s`;
-
   return (
-    <>
-      <Circular
-        value={isEnd ? 0 : parcentageOfAT}
-        text={isEnd ? "End" : displayOfAT}
-        color="orange.400"
-      />
-      <Circular
-        value={isEnd ? 0 : parcentageOfTT}
-        text={isEnd ? "End" : displayOfTT}
-        color="orange.400"
-      />
-      <SubButton
-        text="start"
-        onclick={() => {
-          isPausedRef.current = false;
-          setIsPaused(isPausedRef.current);
-          console.log("start", isPausedRef.current);
-        }}
-      />
-      <SubButton
-        text="pause"
-        onclick={() => {
-          isPausedRef.current = true;
-          setIsPaused(isPausedRef.current);
-          console.log("pause", isPausedRef.current);
-        }}
-      />
-    </>
+    <div className="App">
+      <h1>Pomodoro Timer</h1>
+      <button onClick={start}>start</button>
+      <button onClick={pause}>pause</button>
+      <div>{secondsLeft} seconds left</div>
+    </div>
   );
-};
-
-export default Tiemr;
+}

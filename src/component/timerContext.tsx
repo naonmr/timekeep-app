@@ -25,21 +25,22 @@ type TimerContextProps = {
 
   meetingId?: number;
   setMeetingId?: any;
-  defaultAgenda?: any;
-  setDefaultAgenda?: any;
-  defaultMtgTitle?: any;
-  setDefaultMtgTitle?: any;
+  agendas?: any;
+  setAgendas?: any;
+  mtgTitle?: any;
+  setMtgTitle?: any;
+  mtgTotalTime?: any;
+  setMtgTotalTime?: any;
 };
 const TimerContext = React.createContext<TimerContextProps>({});
 
 export const TimerProvider: React.FC = ({ children }) => {
   const { currentUser } = useAuthContext();
 
-  const [defaultAgenda, setDefaultAgenda] = useState<any[]>([
-    { title: "", time: 1 },
-  ]);
+  const [agendas, setAgendas] = useState<any[]>([{ title: "", time: 1 }]);
 
-  const [defaultMtgTitle, setDefaultMtgTitle] = useState("");
+  const [mtgTitle, setMtgTitle] = useState("");
+  const [mtgTotalTime, setMtgTotalTime] = useState();
 
   /////
   // TT = Total Timer, AT = Agenda Timer
@@ -100,10 +101,13 @@ export const TimerProvider: React.FC = ({ children }) => {
         meetingId,
         setMeetingId,
 
-        defaultAgenda,
-        setDefaultAgenda,
-        defaultMtgTitle,
-        setDefaultMtgTitle,
+        agendas,
+        setAgendas,
+        mtgTitle,
+        setMtgTitle,
+
+        mtgTotalTime,
+        setMtgTotalTime,
       }}
     >
       {children}
