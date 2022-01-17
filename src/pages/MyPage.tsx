@@ -1,6 +1,5 @@
 import Header from "../component/Header";
 import MeetingList from "../component/MeetingList";
-
 const MyPage = () => {
   return (
     <>

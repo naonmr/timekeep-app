@@ -35,6 +35,7 @@ const MeetingList = () => {
     try {
       const res = await axios.get(`/api/meetings/${currentUser?.uid}`);
       await setMeetings(res.data);
+      console.log(currentUser?.uid);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +43,7 @@ const MeetingList = () => {
 
   useEffect(() => {
     getMeetingList();
-  }, []);
+  }, [currentUser]);
 
   const deleteMeeting = async (id: number) => {
     try {
@@ -82,7 +83,7 @@ const MeetingList = () => {
             <Th>
               <PrimaryButton
                 text="new"
-                onclick={() => history.push("/setup/agenda")}
+                onclick={() => history.push("/setup-agenda")}
               />
             </Th>
           </Tr>
@@ -97,7 +98,7 @@ const MeetingList = () => {
                     text="Fix"
                     onclick={async () => {
                       await getAgendaList(meeting.id);
-                      history.push("/fix/agenda");
+                      history.push("/fix-agenda");
                     }}
                   />
                 </Td>

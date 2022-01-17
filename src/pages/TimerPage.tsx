@@ -8,6 +8,7 @@ import { useTimerContext } from "../component/timerContext";
 const TimerPage = () => {
   const { agendas, mtgTotalTime } = useTimerContext();
 
+  const [currentAgendas, setCurrentAgendas] = useState(agendas);
   const timeList = agendas.map((agenda: any) => {
     return agenda.time;
   });
@@ -19,6 +20,7 @@ const TimerPage = () => {
     <>
       <Header />
       <br></br>
+      <p>total time {timeList}</p>
       <Timer
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}

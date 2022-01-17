@@ -40,7 +40,7 @@ const AgendaList = () => {
             return (
               <Tr key={agenda.title}>
                 <Td>{agenda.title}</Td>
-                <Td>{agenda.time}</Td>
+                <Td>{agenda.time}min</Td>
               </Tr>
             );
           })}

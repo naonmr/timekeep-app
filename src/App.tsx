@@ -11,42 +11,10 @@ import PrivateRoute from "./firebase/PrivateRoute";
 import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
 import { TimerProvider, useTimerContext } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import axios from "axios";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App: React.FC = () => {
-  const [showInput, setShowInput] = useState(true);
-  const [isPaused, setIsPaused] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-  const [list, setList] = useState([
-    {
-      id: 1,
-      agenda: "example",
-      time: "1",
-    },
-    {
-      id: 2,
-      agenda: "example2",
-      time: "2",
-    },
-  ]);
-
-  // individual timer関連のstate
-  const [workMinutes, setWorkMinutes] = useState(0);
-  const [secondLeft, setSecondLeft] = useState(1);
-  const [index, setIndex] = useState(0);
-  const [currentAgenda, setCurrentAgenda] = useState("");
-
-  // total timer関連のstate
-  const [totalTime, setTotalTime] = useState(0);
-  const [totalSecondLeft, setTotalSecondLeft] = useState(1);
-
-  useEffect(() => {
-    let total = 0;
-    list.map((item) => {
-      total = total + Number(item.time);
-    });
-    setTotalTime(total);
-  }, [list]);
+  const { currentUser, setCurrentUser } = useAuthContext();
 
   return (
     <>
@@ -58,10 +26,10 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <TimerProvider>
-                <PrivateRoute path="/mypage" component={MyPage} />
-                <PrivateRoute path="/setup/agenda" component={SetupAgenda} />
-                <PrivateRoute path="/fix/agenda" component={FixAgenda} />
-                <PrivateRoute path="/timer" component={TimerPage} />
+                <PrivateRoute path="/mypage" children={<MyPage />} />
+                <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
+                <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
+                <PrivateRoute path="/timer" children={<TimerPage />} />
               </TimerProvider>
             </Switch>
           </BrowserRouter>
