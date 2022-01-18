@@ -15,8 +15,7 @@ type Agenda = {
 };
 
 const AgendaList = (props: any) => {
-  const { agendas } = props;
-  const { mtgTitle } = useTimerContext();
+  const { mtgTitle, agendas } = useTimerContext();
   console.log(agendas);
 
   return (

@@ -120,7 +120,7 @@ const MyPage = (props: MyPageProps) => {
                     <SubButton
                       text="Start"
                       onclick={async () => {
-                        // await getAgendaList(meeting.id);
+                        await getAgendaList(meeting.id);
                         setMeetingId(meeting.id);
                         history.push("/timer");
                       }}
