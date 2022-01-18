@@ -85,7 +85,6 @@ const MyPage = (props: MyPageProps) => {
     <>
       <Header />
       <br></br>
-      {/* <MeetingList /> */}
       <>
         <Table variant="simple">
           <TableCaption>Your Meeting is here</TableCaption>

@@ -32,7 +32,7 @@ const FixAgenda = () => {
       agendas: agendas,
     };
 
-    history.push("/mypage");
+    history.push("/");
     await axios.put(
       `/api/meetings/${currentUser}?meetingId=${meetingId}`,
       newMeeting

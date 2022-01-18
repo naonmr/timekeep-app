@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 import SetupAgenda from "./pages/SetupAgenda";
 import FixAgenda from "./pages/FixAgenda";
@@ -27,15 +26,15 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <TimerProvider>
-                <PrivateRoute path="/" children={<Home />} />
-                {/* <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
+                <PrivateRoute exact path="/" children={<MyPage />} />
+                <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
                 <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
                 <PrivateRoute
                   path="/timer"
                   children={
                     <TimerPage agendas={agendas} setAgendas={setAgendas} />
                   }
-                /> */}
+                />
               </TimerProvider>
             </Switch>
           </BrowserRouter>

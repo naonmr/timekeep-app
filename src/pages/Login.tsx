@@ -22,7 +22,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
       onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
-      history.push("/mypage");
+      history.push("/");
     } catch (error) {
       console.log(error);
       alert(error);
