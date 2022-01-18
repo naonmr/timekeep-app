@@ -1,3 +1,4 @@
+import { Agenda } from "@prisma/client";
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { useAuthContext } from "../firebase/AuthContext";
@@ -16,17 +17,21 @@ const TimerContext = React.createContext<TimerContextProps>({});
 
 export const TimerProvider: React.FC = ({ children }) => {
   const { currentUser } = useAuthContext();
-  const [meetingId, setMeetingId] = useState();
+
+  const [meetings, setMeetings] = useState<any>([
+    { authorId: "", id: 1, title: "" },
+  ]);
+
+  // const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
   const [agendas, setAgendas] = useState<any[]>([{ title: "", time: 1 }]);
 
   const [mtgTitle, setMtgTitle] = useState("");
   const [mtgTotalTime, setMtgTotalTime] = useState();
-
   return (
     <TimerContext.Provider
       value={{
-        meetingId,
-        setMeetingId,
+        // meetingId,
+        // setMeetingId,
 
         agendas,
         setAgendas,

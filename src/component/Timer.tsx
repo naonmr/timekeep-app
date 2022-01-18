@@ -4,6 +4,7 @@ type TimerProps = {
   currentIndex: number;
   setCurrentIndex: any;
   timeList: number[];
+  agendas: any;
 };
 
 export default function Timer(props: TimerProps) {

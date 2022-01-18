@@ -28,14 +28,14 @@ const FixAgenda = () => {
 
     const newMeeting: any = {
       title: data.title,
-      authorId: currentUser?.uid,
+      authorId: currentUser,
       agendas: agendas,
     };
 
     console.log(newMeeting);
     // putの処理をする
     await axios.put(
-      `/api/meetings/${currentUser?.uid}?meetingId=${meetingId}`,
+      `/api/meetings/${currentUser}?meetingId=${meetingId}`,
       newMeeting
     );
     // TODO historyが遷移しない問題を解決する

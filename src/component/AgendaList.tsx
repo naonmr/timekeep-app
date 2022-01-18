@@ -21,8 +21,33 @@ type Agenda = {
   time: number;
 };
 
-const AgendaList = () => {
-  const { mtgTitle, agendas } = useTimerContext();
+const AgendaList = (props: any) => {
+  const { currentUser } = useAuthContext();
+  const { agendas, meetingId, setAgendas } = props;
+  const { mtgTitle, setMtgTitle } = useTimerContext();
+  console.log(agendas);
+
+  // useEffect(() => {
+  //   const getAgendaList = async (meetingId: number) => {
+  //     try {
+  //       const res = await axios.get(
+  //         `/api/agendas/${currentUser}?meetingId=${meetingId}`
+  //       );
+  //       console.log("res", res);
+
+  //       const agendas = res.data.agendas.map((agenda: any) => {
+  //         return { title: agenda.title, time: agenda.time };
+  //       });
+
+  //       setMtgTitle(res.data.title);
+  //       setAgendas(agendas);
+  //       console.log(agendas);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //     getAgendaList(meetingId);
+  //   };
+  // }, []);
 
   return (
     <>

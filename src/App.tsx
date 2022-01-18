@@ -14,7 +14,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App: React.FC = () => {
-  const { currentUser, setCurrentUser } = useAuthContext();
+  const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
+  const [agendas, setAgendas] = useState<any>([{ title: "", time: 1 }]);
 
   return (
     <>
@@ -26,10 +27,25 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <TimerProvider>
-                <PrivateRoute path="/mypage" children={<MyPage />} />
+                <PrivateRoute
+                  path="/mypage"
+                  children={
+                    <MyPage meetingId={meetingId} setMeetingId={setMeetingId} />
+                  }
+                />
                 <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
                 <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
-                <PrivateRoute path="/timer" children={<TimerPage />} />
+                <PrivateRoute
+                  path="/timer"
+                  children={
+                    <TimerPage
+                      meetingId={meetingId}
+                      setMeetingId={setMeetingId}
+                      agendas={agendas}
+                      setAgendas={setAgendas}
+                    />
+                  }
+                />
               </TimerProvider>
             </Switch>
           </BrowserRouter>

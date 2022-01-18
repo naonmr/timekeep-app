@@ -21,7 +21,7 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, email.value, password.value);
       onAuthStateChanged(auth, (user) => {
-        setCurrentUser(user);
+        setCurrentUser(user?.uid);
       });
       history.push("/login");
     } catch (error) {

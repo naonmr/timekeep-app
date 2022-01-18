@@ -23,12 +23,12 @@ const SetupAgenda = () => {
   const onSubmit = async (data: Contents) => {
     let newMeeting: any = {
       title: data.title,
-      authorId: currentUser?.uid,
+      authorId: currentUser,
       agendas: {
         create: data.agendas,
       },
     };
-    await axios.post(`/api/meetings/${currentUser?.uid}`, newMeeting);
+    await axios.post(`/api/meetings/${currentUser}`, newMeeting);
 
     history.push("/mypage");
   };

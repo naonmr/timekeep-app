@@ -21,6 +21,9 @@ type Meetings = {
   title: string;
 };
 
+type MyPageProps = {
+  uid: string;
+};
 const MeetingList = () => {
   const { setMtgTitle, setAgendas, setMtgTotalTime, setMeetingId } =
     useTimerContext();
@@ -33,21 +36,24 @@ const MeetingList = () => {
 
   const getMeetingList = async () => {
     try {
-      const res = await axios.get(`/api/meetings/${currentUser?.uid}`);
+      console.log("currentUser", currentUser);
+      const res = await axios.get(`/api/meetings/${currentUser}`);
       await setMeetings(res.data);
-      console.log(currentUser?.uid);
+      console.log("res.data", res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
+    console.log("useEfect meetingList");
     getMeetingList();
-  }, [currentUser]);
+    console.log(meetings);
+  }, []);
 
   const deleteMeeting = async (id: number) => {
     try {
-      await axios.delete(`/api/meetings/${currentUser?.uid}?meetingId=${id}`);
+      await axios.delete(`/api/meetings/${currentUser}?meetingId=${id}`);
       await getMeetingList();
     } catch (error) {
       console.log(error);
@@ -56,9 +62,10 @@ const MeetingList = () => {
 
   const getAgendaList = async (meetingId: number) => {
     setMeetingId(meetingId);
+    console.log(meetingId);
     try {
       const res = await axios.get(
-        `/api/agendas/${currentUser?.uid}?meetingId=${meetingId}`
+        `/api/agendas/${currentUser}?meetingId=${meetingId}`
       );
 
       const agendas = res.data.agendas.map((agenda: any) => {
@@ -97,7 +104,7 @@ const MeetingList = () => {
                   <SubButton
                     text="Fix"
                     onclick={async () => {
-                      await getAgendaList(meeting.id);
+                      // await getAgendaList(meeting.id);
                       history.push("/fix-agenda");
                     }}
                   />
@@ -106,7 +113,8 @@ const MeetingList = () => {
                   <SubButton
                     text="Start"
                     onclick={async () => {
-                      await getAgendaList(meeting.id);
+                      // await getAgendaList(meeting.id);
+                      setMeetingId(meeting.id);
                       history.push("/timer");
                     }}
                   />

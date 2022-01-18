@@ -4,7 +4,7 @@ import Login from "../pages/Login";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
+const PrivateRoute: React.VFC<RouteProps> = ({ children, ...rest }) => {
   const { currentUser, setCurrentUser } = useAuthContext();
 
   const [authChecked, setAuthChecked] = useState(false);
@@ -20,10 +20,6 @@ const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
     });
   }, []);
 
-  // const Component = currentUser?.uid ? component : Login;
-  // //currentUserがtrueの場合component＝Home、falseならLoginコンポーネントにroute
-
-  // return <Route {...rest} component={Component} />;
   return (
     <Route
       {...rest}
