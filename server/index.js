@@ -72,7 +72,7 @@ app.put("/api/meetings/:uid", async (req, res) => {
 app.get("/api/agendas/:uid", async (req, res) => {
   const meetingId = Number(req.query.meetingId);
 
-  if (!NaN) {
+  if (meetingId) {
     const meetingInfo = await prisma.meeting.findUnique({
       where: {
         id: meetingId,
