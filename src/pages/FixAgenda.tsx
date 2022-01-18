@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
@@ -14,6 +13,7 @@ type Contents = {
     meetingId?: number;
   }[];
 };
+
 const FixAgenda = () => {
   const { currentUser } = useAuthContext();
   const { meetingId, agendas, mtgTitle } = useTimerContext();

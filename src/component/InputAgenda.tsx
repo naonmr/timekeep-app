@@ -34,10 +34,6 @@ const InputAgenda: React.VFC<any> = (props) => {
     formState: { errors },
     setValue,
   } = useForm<Contents>({
-    // defaultValues: {
-    //   title: defaultMtgTitle,
-    //   agendas: defaultAgenda,
-    // },
     mode: "onBlur",
   });
 

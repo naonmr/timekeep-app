@@ -17,6 +17,7 @@ const TimerContext = React.createContext<TimerContextProps>({});
 
 export const TimerProvider: React.FC = ({ children }) => {
   const { currentUser } = useAuthContext();
+  const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
 
   const [meetings, setMeetings] = useState<any>([
     { authorId: "", id: 1, title: "" },
@@ -30,8 +31,8 @@ export const TimerProvider: React.FC = ({ children }) => {
   return (
     <TimerContext.Provider
       value={{
-        // meetingId,
-        // setMeetingId,
+        meetingId,
+        setMeetingId,
 
         agendas,
         setAgendas,

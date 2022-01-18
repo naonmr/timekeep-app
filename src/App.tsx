@@ -8,13 +8,12 @@ import FixAgenda from "./pages/FixAgenda";
 import TimerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
-import { AuthProvider, useAuthContext } from "./firebase/AuthContext";
-import { TimerProvider, useTimerContext } from "./component/timerContext";
+import { AuthProvider } from "./firebase/AuthContext";
+import { TimerProvider } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App: React.FC = () => {
-  const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
+  // const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
   const [agendas, setAgendas] = useState<any>([{ title: "", time: 1 }]);
 
   return (
@@ -27,23 +26,13 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <TimerProvider>
-                <PrivateRoute
-                  path="/mypage"
-                  children={
-                    <MyPage meetingId={meetingId} setMeetingId={setMeetingId} />
-                  }
-                />
+                <PrivateRoute path="/mypage" children={<MyPage />} />
                 <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
                 <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
                 <PrivateRoute
                   path="/timer"
                   children={
-                    <TimerPage
-                      meetingId={meetingId}
-                      setMeetingId={setMeetingId}
-                      agendas={agendas}
-                      setAgendas={setAgendas}
-                    />
+                    <TimerPage agendas={agendas} setAgendas={setAgendas} />
                   }
                 />
               </TimerProvider>

@@ -1,6 +1,4 @@
-import { type } from "os";
 import Header from "../component/Header";
-// import MeetingList from "../component/MeetingList";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PrimaryButton, SubButton } from "../component/Button";
@@ -19,8 +17,8 @@ import { useAuthContext } from "../firebase/AuthContext";
 import { useTimerContext } from "../component/timerContext";
 
 type MyPageProps = {
-  meetingId: number | undefined;
-  setMeetingId: any;
+  meetingId?: number | undefined;
+  setMeetingId?: any;
 };
 
 type Meetings = {
@@ -30,9 +28,8 @@ type Meetings = {
 };
 
 const MyPage = (props: MyPageProps) => {
-  const { setMtgTitle, setAgendas, setMtgTotalTime } = useTimerContext();
+  const { setMeetingId, setMtgTitle, setAgendas } = useTimerContext();
 
-  const { meetingId, setMeetingId } = props;
   const [meetings, setMeetings] = useState<Meetings[] | []>([
     { authorId: "", id: 1, title: "" },
   ]);
@@ -65,24 +62,24 @@ const MyPage = (props: MyPageProps) => {
     }
   };
 
-  // const getAgendaList = async (meetingId: number) => {
-  //   setMeetingId(meetingId);
-  //   console.log(meetingId);
-  //   try {
-  //     const res = await axios.get(
-  //       `/api/agendas/${currentUser}?meetingId=${meetingId}`
-  //     );
+  const getAgendaList = async (meetingId: number) => {
+    setMeetingId(meetingId);
+    console.log(meetingId);
+    try {
+      const res = await axios.get(
+        `/api/agendas/${currentUser}?meetingId=${meetingId}`
+      );
 
-  //     const agendas = res.data.agendas.map((agenda: any) => {
-  //       return { title: agenda.title, time: agenda.time };
-  //     });
+      const agendas = res.data.agendas.map((agenda: any) => {
+        return { title: agenda.title, time: agenda.time };
+      });
 
-  //     setMtgTitle(res.data.title);
-  //     setAgendas(agendas);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+      setMtgTitle(res.data.title);
+      setAgendas(agendas);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -114,7 +111,7 @@ const MyPage = (props: MyPageProps) => {
                     <SubButton
                       text="Fix"
                       onclick={async () => {
-                        // await getAgendaList(meeting.id);
+                        await getAgendaList(meeting.id);
                         history.push("/fix-agenda");
                       }}
                     />

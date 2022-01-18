@@ -1,5 +1,4 @@
 import axios from "axios";
-import { time } from "console";
 import { useEffect, useState } from "react";
 import AgendaList from "../component/AgendaList";
 import Header from "../component/Header";
@@ -9,24 +8,29 @@ import { useAuthContext } from "../firebase/AuthContext";
 // TODO: timer関数を修正
 
 type TimerPageProps = {
-  meetingId: number | undefined;
-  setMeetingId: any;
+  meetingId?: number | undefined;
+  setMeetingId?: any;
   agendas: any;
   setAgendas: any;
 };
 const TimerPage = (props: TimerPageProps) => {
   const { currentUser } = useAuthContext();
-  const { meetingId, setMeetingId, agendas, setAgendas } = props;
-  // const [agendas, setAgendas] = useState<any>([{ title: "", time: 1 }]);
+  const { agendas } = props;
 
-  const { mtgTotalTime, setMtgTitle } = useTimerContext();
+  const { meetingId, setMtgTitle, setAgendas } = useTimerContext();
   console.log("Timerpage", meetingId);
 
   const timeList = agendas.map((agenda: any) => {
     return agenda.time;
   });
+
+  const add = (previousValue: number, currentValue: number) =>
+    previousValue + currentValue;
+  // const totalTime = timeList.reduce(add(time,0));
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  console.log("🌸", meetingId);
   useEffect(() => {
     const getAgendaList = async (meetingId: number | undefined) => {
       try {
