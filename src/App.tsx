@@ -26,7 +26,7 @@ const App: React.FC = () => {
               <Route path="/login" component={Login} />
 
               <TimerProvider>
-                <PrivateRoute path="/mypage" children={<MyPage />} />
+                <PrivateRoute path="/" children={<MyPage />} />
                 <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
                 <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
                 <PrivateRoute
