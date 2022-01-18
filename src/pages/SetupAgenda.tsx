@@ -23,10 +23,9 @@ const SetupAgenda = () => {
     let newMeeting: any = {
       title: data.title,
       authorId: currentUser,
-      agendas: {
-        create: data.agendas,
-      },
+      agendas: data.agendas,
     };
+    console.log("sendData", newMeeting);
     history.push("/");
     await axios.post(`/api/meetings/${currentUser}`, newMeeting);
   };
