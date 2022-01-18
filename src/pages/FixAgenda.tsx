@@ -32,15 +32,12 @@ const FixAgenda = () => {
       agendas: agendas,
     };
 
-    console.log(newMeeting);
-    // putの処理をする
+    history.push("/mypage");
     await axios.put(
       `/api/meetings/${currentUser}?meetingId=${meetingId}`,
       newMeeting
     );
     // TODO historyが遷移しない問題を解決する
-    history.push("/mypage");
-    console.log("tesuto");
   };
 
   return (
