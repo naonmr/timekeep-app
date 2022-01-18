@@ -29,7 +29,7 @@ const Header = () => {
       <IconButton
         aria-label="home"
         icon={<AiFillHome />}
-        onClick={() => history.push("/")}
+        onClick={() => history.push("/mypage")}
       />
       <Menu>
         <MenuButton

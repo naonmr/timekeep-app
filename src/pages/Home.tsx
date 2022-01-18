@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import MyPage from "./pages/MyPage";
-import SetupAgenda from "./pages/SetupAgenda";
-import FixAgenda from "./pages/FixAgenda";
-import TimerPage from "./pages/TimerPage";
+import MyPage from "../pages/MyPage";
+import SetupAgenda from "../pages/SetupAgenda";
+import FixAgenda from "../pages/FixAgenda";
+import TimerPage from "../pages/TimerPage";
 
-import PrivateRoute from "./firebase/PrivateRoute";
-import { AuthProvider } from "./firebase/AuthContext";
-import { TimerProvider } from "./component/timerContext";
+import PrivateRoute from "../firebase/PrivateRoute";
+import { AuthProvider } from "../firebase/AuthContext";
+import { TimerProvider } from "../component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   // const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
   const [agendas, setAgendas] = useState<any>([{ title: "", time: 1 }]);
 
@@ -23,19 +19,16 @@ const App: React.FC = () => {
         <AuthProvider>
           <BrowserRouter>
             <Switch>
-              <Route path="/signup" component={SignUp} />
-              <Route path="/login" component={Login} />
-
               <TimerProvider>
-                <PrivateRoute path="/" children={<Home />} />
-                {/* <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
+                <PrivateRoute path="/mypage" children={<MyPage />} />
+                <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
                 <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
                 <PrivateRoute
                   path="/timer"
                   children={
                     <TimerPage agendas={agendas} setAgendas={setAgendas} />
                   }
-                /> */}
+                />
               </TimerProvider>
             </Switch>
           </BrowserRouter>
@@ -45,4 +38,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;
