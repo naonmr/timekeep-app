@@ -24,6 +24,7 @@ app.get("/api/meetings/:uid", async (req, res) => {
       authorId: uid,
     },
   });
+  console.log("🙇‍♀️", meetings);
   res.json(meetings);
 });
 

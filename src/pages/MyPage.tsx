@@ -30,9 +30,7 @@ type Meetings = {
 const MyPage = (props: MyPageProps) => {
   const { setMeetingId, setMtgTitle, setAgendas } = useTimerContext();
 
-  const [meetings, setMeetings] = useState<Meetings[] | []>([
-    { authorId: "", id: 1, title: "" },
-  ]);
+  const [meetings, setMeetings] = useState<Meetings[] | null>(null);
   const { currentUser } = useAuthContext();
   const history = useHistory();
 
@@ -102,38 +100,39 @@ const MyPage = (props: MyPageProps) => {
             </Tr>
           </Thead>
           <Tbody>
-            {meetings.map((meeting: Meetings) => {
-              return (
-                <Tr key={meeting.id}>
-                  <Td>{meeting.title}</Td>
-                  <Td>
-                    <SubButton
-                      text="Fix"
-                      onclick={async () => {
-                        await getAgendaList(meeting.id);
-                        history.push("/fix-agenda");
-                      }}
-                    />
-                  </Td>
-                  <Td>
-                    <SubButton
-                      text="Start"
-                      onclick={async () => {
-                        await getAgendaList(meeting.id);
-                        setMeetingId(meeting.id);
-                        history.push("/timer");
-                      }}
-                    />
-                  </Td>
-                  <Td>
-                    <SubButton
-                      text="Delete"
-                      onclick={() => deleteMeeting(meeting.id)}
-                    />
-                  </Td>
-                </Tr>
-              );
-            })}
+            {!(meetings === null) &&
+              meetings.map((meeting: Meetings) => {
+                return (
+                  <Tr key={meeting.id}>
+                    <Td>{meeting.title}</Td>
+                    <Td>
+                      <SubButton
+                        text="Fix"
+                        onclick={async () => {
+                          await getAgendaList(meeting.id);
+                          history.push("/fix-agenda");
+                        }}
+                      />
+                    </Td>
+                    <Td>
+                      <SubButton
+                        text="Start"
+                        onclick={async () => {
+                          await getAgendaList(meeting.id);
+                          setMeetingId(meeting.id);
+                          history.push("/timer");
+                        }}
+                      />
+                    </Td>
+                    <Td>
+                      <SubButton
+                        text="Delete"
+                        onclick={() => deleteMeeting(meeting.id)}
+                      />
+                    </Td>
+                  </Tr>
+                );
+              })}
           </Tbody>
         </Table>
       </>
