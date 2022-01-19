@@ -36,19 +36,15 @@ const MyPage = (props: MyPageProps) => {
 
   const getMeetingList = async () => {
     try {
-      console.log("currentUser", currentUser);
       const res = await axios.get(`/api/meetings/${currentUser}`);
       await setMeetings(res.data);
-      console.log("res.data", res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log("useEfect meetingList");
     getMeetingList();
-    console.log(meetings);
   }, []);
 
   const deleteMeeting = async (id: number) => {
@@ -62,7 +58,6 @@ const MyPage = (props: MyPageProps) => {
 
   const getAgendaList = async (meetingId: number) => {
     setMeetingId(meetingId);
-    console.log(meetingId);
     try {
       const res = await axios.get(
         `/api/agendas/${currentUser}?meetingId=${meetingId}`
@@ -109,7 +104,7 @@ const MyPage = (props: MyPageProps) => {
                       <SubButton
                         text="Fix"
                         onclick={async () => {
-                          // await getAgendaList(meeting.id);
+                          await getAgendaList(meeting.id);
                           history.push(`/fix-agenda/${meeting.id}`);
                         }}
                       />

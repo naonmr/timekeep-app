@@ -45,7 +45,7 @@ const InputAgenda: React.VFC<any> = (props) => {
   useEffect(() => {
     setValue("title", defaultMtgTitle);
     setValue("agendas", defaultAgenda);
-  }, []);
+  }, [defaultMtgTitle, defaultAgenda]);
 
   return (
     <>

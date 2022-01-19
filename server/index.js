@@ -102,7 +102,7 @@ app.get("/api/agendas/:uid", async (req, res) => {
       },
     });
     const resData = { title: meetingInfo.title, agendas: agendaInfo };
-
+    console.log(resData);
     res.json(resData);
   }
 });
