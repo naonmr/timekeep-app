@@ -40,6 +40,7 @@ app.post("/api/meetings/:uid", async (req, res) => {
     agenda.meetingId = newMeeting.id;
     return agenda;
   });
+
   const newAgenda = await prisma.agenda.createMany({
     data: agedas,
   });
