@@ -27,10 +27,16 @@ const App: React.FC = () => {
 
               <TimerProvider>
                 <PrivateRoute exact path="/" children={<MyPage />} />
-                <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
-                <PrivateRoute path="/fix-agenda" children={<FixAgenda />} />
                 <PrivateRoute
-                  path="/timer"
+                  path="/setup-agenda/"
+                  children={<SetupAgenda />}
+                />
+                <PrivateRoute
+                  path="/fix-agenda/:meetindId"
+                  children={<FixAgenda />}
+                />
+                <PrivateRoute
+                  path="/timer/:meetingId"
                   children={
                     <TimerPage agendas={agendas} setAgendas={setAgendas} />
                   }
