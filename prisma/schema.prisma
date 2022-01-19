@@ -14,14 +14,14 @@ model Agenda {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   time      Int
-  meeting   Meeting @relation(fields: [meetingId], references: [id])
+  meeting   Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   meetingId Int
 }
 
 model Meeting {
   id        Int      @id @default(autoincrement())
   title     String?
-  author    User     @relation(fields: [authorId], references: [uid])
+  author    User     @relation(fields: [authorId], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   authorId  String  
   agendas   Agenda[]
 }
