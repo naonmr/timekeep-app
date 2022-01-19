@@ -34,13 +34,10 @@ const App: React.FC = () => {
                 <PrivateRoute
                   path="/fix-agenda/:meetindId"
                   children={<FixAgenda />}
-                  // render={({match}) => <FixAgenda match={match} />}
                 />
                 <PrivateRoute
-                  path="/timer/:meetingId"
-                  children={
-                    <TimerPage agendas={agendas} setAgendas={setAgendas} />
-                  }
+                  path="/timer/:meetindId"
+                  children={<TimerPage />}
                 />
               </TimerProvider>
             </Switch>

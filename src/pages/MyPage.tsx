@@ -104,7 +104,7 @@ const MyPage = (props: MyPageProps) => {
                       <SubButton
                         text="Fix"
                         onclick={async () => {
-                          await getAgendaList(meeting.id);
+                          // await getAgendaList(meeting.id);
                           history.push(`/fix-agenda/${meeting.id}`);
                         }}
                       />

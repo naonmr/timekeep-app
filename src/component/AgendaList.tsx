@@ -7,7 +7,7 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
-import { useTimerContext } from "./timerContext";
+import { useEffect } from "react";
 
 type Agenda = {
   title: string;
@@ -15,14 +15,13 @@ type Agenda = {
 };
 
 const AgendaList = (props: any) => {
-  const { mtgTitle, agendas } = useTimerContext();
-  console.log(agendas);
+  const { currentAgendas, currentMeetingTitle } = props;
 
   return (
     <>
       <></>
       <Table variant="simple">
-        <TableCaption>{mtgTitle}</TableCaption>
+        <TableCaption>{currentMeetingTitle}</TableCaption>
         <Thead>
           <Tr>
             <Th>Agenda Title</Th>
@@ -30,7 +29,7 @@ const AgendaList = (props: any) => {
           </Tr>
         </Thead>
         <Tbody>
-          {agendas.map((agenda: Agenda) => {
+          {currentAgendas.map((agenda: Agenda) => {
             return (
               <Tr key={agenda.title}>
                 <Td>{agenda.title}</Td>
