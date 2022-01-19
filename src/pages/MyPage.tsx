@@ -109,8 +109,8 @@ const MyPage = (props: MyPageProps) => {
                       <SubButton
                         text="Fix"
                         onclick={async () => {
-                          await getAgendaList(meeting.id);
-                          history.push("/fix-agenda");
+                          // await getAgendaList(meeting.id);
+                          history.push(`/fix-agenda/${meeting.id}`);
                         }}
                       />
                     </Td>
@@ -118,9 +118,9 @@ const MyPage = (props: MyPageProps) => {
                       <SubButton
                         text="Start"
                         onclick={async () => {
-                          await getAgendaList(meeting.id);
+                          // await getAgendaList(meeting.id);
                           setMeetingId(meeting.id);
-                          history.push("/timer");
+                          history.push(`/timer/${meeting.id}`);
                         }}
                       />
                     </Td>
