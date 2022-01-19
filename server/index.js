@@ -29,22 +29,26 @@ app.get("/api/meetings/:uid", async (req, res) => {
 });
 
 app.post("/api/meetings/:uid", async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  const newMeeting = await prisma.meeting.create({
-    data: { title: data.title, authorId: data.authorId },
-  });
+  try {
+    const data = req.body;
+    console.log(data);
+    const newMeeting = await prisma.meeting.create({
+      data: { title: data.title, authorId: data.authorId },
+    });
 
-  console.log(newMeeting);
-  const agedas = data.agendas.map((agenda) => {
-    agenda.meetingId = newMeeting.id;
-    return agenda;
-  });
+    console.log(newMeeting);
+    const agedas = data.agendas.map((agenda) => {
+      agenda.meetingId = newMeeting.id;
+      return agenda;
+    });
 
-  const newAgenda = await prisma.agenda.createMany({
-    data: agedas,
-  });
-  res.json(data);
+    const newAgenda = await prisma.agenda.createMany({
+      data: agedas,
+    });
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.delete("/api/meetings/:uid", async (req, res) => {
