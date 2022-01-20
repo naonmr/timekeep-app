@@ -1,1 +1,1 @@
-release: "prisma migrate deploy && node prisma/seed.js"
+release: "npx prisma migrate deploy && node prisma/seed.js"
