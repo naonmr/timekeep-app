@@ -27,8 +27,8 @@ model Meeting {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  uid     String   @unique
+  id      Int      @default(autoincrement())
+  uid     String   @id @unique 
   name    String
   meetings   Meeting[]
 }

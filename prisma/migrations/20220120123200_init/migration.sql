@@ -23,7 +23,7 @@ CREATE TABLE "User" (
     "uid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("uid")
 );
 
 -- CreateIndex
