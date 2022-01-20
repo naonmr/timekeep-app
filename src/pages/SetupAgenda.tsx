@@ -28,8 +28,8 @@ const SetupAgenda = () => {
       },
     };
     console.log("sendData", newMeeting);
-    await axios.post(`/api/meetings/${currentUser}`, newMeeting);
     history.push("/");
+    await axios.post(`/api/meetings/${currentUser}`, newMeeting);
   };
   return (
     <>
