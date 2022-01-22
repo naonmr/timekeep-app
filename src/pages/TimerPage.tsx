@@ -6,7 +6,7 @@ import Header from "../component/Header";
 import Timer from "../component/Timer";
 import { useTimerContext } from "../component/timerContext";
 import { useAuthContext } from "../firebase/AuthContext";
-// TODO: timer関数を修正
+// TODO: 会議全体の時間のTimerの作成
 
 const TimerPage = () => {
   const { currentUser } = useAuthContext();

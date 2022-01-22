@@ -1,6 +1,8 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { json } from "stream/consumers";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
 import { useTimerContext } from "../component/timerContext";
@@ -11,7 +13,7 @@ type Contents = {
   agendas: {
     title: string;
     time: number;
-    meetingId?: number;
+    meetingId?: any;
   }[];
 };
 
@@ -24,15 +26,13 @@ const FixAgenda: any = () => {
   ]);
 
   const history = useHistory();
-  const currentMeetingTitleRef = useRef("");
-  const currentAgendasRef = useRef([{ title: "", time: 1 }]);
   //　paramからmeeeting Idをget
 
   let params: any = useParams();
-  let meetingId: string = params.meetindId;
+  let id: number = params.meetindId;
 
   useEffect(() => {
-    const getAgendaList = async (meetingId: string) => {
+    const getAgendaList = async (meetingId: number) => {
       try {
         const res = await axios.get(
           `/api/agendas/${currentUser}?meetingId=${meetingId}`
@@ -50,26 +50,17 @@ const FixAgenda: any = () => {
       }
     };
 
-    getAgendaList(meetingId);
+    getAgendaList(id);
   }, []);
 
+  // TODO orderを追加
   const onSubmit = async (data: Contents) => {
-    const agendas = data.agendas.map((agenda) => {
-      // agenda.meetingId = id;
-      return agenda;
-    });
-
-    const newMeeting: any = {
-      title: data.title,
-      authorId: currentUser,
-      agendas: agendas,
+    console.log(data.agendas);
+    const putMeeting = async () => {
+      await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
     };
-
+    putMeeting();
     history.push("/");
-    await axios.put(
-      `/api/meetings/${currentUser}?meetingId=${meetingId}`,
-      newMeeting
-    );
   };
 
   return (

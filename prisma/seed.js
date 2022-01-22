@@ -22,7 +22,7 @@ const userData1 = {
           agendas: {
             create: [
               { order: 1, title: "agenda2-1", time: 1 },
-              { order: 2, title: "agenda2-1", time: 2 },
+              { order: 2, title: "agenda2-2", time: 2 },
             ],
           },
         },

@@ -1,8 +1,10 @@
 const { Prisma, PrismaClient } = require("@prisma/client");
+const { create } = require("domain");
 const express = require("express");
 // const { request } = require("http");
 const morgan = require("morgan");
 const path = require("path");
+const { title } = require("process");
 
 const prisma = new PrismaClient();
 
@@ -11,10 +13,11 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
-app.get("/users", async (req, res) => {
-  const allUsers = await prisma.user.findMany();
-  console.log(allUsers);
-  res.json(allUsers);
+app.post("/api/user/:uid", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const newUser = await prisma.user.create({ data: data });
+  res.json(newUser);
 });
 
 app.get("/api/meetings/:uid", async (req, res) => {
@@ -60,18 +63,36 @@ app.delete("/api/meetings/:uid", async (req, res) => {
 app.put("/api/meetings/:uid", async (req, res) => {
   const meetingId = Number(req.query.meetingId);
   const data = req.body;
+  console.log("😭", data);
+  const deleteAgenda = await prisma.agenda.deleteMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
+
   const putMeeting = await prisma.meeting.update({
     where: {
       id: meetingId,
     },
     data: { title: data.title },
   });
-  const deleteAgenda = await prisma.agenda.deleteMany({
-    where: {
-      meetingId: meetingId,
-    },
+
+  data.agendas.map(async (agenda) => {
+    const createNewAgenda = await prisma.agenda.create({
+      data: {
+        title: agenda.title,
+        time: agenda.time,
+        meeting: {
+          connect: {
+            id: meetingId,
+          },
+        },
+      },
+    });
+    console.log(createNewAgenda);
   });
-  const createAgenda = await prisma.agenda.createMany({ data: data.agendas });
+
+  res.json(putMeeting);
 });
 
 app.get("/api/agendas/:uid", async (req, res) => {
@@ -84,12 +105,23 @@ app.get("/api/agendas/:uid", async (req, res) => {
       },
     });
 
-    const agendaInfo = await prisma.agenda.findMany({
+    let agendas = await prisma.agenda.findMany({
       where: {
         meetingId: meetingId,
       },
     });
-    const resData = { title: meetingInfo.title, agendas: agendaInfo };
+
+    //　getした情報を並び替える
+    for (let i = 0; i < agendas.length; i++) {
+      for (let j = agendas.length; i < j; j++) {
+        if (agendas[i].order < agendas[j - 1].order) {
+          let tmp = agendas[j - 1];
+          agendas[j - 1] = agendas[j];
+          agendas[j] = tmp;
+        }
+      }
+    }
+    const resData = { title: meetingInfo.title, agendas: agendas };
     console.log(resData);
     res.json(resData);
   }

@@ -9,24 +9,33 @@ import firebase from "../firebase/firebaseConfig";
 import { useHistory } from "react-router-dom";
 
 import { FormControl, FormLabel, Input, Box, Center } from "@chakra-ui/react";
+import axios from "axios";
 const SignUp = () => {
   const { setCurrentUser } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const { email, password } = event.target.elements;
+    const { email, password, userName } = event.target.elements;
     const auth = getAuth(firebase);
 
-    try {
-      await createUserWithEmailAndPassword(auth, email.value, password.value);
-      onAuthStateChanged(auth, (user) => {
-        setCurrentUser(user?.uid);
-      });
-      history.push("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    let uid;
+    onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user?.uid);
+
+      uid = user?.uid;
+      console.log(uid);
+      const newUser = { uid: uid, name: userName.value, meetings: {} };
+      axios
+        .post(`/api/user/${uid}`, newUser)
+        .then((res) => {
+          history.push("/login");
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    });
   };
 
   return (
