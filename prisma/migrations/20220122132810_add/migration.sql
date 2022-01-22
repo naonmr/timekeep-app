@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "Agenda" (
     "id" SERIAL NOT NULL,
+    "order" INTEGER NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "time" INTEGER NOT NULL,
     "meetingId" INTEGER NOT NULL,

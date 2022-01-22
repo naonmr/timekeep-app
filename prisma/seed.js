@@ -11,8 +11,8 @@ const userData1 = {
         title: "test1",
         agendas: {
           create: [
-            { title: "agenda1", time: 1 },
-            { title: "agenda2", time: 2 },
+            { order: 1, title: "agenda1", time: 1 },
+            { order: 2, title: "agenda2", time: 2 },
           ],
         },
       },
@@ -20,8 +20,8 @@ const userData1 = {
         title: "test2",
         agendas: {
           create: [
-            { title: "agenda2-1", time: 1 },
-            { title: "agenda2-1", time: 2 },
+            { order: 1, title: "agenda2-1", time: 1 },
+            { order: 2, title: "agenda2-1", time: 2 },
           ],
         },
       },
