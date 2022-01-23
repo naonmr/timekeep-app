@@ -18,7 +18,6 @@ const SetupAgenda = () => {
 
   const defaultAgenda = [{ title: "", time: 1 }];
   const defaultMtgTitle = "";
-  //　TODO orderを追加
   const onSubmit = async (data: Contents) => {
     await axios.post(`/api/meetings/${currentUser}`, data);
     history.push("/");
