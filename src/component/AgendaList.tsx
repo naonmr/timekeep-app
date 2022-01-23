@@ -15,7 +15,7 @@ type Agenda = {
 };
 
 const AgendaList = (props: any) => {
-  const { currentAgendas, currentMeetingTitle } = props;
+  const { agendas, currentMeetingTitle } = props;
 
   return (
     <>
@@ -29,7 +29,7 @@ const AgendaList = (props: any) => {
           </Tr>
         </Thead>
         <Tbody>
-          {currentAgendas.map((agenda: Agenda) => {
+          {agendas.map((agenda: Agenda) => {
             return (
               <Tr key={agenda.title}>
                 <Td>{agenda.title}</Td>

@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
+import AgendaList from "./AgendaList";
+import { PrimaryButton } from "./Button";
+import Circular from "./Circular";
 
 type TimerProps = {
   currentIndex: number;
   setCurrentIndex: any;
   timeList: number[];
-  agendas: any;
+  agendas?: any;
 };
 
 export default function Timer(props: TimerProps) {
-  const { currentIndex, setCurrentIndex, timeList } = props;
+  const { currentIndex, setCurrentIndex, timeList, agendas } = props;
+  console.log("☀️", timeList, currentIndex);
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [isWorking, setIsWorking] = useState(false);
 
@@ -41,6 +45,7 @@ export default function Timer(props: TimerProps) {
   const switchNextAgenda = () => {
     console.log("🌸", timeList.length, currentIndexRef.current + 1);
     if (timeList.length <= currentIndexRef.current + 1) {
+      // 全てのアジェンダが終了したら実行される処理
       console.log("next");
 
       return;
@@ -62,16 +67,29 @@ export default function Timer(props: TimerProps) {
         return switchNextAgenda();
       }
       tick();
-    }, 100);
+    }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timeList]);
+
+  // きれいに表示するために諸々設定
+  let percentage = (secondsLeft / (timeList[currentIndex] * 60)) * 100;
+  let minute = Math.trunc(secondsLeft / 60);
+  let seconds: number | string = secondsLeft % 60;
+  if (seconds < 10) seconds = "0" + String(seconds);
 
   return (
     <div className="App">
-      <h1>Pomodoro Timer</h1>
-      <button onClick={start}>start</button>
-      <button onClick={pause}>pause</button>
-      <div>{secondsLeft} seconds left</div>
+      {/* <div>{agendas[currentIndex].agenda}</div> */}
+      <Circular
+        value={percentage}
+        text={`${minute}:${seconds}`}
+        color="#E53E3E"
+      />
+      {isWorking ? (
+        <PrimaryButton onclick={pause} text="pause" />
+      ) : (
+        <PrimaryButton onclick={start} text="start" />
+      )}
     </div>
   );
 }
