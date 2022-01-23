@@ -27,6 +27,16 @@ app.get("/api/meetings/:uid", async (req, res) => {
       authorId: uid,
     },
   });
+  // getした情報を並び替える;
+  for (let outer = 0; outer < meetings.length - 1; outer++) {
+    for (let i = meetings.length - 1; i > outer; i--) {
+      if (meetings[i].id < meetings[i - 1].id) {
+        let tmp = meetings[i];
+        meetings[i] = meetings[i - 1];
+        meetings[i - 1] = tmp;
+      }
+    }
+  }
   console.log("🙇‍♀️", meetings);
   res.json(meetings);
 });
