@@ -8,24 +8,32 @@ import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
 import { FormControl, FormLabel, Input, Box, Center } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+
 import { PrimaryButton } from "../component/Button";
 
 const Login = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
   const history = useHistory();
   const { setCurrentUser } = useAuthContext();
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const { email, password } = event.target.elements;
-    console.log(email.value, password.value);
+  const onSubmit = async (data: any) => {
     const auth = getAuth(firebase);
 
     try {
-      await signInWithEmailAndPassword(auth, email.value, password.value);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
       history.push("/");
     } catch (error) {
-      console.log(error);
-      alert(error);
+      if (
+        String(error) === "FirebaseError: Firebase: Error (auth/missing-email)."
+      ) {
+        alert("ご入力いただいたアドレスまたはパスワードは間違っています");
+      }
     }
   };
 
@@ -42,12 +50,12 @@ const Login = () => {
         >
           <h1>Login</h1>
           <Center m={4}>
-            <form onSubmit={handleSubmit}>
-              <FormControl isRequired m={2}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControl isInvalid={errors.userName} m={2}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input name="email" type="email" placeholder="email" />
               </FormControl>
-              <FormControl isRequired m={2}>
+              <FormControl isInvalid={errors.userName} m={2}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input name="password" type="password" placeholder="password" />
               </FormControl>
