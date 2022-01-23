@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import AgendaList from "./AgendaList";
 import { PrimaryButton } from "./Button";
 import Circular from "./Circular";
+import useSound from "use-sound";
 
 type TimerProps = {
   currentIndex: number;
@@ -48,6 +49,8 @@ export default function Timer(props: TimerProps) {
   };
 
   const switchNextAgenda = () => {
+    const play = useSound;
+
     if (timeList.length <= currentIndexRef.current + 1) {
       // 全てのアジェンダが終了したら実行される処理
       setIsEnd(true);
