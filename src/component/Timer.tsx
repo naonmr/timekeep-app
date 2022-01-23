@@ -3,6 +3,7 @@ import AgendaList from "./AgendaList";
 import { PrimaryButton } from "./Button";
 import Circular from "./Circular";
 import useSound from "use-sound";
+// const sound = require("../../public/end.mp3");
 
 type TimerProps = {
   currentIndex: number;
@@ -49,7 +50,9 @@ export default function Timer(props: TimerProps) {
   };
 
   const switchNextAgenda = () => {
-    const play = useSound;
+    // TODO 音を鳴らす
+    // const [play] = useSound(sound);
+    // play();
 
     if (timeList.length <= currentIndexRef.current + 1) {
       // 全てのアジェンダが終了したら実行される処理

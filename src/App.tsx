@@ -11,6 +11,7 @@ import PrivateRoute from "./firebase/PrivateRoute";
 import { AuthProvider } from "./firebase/AuthContext";
 import { TimerProvider } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import IsRegister from "./pages/IsRegister";
 
 const App: React.FC = () => {
   // const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <BrowserRouter>
             <Switch>
               <Route path="/signup" component={SignUp} />
+              <Route path="/is-register" component={IsRegister} />
               <Route path="/login" component={Login} />
 
               <TimerProvider>

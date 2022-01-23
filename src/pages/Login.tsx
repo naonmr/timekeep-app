@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useHistory, withRouter } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
@@ -54,6 +54,9 @@ const Login = () => {
               <PrimaryButton text="Login" type="submit" mt={2} />
             </form>
           </Center>
+          <div>
+            アカウント登録は<Link to="/signup">こちら</Link>
+          </div>
         </Box>
       </Center>
     </>
