@@ -32,14 +32,31 @@ app.get("/api/meetings/:uid", async (req, res) => {
 });
 
 app.post("/api/meetings/:uid", async (req, res) => {
-  try {
-    const data = req.body;
-    console.log(data);
-    const newMeeting = await prisma.meeting.create({ data: data });
-    res.json(newMeeting);
-  } catch (error) {
-    console.log(error);
-  }
+  const data = req.body;
+  const uid = req.params.uid;
+
+  let count = 1;
+  const agendas = data.agendas.map((agenda) => {
+    agenda.order = count;
+    count++;
+    return agenda;
+  });
+  console.log(agendas);
+
+  let newMeeting = {
+    title: data.title,
+    author: {
+      connect: {
+        uid: uid,
+      },
+    },
+    agendas: {
+      create: agendas,
+    },
+  };
+  console.log(newMeeting);
+  const createMeeting = await prisma.meeting.create({ data: newMeeting });
+  res.json(newMeeting);
 });
 
 app.delete("/api/meetings/:uid", async (req, res) => {
@@ -63,7 +80,16 @@ app.delete("/api/meetings/:uid", async (req, res) => {
 app.put("/api/meetings/:uid", async (req, res) => {
   const meetingId = Number(req.query.meetingId);
   const data = req.body;
-  console.log("😭", data);
+
+  let count = 1;
+  const agendas = data.agendas.map((agenda) => {
+    agenda.order = count;
+    count++;
+    return agenda;
+  });
+
+  console.log("😭", agendas);
+
   const deleteAgenda = await prisma.agenda.deleteMany({
     where: {
       meetingId: meetingId,
@@ -82,6 +108,7 @@ app.put("/api/meetings/:uid", async (req, res) => {
       data: {
         title: agenda.title,
         time: agenda.time,
+        order: agenda.order,
         meeting: {
           connect: {
             id: meetingId,
@@ -89,7 +116,7 @@ app.put("/api/meetings/:uid", async (req, res) => {
         },
       },
     });
-    console.log(createNewAgenda);
+    console.log("🐱", createNewAgenda);
   });
 
   res.json(putMeeting);
@@ -98,33 +125,32 @@ app.put("/api/meetings/:uid", async (req, res) => {
 app.get("/api/agendas/:uid", async (req, res) => {
   const meetingId = Number(req.query.meetingId);
 
-  if (meetingId) {
-    const meetingInfo = await prisma.meeting.findUnique({
-      where: {
-        id: meetingId,
-      },
-    });
+  const meetingInfo = await prisma.meeting.findUnique({
+    where: {
+      id: meetingId,
+    },
+  });
 
-    let agendas = await prisma.agenda.findMany({
-      where: {
-        meetingId: meetingId,
-      },
-    });
+  let agendas = await prisma.agenda.findMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
 
-    //　getした情報を並び替える
-    for (let i = 0; i < agendas.length; i++) {
-      for (let j = agendas.length; i < j; j++) {
-        if (agendas[i].order < agendas[j - 1].order) {
-          let tmp = agendas[j - 1];
-          agendas[j - 1] = agendas[j];
-          agendas[j] = tmp;
-        }
+  console.log("🐵", agendas);
+  // getした情報を並び替える;
+  for (let outer = 0; outer < agendas.length - 1; outer++) {
+    for (let i = agendas.length - 1; i > outer; i--) {
+      if (agendas[i].order < agendas[i - 1].order) {
+        let tmp = agendas[i];
+        agendas[i] = agendas[i - 1];
+        agendas[i - 1] = tmp;
       }
     }
-    const resData = { title: meetingInfo.title, agendas: agendas };
-    console.log(resData);
-    res.json(resData);
   }
+  const resData = { title: meetingInfo.title, agendas: agendas };
+  console.log(resData);
+  res.json(resData);
 });
 
 const PORT = process.env.PORT || 8000;
