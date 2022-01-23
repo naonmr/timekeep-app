@@ -84,20 +84,21 @@ const MyPage = (props: MyPageProps) => {
                     <Td>{meeting.title}</Td>
                     <Td>
                       <SubButton
-                        text="Fix"
-                        onclick={async () => {
-                          // await getAgendaList(meeting.id);
-                          history.push(`/fix-agenda/${meeting.id}`);
-                        }}
-                      />
-                    </Td>
-                    <Td>
-                      <SubButton
                         text="Start"
                         onclick={async () => {
                           // await getAgendaList(meeting.id);
                           setMeetingId(meeting.id);
                           history.push(`/timer/${meeting.id}`);
+                        }}
+                      />
+                    </Td>
+
+                    <Td>
+                      <SubButton
+                        text="Fix"
+                        onclick={async () => {
+                          // await getAgendaList(meeting.id);
+                          history.push(`/fix-agenda/${meeting.id}`);
                         }}
                       />
                     </Td>

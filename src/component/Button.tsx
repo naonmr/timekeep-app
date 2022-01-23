@@ -10,25 +10,28 @@ type ButtonProps = {
 export const PrimaryButton: React.VFC<ButtonProps> = (props) => {
   return (
     <Button
-      colorScheme="teal"
+      color="brand.300"
+      bg="brand.200"
       size="sm"
       w={65}
       variant="solid"
       type={props.type}
       onClick={props.onclick}
       mt={props.mt}
+      shadow="base"
     >
       {props.text}
     </Button>
   );
 };
+
 export const SubButton: React.VFC<ButtonProps> = (props) => (
   <>
     <Button
-      colorScheme="teal"
+      color="brand.200"
       size="sm"
       w={65}
-      variant="outline"
+      variant="ghost"
       type={props.type}
       onClick={props.onclick}
       mt={props.mt}
