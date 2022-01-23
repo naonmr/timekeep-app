@@ -7,7 +7,14 @@ import { Link, useHistory, withRouter } from "react-router-dom";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
-import { FormControl, FormLabel, Input, Box, Center } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Box,
+  Center,
+  FormErrorMessage,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
 import { PrimaryButton } from "../component/Button";
@@ -22,6 +29,7 @@ const Login = () => {
   const history = useHistory();
   const { setCurrentUser } = useAuthContext();
   const onSubmit = async (data: any) => {
+    console.log(data);
     const auth = getAuth(firebase);
 
     try {
@@ -51,13 +59,33 @@ const Login = () => {
           <h1>Login</h1>
           <Center m={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl isInvalid={errors.userName} m={2}>
+              <FormControl isInvalid={errors.email} m={2}>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input name="email" type="email" placeholder="email" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="email"
+                  {...register("email", {
+                    required: true,
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.email && "メールアドレスを入力してください"}
+                </FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.userName} m={2}>
+              <FormControl isInvalid={errors.password} m={2}>
                 <FormLabel htmlFor="password">Password</FormLabel>
-                <Input name="password" type="password" placeholder="password" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  {...register("password", {
+                    required: "パスワードは6文字以上入力してください",
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.password && "パスワードを入力してください"}
+                </FormErrorMessage>
               </FormControl>
               <PrimaryButton text="Login" type="submit" mt={2} />
             </form>
