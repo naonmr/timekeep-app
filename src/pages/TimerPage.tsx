@@ -16,8 +16,6 @@ const TimerPage = () => {
   const [totalTime, setTotaltime] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  console.log("現在のアジェンダ！", agendas[currentIndex].title);
-
   // paramsを取得
   let params: any = useParams();
   let meetingId: string = params.meetindId;
@@ -57,11 +55,12 @@ const TimerPage = () => {
     // timeの情報だけを抽出
   }, []);
 
+  // TODO CSS整える！
   return (
     <>
       <Header />
       <br></br>
-      <p>{currentMeetingTitle}</p>
+      <h1>{currentMeetingTitle}</h1>
       <p>total time {totalTime}m</p>
       <div>現在のアジェンダ： {agendas[currentIndex].title}</div>
       <Timer
@@ -69,6 +68,7 @@ const TimerPage = () => {
         setCurrentIndex={setCurrentIndex}
         timeList={timeList}
         agendas={agendas}
+        totalTime={totalTime}
       />
       <AgendaList agendas={agendas} currentMeetingTitle={currentMeetingTitle} />
     </>

@@ -56,24 +56,6 @@ const MyPage = (props: MyPageProps) => {
     }
   };
 
-  const getAgendaList = async (meetingId: number) => {
-    setMeetingId(meetingId);
-    try {
-      const res = await axios.get(
-        `/api/agendas/${currentUser}?meetingId=${meetingId}`
-      );
-
-      const agendas = res.data.agendas.map((agenda: any) => {
-        return { title: agenda.title, time: agenda.time };
-      });
-
-      setMtgTitle(res.data.title);
-      setAgendas(agendas);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       <Header />
