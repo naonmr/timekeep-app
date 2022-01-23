@@ -55,12 +55,12 @@ const FixAgenda: any = () => {
 
   // TODO orderを追加
   const onSubmit = async (data: Contents) => {
-    console.log(data.agendas);
-    const putMeeting = async () => {
-      await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
-    };
-    await putMeeting();
-    history.push("/");
+    console.log(data);
+    // const putMeeting = async () => {
+    //   await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
+    // };
+    // await putMeeting();
+    // history.push("/");
   };
 
   return (

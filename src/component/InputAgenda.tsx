@@ -33,7 +33,7 @@ const InputAgenda: React.VFC<any> = (props) => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<Contents>({
+  } = useForm({
     mode: "onBlur",
   });
 
@@ -54,58 +54,63 @@ const InputAgenda: React.VFC<any> = (props) => {
           onSubmit={handleSubmit(onSubmit)}
           style={{ width: "500px", marginTop: "20px" }}
         >
-          <FormControl isRequired>
-            <FormLabel>
-              {/* input部分 */}
-              <Input
-                variant="filled"
-                {...register("title")}
-                placeholder="Meeting title"
-              />
-            </FormLabel>
+          <FormControl isInvalid={errors.title}>
+            <FormLabel>Meeting Title</FormLabel>
+            {/* input部分 */}
+            <Input
+              variant="filled"
+              {...register("title")}
+              placeholder="Meeting title"
+            />
           </FormControl>
 
-          {fields.map((field, index) => {
+          {/* TODO 横並びにする */}
+          <div className="agenda-title">agenda title</div>
+          <div className="agenda-title">time</div>
+
+          {fields.map((field: any, index) => {
             return (
               <div key={field.id}>
                 <section className={"section"} key={field.id}>
                   <Flex>
-                    <FormControl isRequired>
-                      <FormLabel>
-                        <Input
-                          variant="outline"
-                          placeholder="agenda title"
-                          {...register(`agendas.${index}.title` as const, {
-                            required: true,
-                          })}
-                          className={
-                            errors?.agendas?.[index]?.title ? "error" : ""
-                          }
-                          defaultValue={field.title}
-                          errorBorderColor="red.300"
-                          onFocus={() => setFocusIndex(index)}
-                        />
-                      </FormLabel>
+                    <FormControl isInvalid={errors.title}>
+                      <FormLabel></FormLabel>
+                      <Input
+                        variant="outline"
+                        placeholder="agenda title"
+                        {...register(`agendas.${index}.title` as const, {
+                          required: true,
+                        })}
+                        // className={
+                        //   errors?.agendas?.[index]?.title ? "error" : ""
+                        // }
+                        defaultValue={field.title}
+                        errorBorderColor="red.300"
+                        onFocus={() => setFocusIndex(index)}
+                      />
                     </FormControl>
 
-                    <FormControl isRequired>
-                      <FormLabel>
-                        <Input
-                          variant="outline"
-                          placeholder="time"
-                          type="number"
-                          {...register(`agendas.${index}.time` as const, {
-                            valueAsNumber: true,
-                            required: true,
-                          })}
-                          className={
-                            errors?.agendas?.[index]?.time ? "error" : ""
-                          }
-                          defaultValue={field.time}
-                          errorBorderColor="red.300"
-                          onFocus={() => setFocusIndex(index)}
-                        />
-                      </FormLabel>
+                    <FormControl isInvalid={errors.time}>
+                      <FormLabel> </FormLabel>
+                      <Input
+                        variant="outline"
+                        placeholder="time"
+                        type="number"
+                        {...register(`agendas.${index}.time` as const, {
+                          valueAsNumber: true,
+                          required: true,
+                          min: {
+                            value: 1,
+                            message: "1以上の数字を入力してください",
+                          },
+                        })}
+                        // className={
+                        //   errors?.agendas?.[index]?.time ? "error" : ""
+                        // }
+                        defaultValue={field.time}
+                        errorBorderColor="red.300"
+                        onFocus={() => setFocusIndex(index)}
+                      />
                     </FormControl>
 
                     <CloseIcon
@@ -118,7 +123,6 @@ const InputAgenda: React.VFC<any> = (props) => {
               </div>
             );
           })}
-
           <Center>
             <Stack spacing={2} direction="row" align="center">
               <SubButton
@@ -140,7 +144,8 @@ const InputAgenda: React.VFC<any> = (props) => {
               />
             </Stack>
           </Center>
-
+          <div>※全てのフォームを記入してください</div>
+          <div>※timeには1以上の数字を、半角で入力してください</div>
           <PrimaryButton text="save" type="submit" mt={2} />
         </form>
       </Center>
