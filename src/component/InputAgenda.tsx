@@ -11,6 +11,17 @@ import {
   Flex,
   Spacer,
   HStack,
+  Box,
+  Text,
+  VStack,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
@@ -49,106 +60,169 @@ const InputAgenda: React.VFC<any> = (props) => {
 
   return (
     <>
-      <Center>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          style={{ width: "500px", marginTop: "20px" }}
-        >
-          <FormControl isInvalid={errors.title}>
-            <FormLabel>Meeting Title</FormLabel>
-            {/* input部分 */}
-            <Input
-              variant="filled"
-              {...register("title")}
-              placeholder="Meeting title"
-            />
-          </FormControl>
+      <Box p="4">
+        <VStack>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl isInvalid={errors.title}>
+              <FormLabel>Meeting Title</FormLabel>
+              {/* input部分 */}
+              <Input
+                variant="filled"
+                size="sm"
+                {...register("title")}
+                placeholder="Meeting title"
+              />
+            </FormControl>
 
-          {/* TODO 横並びにする */}
-          <div className="agenda-title">agenda title</div>
-          <div className="agenda-title">time</div>
+            {fields.map((field: any, index) => {
+              // 一個目だけラベルをつける
+              if (index === 0) {
+                return (
+                  <div key={field.id}>
+                    <section className={"section"} key={field.id}>
+                      <HStack spacing="12px" mt="5">
+                        <FormControl isInvalid={errors.title} w="350px">
+                          <FormLabel>agenda</FormLabel>
+                          <Input
+                            variant="filled"
+                            size="sm"
+                            placeholder="agenda title"
+                            {...register(`agendas.${index}.title` as const, {
+                              required: true,
+                            })}
+                            // className={
+                            //   errors?.agendas?.[index]?.title ? "error" : ""
+                            // }
+                            defaultValue={field.title}
+                            errorBorderColor="red.300"
+                            onFocus={() => setFocusIndex(index)}
+                          />
+                        </FormControl>
 
-          {fields.map((field: any, index) => {
-            return (
-              <div key={field.id}>
-                <section className={"section"} key={field.id}>
-                  <Flex>
-                    <FormControl isInvalid={errors.title}>
-                      <FormLabel></FormLabel>
-                      <Input
-                        variant="outline"
-                        placeholder="agenda title"
-                        {...register(`agendas.${index}.title` as const, {
-                          required: true,
-                        })}
-                        // className={
-                        //   errors?.agendas?.[index]?.title ? "error" : ""
-                        // }
-                        defaultValue={field.title}
-                        errorBorderColor="red.300"
-                        onFocus={() => setFocusIndex(index)}
+                        <FormControl isInvalid={errors.time} w="70px">
+                          <FormLabel>time</FormLabel>
+                          <Input
+                            variant="filled"
+                            size="sm"
+                            placeholder="time"
+                            type="number"
+                            {...register(`agendas.${index}.time` as const, {
+                              valueAsNumber: true,
+                              required: true,
+                              min: {
+                                value: 1,
+                                message: "1以上の数字を入力してください",
+                              },
+                            })}
+                            // className={
+                            //   errors?.agendas?.[index]?.time ? "error" : ""
+                            // }
+                            defaultValue={field.time}
+                            errorBorderColor="red.300"
+                            onFocus={() => setFocusIndex(index)}
+                          />
+                        </FormControl>
+
+                        <VStack>
+                          <Text></Text>
+                          <Spacer></Spacer>
+                          <Spacer></Spacer>
+                          <CloseIcon
+                            type="button"
+                            onClick={() => remove(index)}
+                          />
+                        </VStack>
+                      </HStack>
+                    </section>
+                  </div>
+                );
+              }
+              return (
+                <div key={field.id}>
+                  <section className={"section"} key={field.id}>
+                    <HStack spacing="12px">
+                      <FormControl isInvalid={errors.title} w="350px">
+                        <FormLabel></FormLabel>
+                        <Input
+                          variant="filled"
+                          size="sm"
+                          placeholder="agenda title"
+                          {...register(`agendas.${index}.title` as const, {
+                            required: true,
+                          })}
+                          // className={
+                          //   errors?.agendas?.[index]?.title ? "error" : ""
+                          // }
+                          defaultValue={field.title}
+                          errorBorderColor="red.300"
+                          onFocus={() => setFocusIndex(index)}
+                        />
+                      </FormControl>
+
+                      <FormControl isInvalid={errors.time} w="70px">
+                        <FormLabel> </FormLabel>
+                        <Input
+                          variant="filled"
+                          size="sm"
+                          placeholder="time"
+                          type="number"
+                          {...register(`agendas.${index}.time` as const, {
+                            valueAsNumber: true,
+                            required: true,
+                            min: {
+                              value: 1,
+                              message: "1以上の数字を入力してください",
+                            },
+                          })}
+                          // className={
+                          //   errors?.agendas?.[index]?.time ? "error" : ""
+                          // }
+                          defaultValue={field.time}
+                          errorBorderColor="red.300"
+                          onFocus={() => setFocusIndex(index)}
+                        />
+                      </FormControl>
+
+                      <CloseIcon
+                        type="button"
+                        onClick={() => remove(index)}
+                        mt={2.5}
                       />
-                    </FormControl>
+                    </HStack>
+                  </section>
+                </div>
+              );
+            })}
 
-                    <FormControl isInvalid={errors.time}>
-                      <FormLabel> </FormLabel>
-                      <Input
-                        variant="outline"
-                        placeholder="time"
-                        type="number"
-                        {...register(`agendas.${index}.time` as const, {
-                          valueAsNumber: true,
-                          required: true,
-                          min: {
-                            value: 1,
-                            message: "1以上の数字を入力してください",
-                          },
-                        })}
-                        // className={
-                        //   errors?.agendas?.[index]?.time ? "error" : ""
-                        // }
-                        defaultValue={field.time}
-                        errorBorderColor="red.300"
-                        onFocus={() => setFocusIndex(index)}
-                      />
-                    </FormControl>
-
-                    <CloseIcon
-                      type="button"
-                      onClick={() => remove(index)}
-                      mt={2.5}
-                    />
-                  </Flex>
-                </section>
-              </div>
-            );
-          })}
-          <Center>
-            <Stack spacing={2} direction="row" align="center">
-              <SubButton
-                text="add"
-                type="button"
-                onclick={() => {
-                  append({ title: "", time: 0 });
-                }}
-              />
-              <SubButton
-                text="insert"
-                type="button"
-                onclick={() => insert(focusIndex, { title: "", time: 0 })}
-              />
-              <SubButton
-                text="move"
-                type="button"
-                onclick={() => move(focusIndex, focusIndex + 1)}
-              />
-            </Stack>
-          </Center>
-          <div>※全てのフォームを記入してください</div>
-          <div>※timeには1以上の数字を、半角で入力してください</div>
-          <PrimaryButton text="save" type="submit" mt={2} />
-        </form>
-      </Center>
+            <Center>
+              <HStack spacing={2} mt="3.5">
+                <SubButton
+                  text="add"
+                  type="button"
+                  onclick={() => {
+                    append({ title: "", time: 0 });
+                  }}
+                />
+                <SubButton
+                  text="insert"
+                  type="button"
+                  onclick={() => insert(focusIndex, { title: "", time: 0 })}
+                />
+                <SubButton
+                  text="move"
+                  type="button"
+                  onclick={() => move(focusIndex, focusIndex + 1)}
+                />
+              </HStack>
+            </Center>
+            <Text fontSize="sm">※全てのフォームを記入してください</Text>
+            <Text fontSize="sm">
+              ※timeには1以上の数字を、半角で入力してください
+            </Text>
+            <PrimaryButton text="save" type="submit" mt={2} />
+          </form>
+        </VStack>
+      </Box>
     </>
   );
 };
