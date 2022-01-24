@@ -14,7 +14,6 @@ import {
   TableCaption,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
-import { useTimerContext } from "../component/timerContext";
 
 type MyPageProps = {
   meetingId?: number | undefined;
@@ -28,8 +27,6 @@ type Meetings = {
 };
 
 const MyPage = (props: MyPageProps) => {
-  const { setMeetingId, setMtgTitle, setAgendas } = useTimerContext();
-
   const [meetings, setMeetings] = useState<Meetings[] | null>(null);
   const { currentUser } = useAuthContext();
   const history = useHistory();
@@ -86,8 +83,6 @@ const MyPage = (props: MyPageProps) => {
                       <SubButton
                         text="Start"
                         onclick={async () => {
-                          // await getAgendaList(meeting.id);
-                          setMeetingId(meeting.id);
                           history.push(`/timer/${meeting.id}`);
                         }}
                       />

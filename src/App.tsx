@@ -9,7 +9,6 @@ import TimerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
 import { AuthProvider } from "./firebase/AuthContext";
-import { TimerProvider } from "./component/timerContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import IsRegister from "./pages/IsRegister";
 
@@ -27,21 +26,13 @@ const App: React.FC = () => {
               <Route path="/is-register" component={IsRegister} />
               <Route path="/login" component={Login} />
 
-              <TimerProvider>
-                <PrivateRoute exact path="/" children={<MyPage />} />
-                <PrivateRoute
-                  path="/setup-agenda/"
-                  children={<SetupAgenda />}
-                />
-                <PrivateRoute
-                  path="/fix-agenda/:meetindId"
-                  children={<FixAgenda />}
-                />
-                <PrivateRoute
-                  path="/timer/:meetindId"
-                  children={<TimerPage />}
-                />
-              </TimerProvider>
+              <PrivateRoute exact path="/" children={<MyPage />} />
+              <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
+              <PrivateRoute
+                path="/fix-agenda/:meetindId"
+                children={<FixAgenda />}
+              />
+              <PrivateRoute path="/timer/:meetindId" children={<TimerPage />} />
             </Switch>
           </BrowserRouter>
         </AuthProvider>
