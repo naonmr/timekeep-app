@@ -17,6 +17,7 @@ import {
   Text,
   Link,
   Heading,
+  Spacer,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
@@ -73,7 +74,7 @@ const Login = () => {
                   {errors.email && "メールアドレスを入力してください"}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.password}>
+              <FormControl isInvalid={errors.password} mt={2}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"

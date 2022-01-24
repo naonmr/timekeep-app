@@ -38,7 +38,7 @@ const SignUp = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
-      onAuthStateChanged(auth, async (user) => {
+      await onAuthStateChanged(auth, async (user) => {
         setCurrentUser(user?.uid);
 
         console.log("🌹");
@@ -57,7 +57,7 @@ const SignUp = () => {
     console.log(currentUser);
     if (currentUser) {
       const newUser = { uid: currentUser, name: data.userName, meetings: {} };
-      axios.post(`/api/user/${currentUser}`, newUser);
+      await axios.post(`/api/user/${currentUser}`, newUser);
       history.push("/is-register");
     }
   };
@@ -71,7 +71,7 @@ const SignUp = () => {
           </Heading>
           <Center m={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl isInvalid={errors.userName}>
+              <FormControl isInvalid={errors.userName} mt={2}>
                 <FormLabel htmlFor="name">Your Name</FormLabel>
                 <Input
                   id="userName"
@@ -85,7 +85,7 @@ const SignUp = () => {
                   {errors.userName && "お名前を入力してください"}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.email}>
+              <FormControl isInvalid={errors.email} mt={2}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
                   id="email"
@@ -101,7 +101,7 @@ const SignUp = () => {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.password}>
+              <FormControl isInvalid={errors.password} mt={2}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
@@ -123,7 +123,7 @@ const SignUp = () => {
             </form>
           </Center>
           <Box mt={2}>
-            <Link href="/login" fon="sm" fontSize="sm">
+            <Link href="/login" fontSize="sm">
               ログイン
               <ExternalLinkIcon mx="2px" />
             </Link>
