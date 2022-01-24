@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -13,9 +13,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import IsRegister from "./pages/IsRegister";
 
 const App: React.FC = () => {
-  // const [meetingId, setMeetingId] = useState<number | undefined>(undefined);
-  const [agendas, setAgendas] = useState<any>([{ title: "", time: 1 }]);
-
   return (
     <>
       <div className="App">

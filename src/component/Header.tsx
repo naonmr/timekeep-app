@@ -8,6 +8,7 @@ import {
   Spacer,
   Flex,
   Heading,
+  Box,
 } from "@chakra-ui/react";
 import { AiFillHome } from "react-icons/ai";
 import { HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
@@ -29,35 +30,35 @@ const Header = () => {
 
   return (
     <>
-      <HStack p={3} bg="brand.100">
-        {/* <Flex> */}
-        <IconButton
-          aria-label="home"
-          icon={<AiFillHome />}
-          bg="brand.300"
-          onClick={() => history.push("/")}
-        />
-        <Heading as="h5" color="brand.300">
-          TimeKeep App
-        </Heading>
-        <Spacer />
-
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<HamburgerIcon />}
-            variant="outline"
-            color="brand.300"
+      <Box>
+        <HStack p="2" bg="brand.100">
+          <IconButton
+            aria-label="home"
+            icon={<AiFillHome />}
+            bg="brand.300"
+            onClick={() => history.push("/")}
           />
-          <MenuList>
-            <MenuItem icon={<NotAllowedIcon />} onClick={handleLogout}>
-              Logout
-            </MenuItem>
-          </MenuList>
-        </Menu>
-        {/* </Flex> */}
-      </HStack>
+          <Heading as="h1" size="md" color="brand.300">
+            TimeKeep App
+          </Heading>
+          <Spacer />
+
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<HamburgerIcon />}
+              variant="outline"
+              color="brand.300"
+            />
+            <MenuList>
+              <MenuItem icon={<NotAllowedIcon />} onClick={handleLogout}>
+                Logout
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </HStack>
+      </Box>
     </>
   );
 };

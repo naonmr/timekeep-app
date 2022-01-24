@@ -12,6 +12,7 @@ import {
   Th,
   Td,
   TableCaption,
+  Box,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
 
@@ -55,10 +56,10 @@ const MyPage = (props: MyPageProps) => {
 
   return (
     <>
-      <Header />
-      <br></br>
-      <>
-        <Table variant="simple" size="sm">
+      <Box>
+        <Header />
+        <br></br>
+        <Table variant="simple" size="sm" W="100%">
           <TableCaption>Your Meeting is here</TableCaption>
           <Thead>
             <Tr>
@@ -108,7 +109,7 @@ const MyPage = (props: MyPageProps) => {
               })}
           </Tbody>
         </Table>
-      </>
+      </Box>
     </>
   );
 };

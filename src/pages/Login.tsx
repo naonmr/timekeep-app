@@ -32,12 +32,11 @@ const Login = () => {
   const history = useHistory();
   const { setCurrentUser } = useAuthContext();
   const onSubmit = async (data: any) => {
-    console.log(data);
     const auth = getAuth(firebase);
 
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
+      await onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
       history.push("/");
     } catch (error) {
       if (
