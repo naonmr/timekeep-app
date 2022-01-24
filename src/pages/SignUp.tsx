@@ -20,18 +20,16 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 const SignUp = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
   const { currentUser, setCurrentUser } = useAuthContext();
   const history = useHistory();
 
-  const [isRegister, setIsRegister] = useState(false);
   const onSubmit = async (data: any) => {
     console.log(data);
     const auth = getAuth(firebase);

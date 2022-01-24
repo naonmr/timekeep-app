@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import AgendaList from "./AgendaList";
+import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "./Button";
 import Circular from "./Circular";
-import useSound from "use-sound";
+// import useSound from "use-sound";
 import { Center, HStack, Text, VStack } from "@chakra-ui/react";
 // const sound = require("../../public/end.mp3");
 

@@ -7,7 +7,6 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 type Agenda = {
   title: string;

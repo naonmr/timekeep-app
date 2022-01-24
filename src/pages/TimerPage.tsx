@@ -1,11 +1,10 @@
 import { Box, Text } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AgendaList from "../component/AgendaList";
 import Header from "../component/Header";
 import Timer from "../component/Timer";
-import { useTimerContext } from "../component/timerContext";
 import { useAuthContext } from "../firebase/AuthContext";
 // TODO: 会議全体の時間のTimerの作成
 
@@ -38,7 +37,6 @@ const TimerPage = () => {
       setCurrentMeetingTitle(res.data.title);
       setAgendas(agendas);
 
-      console.log(agendas);
       newTimeList = agendas.map((agenda: any) => {
         return agenda.time;
       });

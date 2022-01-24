@@ -14,10 +14,8 @@ import {
   Box,
   Center,
   FormErrorMessage,
-  Text,
   Link,
   Heading,
-  Spacer,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
@@ -28,7 +26,7 @@ const Login = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
 
   const history = useHistory();

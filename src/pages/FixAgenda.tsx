@@ -1,11 +1,8 @@
-import { async } from "@firebase/util";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { json } from "stream/consumers";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
-import { useTimerContext } from "../component/timerContext";
 import { useAuthContext } from "../firebase/AuthContext";
 
 type Contents = {

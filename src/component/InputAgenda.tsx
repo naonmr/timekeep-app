@@ -13,19 +13,9 @@ import {
   List,
   ListItem,
   ListIcon,
-  OrderedList,
-  UnorderedList,
 } from "@chakra-ui/react";
 import { CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
-
-type Contents = {
-  title: string;
-  agendas: {
-    title: string;
-    time: number;
-  }[];
-};
 
 const InputAgenda: React.VFC<any> = (props) => {
   const [focusIndex, setFocusIndex] = useState(0);
