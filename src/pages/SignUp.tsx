@@ -6,7 +6,7 @@ import {
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import {
   FormControl,
@@ -15,10 +15,13 @@ import {
   Box,
   Center,
   FormErrorMessage,
+  Link,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 const SignUp = () => {
   const {
     handleSubmit,
@@ -62,17 +65,13 @@ const SignUp = () => {
   return (
     <>
       <Center p={3}>
-        <Box
-          maxW="sm"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          p={2}
-        >
-          <h1>SignUp</h1>
-          <Center m={5}>
+        <Box borderWidth="1px" borderRadius="lg" p={4} m={2}>
+          <Heading as="h3" size="lg">
+            SignUp
+          </Heading>
+          <Center m={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl isInvalid={errors.userName} m={2}>
+              <FormControl isInvalid={errors.userName}>
                 <FormLabel htmlFor="name">Your Name</FormLabel>
                 <Input
                   id="userName"
@@ -86,7 +85,7 @@ const SignUp = () => {
                   {errors.userName && "お名前を入力してください"}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.email} m={2}>
+              <FormControl isInvalid={errors.email}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
                   id="email"
@@ -102,7 +101,7 @@ const SignUp = () => {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.password} m={2}>
+              <FormControl isInvalid={errors.password}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
@@ -120,9 +119,15 @@ const SignUp = () => {
                   {errors.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
-              <PrimaryButton text="Sign Up" type="submit" mt={2} />
+              <PrimaryButton text="Sign Up" type="submit" mt={3} />
             </form>
           </Center>
+          <Box mt={2}>
+            <Link href="/login" fon="sm" fontSize="sm">
+              ログイン
+              <ExternalLinkIcon mx="2px" />
+            </Link>
+          </Box>
         </Box>
       </Center>
     </>

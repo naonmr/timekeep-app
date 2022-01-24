@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Link, useHistory, withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
 
@@ -14,10 +14,14 @@ import {
   Box,
   Center,
   FormErrorMessage,
+  Text,
+  Link,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
 import { PrimaryButton } from "../component/Button";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const Login = () => {
   const {
@@ -49,17 +53,13 @@ const Login = () => {
     <>
       {/* TODO 左右対称にする */}
       <Center p={3}>
-        <Box
-          maxW="sm"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          p={2}
-        >
-          <h1>Login</h1>
+        <Box borderWidth="1px" borderRadius="lg" p={4} m={2}>
+          <Heading as="h3" size="lg">
+            Login
+          </Heading>
           <Center m={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl isInvalid={errors.email} m={2}>
+              <FormControl isInvalid={errors.email}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
                   id="email"
@@ -73,7 +73,7 @@ const Login = () => {
                   {errors.email && "メールアドレスを入力してください"}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.password} m={2}>
+              <FormControl isInvalid={errors.password}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
@@ -87,12 +87,15 @@ const Login = () => {
                   {errors.password && "パスワードを入力してください"}
                 </FormErrorMessage>
               </FormControl>
-              <PrimaryButton text="Login" type="submit" mt={2} />
+              <PrimaryButton text="Login" type="submit" mt={3} />
             </form>
           </Center>
-          <div>
-            アカウント登録は<Link to="/signup">こちら</Link>
-          </div>
+          <Box mt={2}>
+            <Link href="/signup" fontSize="sm">
+              アカウント登録
+              <ExternalLinkIcon mx="2px" />
+            </Link>
+          </Box>
         </Box>
       </Center>
     </>

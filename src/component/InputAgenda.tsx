@@ -1,29 +1,22 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import {
-  FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
-  Button,
-  Stack,
   Center,
-  Flex,
   Spacer,
   HStack,
   Box,
   Text,
   VStack,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
+  List,
+  ListItem,
+  ListIcon,
+  OrderedList,
+  UnorderedList,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
 
 type Contents = {
@@ -215,10 +208,17 @@ const InputAgenda: React.VFC<any> = (props) => {
                 />
               </HStack>
             </Center>
-            <Text fontSize="sm">※全てのフォームを記入してください</Text>
-            <Text fontSize="sm">
-              ※timeには1以上の数字を、半角で入力してください
-            </Text>
+
+            <List spacing={1} mt="1.5">
+              <ListItem fontSize="xs">
+                <ListIcon as={InfoOutlineIcon} color="green.500" />
+                全てのフォームを記入してください
+              </ListItem>
+              <ListItem fontSize="xs">
+                <ListIcon as={InfoOutlineIcon} color="green.500" />
+                timeには1以上の数字を、半角で入力してください{" "}
+              </ListItem>
+            </List>
             <PrimaryButton text="save" type="submit" mt={2} />
           </form>
         </VStack>

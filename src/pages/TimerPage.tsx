@@ -62,7 +62,7 @@ const TimerPage = () => {
       <Header />
       <Box mt="4">
         <Text fontSize="lg" as="u">
-          本日の会議：{currentMeetingTitle}
+          {currentMeetingTitle}
         </Text>
         <Timer
           currentIndex={currentIndex}

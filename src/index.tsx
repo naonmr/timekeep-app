@@ -31,7 +31,12 @@ const theme = extendTheme({
   },
 
   fonts: {
-    body: "Open Sans",
+    body: `"Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;`,
     heading: "Open Sans",
     mono: "Open Sans",
   },
