@@ -60,7 +60,7 @@ const InputAgenda: React.VFC<any> = (props) => {
 
   return (
     <>
-      <Box p="4">
+      <Box m="4">
         <VStack>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={errors.title}>

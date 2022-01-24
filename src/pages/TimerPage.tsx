@@ -1,3 +1,4 @@
+import { Box, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -59,18 +60,22 @@ const TimerPage = () => {
   return (
     <>
       <Header />
-      <br></br>
-      <h1>{currentMeetingTitle}</h1>
-      <p>total time {totalTime}m</p>
-      <div>現在のアジェンダ： {agendas[currentIndex].title}</div>
-      <Timer
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-        timeList={timeList}
-        agendas={agendas}
-        totalTime={totalTime}
-      />
-      <AgendaList agendas={agendas} currentMeetingTitle={currentMeetingTitle} />
+      <Box mt="4">
+        <Text fontSize="lg" as="u">
+          本日の会議：{currentMeetingTitle}
+        </Text>
+        <Timer
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          timeList={timeList}
+          agendas={agendas}
+          totalTime={totalTime}
+        />
+        <AgendaList
+          agendas={agendas}
+          currentMeetingTitle={currentMeetingTitle}
+        />
+      </Box>
     </>
   );
 };

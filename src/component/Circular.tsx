@@ -11,7 +11,7 @@ const Circular = (props: Props) => {
     <>
       <CircularProgress
         value={props.value}
-        size="150px"
+        size="120px"
         thickness="4px"
         color={props.color}
       >

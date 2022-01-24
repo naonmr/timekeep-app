@@ -3,6 +3,7 @@ import AgendaList from "./AgendaList";
 import { PrimaryButton } from "./Button";
 import Circular from "./Circular";
 import useSound from "use-sound";
+import { Center, HStack, Text, VStack } from "@chakra-ui/react";
 // const sound = require("../../public/end.mp3");
 
 type TimerProps = {
@@ -14,7 +15,7 @@ type TimerProps = {
 };
 
 export default function Timer(props: TimerProps) {
-  const { currentIndex, setCurrentIndex, timeList, totalTime } = props;
+  const { currentIndex, setCurrentIndex, timeList, totalTime, agendas } = props;
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [secondsLeftOfTotal, setSecondsLeftOfTotal] = useState(totalTime * 60);
   const [isWorking, setIsWorking] = useState(false);
@@ -80,7 +81,7 @@ export default function Timer(props: TimerProps) {
       }
 
       tick();
-    }, 100);
+    }, 1000);
     return () => clearInterval(interval);
   }, [timeList, totalTime]);
 
@@ -98,16 +99,33 @@ export default function Timer(props: TimerProps) {
 
   return (
     <div className="App">
-      <Circular
-        value={percentage}
-        text={`${minute}:${seconds}`}
-        color="#276749"
-      />
-      <Circular
-        value={percentageOfTotal}
-        text={`${minuteOfTotal}:${secondsOfTotal}`}
-        color="#ED8936"
-      />
+      <Center mt="4" mb="2">
+        <VStack>
+          <HStack>
+            <Text fontSize="sm" w="120px">
+              「{agendas[currentIndex].title}」残り
+            </Text>
+            <Text fontSize="sm" w="120px">
+              会議時間残り
+            </Text>
+          </HStack>
+
+          <HStack>
+            <Circular
+              value={percentage}
+              text={`${minute}:${seconds}`}
+              color="#487d9f"
+            />
+
+            <Circular
+              value={percentageOfTotal}
+              text={`${minuteOfTotal}:${secondsOfTotal}`}
+              color="#c79139"
+            />
+          </HStack>
+        </VStack>
+      </Center>
+
       {isEnd ? (
         "end"
       ) : isWorking ? (

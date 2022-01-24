@@ -20,7 +20,7 @@ const AgendaList = (props: any) => {
   return (
     <>
       <></>
-      <Table variant="simple">
+      <Table variant="simple" size="sm">
         <TableCaption>{currentMeetingTitle}</TableCaption>
         <Thead>
           <Tr>
