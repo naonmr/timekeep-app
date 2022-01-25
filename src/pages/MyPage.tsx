@@ -59,7 +59,7 @@ const MyPage = (props: MyPageProps) => {
       <Box>
         <Header />
         <br></br>
-        <Table variant="simple" size="sm" W="100%">
+        <Table variant="simple" size="sm">
           <TableCaption>Your Meeting is here</TableCaption>
           <Thead>
             <Tr>
