@@ -1,6 +1,5 @@
 import { RouteProps, Route, Redirect } from "react-router-dom";
 import { useAuthContext } from "./AuthContext";
-import Login from "../pages/Login";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 

@@ -8,7 +8,6 @@ import {
   FormControl,
   FormLabel,
   HStack,
-  Spacer,
   Switch,
   Text,
   VStack,

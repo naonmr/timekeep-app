@@ -1,7 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { User } from "./User";
-import firebase from "./firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { createContext, useContext, useState } from "react";
 
 type AuthContextProps = {
   currentUser?: string | null | undefined;

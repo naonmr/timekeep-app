@@ -14,7 +14,6 @@ import {
   TableCaption,
   Box,
   HStack,
-  Spacer,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
 

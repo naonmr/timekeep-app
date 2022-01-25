@@ -13,8 +13,6 @@ import {
   List,
   ListItem,
   ListIcon,
-  Stack,
-  InputRightAddon,
 } from "@chakra-ui/react";
 import { CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { PrimaryButton, SubButton } from "./Button";
