@@ -1,7 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { PrimaryButton } from "./Button";
+import { PrimaryButton, PrimaryButton2 } from "./Button";
 import Circular from "./Circular";
-import { Center, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  FormControl,
+  FormLabel,
+  HStack,
+  Spacer,
+  Switch,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 
 type TimerProps = {
   currentIndex: number;
@@ -12,16 +24,21 @@ type TimerProps = {
 };
 
 export default function Timer(props: TimerProps) {
+  const history = useHistory();
+
   const { currentIndex, setCurrentIndex, timeList, totalTime, agendas } = props;
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [secondsLeftOfTotal, setSecondsLeftOfTotal] = useState(totalTime * 60);
   const [isWorking, setIsWorking] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
 
+  const [sound, setSound] = useState(true);
+
   const isWorkingRef = useRef(isWorking);
   const currentIndexRef = useRef(currentIndex);
   const secondsLeftRef = useRef(secondsLeft);
   const secondsLeftOfTotalRef = useRef(totalTime);
+  const soundRef = useRef(sound);
 
   const start = () => {
     isWorkingRef.current = true;
@@ -72,6 +89,12 @@ export default function Timer(props: TimerProps) {
         return;
       }
       if (secondsLeftRef.current === 0) {
+        console.log("🌸", soundRef);
+        if (soundRef.current) {
+          const audio = new Audio(`${process.env.PUBLIC_URL}/end.mp3`);
+          audio.play();
+        }
+
         return switchNextAgenda();
       }
 
@@ -122,12 +145,39 @@ export default function Timer(props: TimerProps) {
       </Center>
 
       {isEnd ? (
-        "end"
+        <PrimaryButton2 onclick={() => history.push("")} text="pause" />
       ) : isWorking ? (
         <PrimaryButton onclick={pause} text="pause" />
       ) : (
         <PrimaryButton onclick={start} text="start" />
       )}
+
+      <Center>
+        <Box mt="4">
+          <FormControl display="flex" alignItems="center">
+            <FormLabel htmlFor="email-alerts" mb="0">
+              sound off ⇄ on?
+            </FormLabel>
+            <Switch
+              defaultIsChecked
+              id="sound-on-off"
+              colorScheme={"telegram"}
+              onChange={(e) => {
+                console.log("e:", e.target.checked);
+                if (e.target.checked === true) {
+                  soundRef.current = true;
+                  setSound(() => true);
+                  console.log(soundRef.current);
+                }
+                if (e.target.checked === false) {
+                  soundRef.current = false;
+                  setSound(false);
+                }
+              }}
+            />
+          </FormControl>
+        </Box>
+      </Center>
     </div>
   );
 }
