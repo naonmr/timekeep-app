@@ -14,6 +14,8 @@ import {
   TableCaption,
   Box,
   HStack,
+  Center,
+  Spacer,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
 
@@ -60,57 +62,59 @@ const MyPage = (props: MyPageProps) => {
       <Box w="100%">
         <Header />
         <br></br>
-        <Box float="right" p="2">
-          <PrimaryButton
-            text="new"
-            onclick={() => history.push("/setup-agenda")}
-          />
-        </Box>
-        <Box w="100%" minW="100%" box-sizing="border-box">
-          <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
-            <TableCaption>Your Meeting is here</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Meeting Title</Th>
-                <Th w="5%"> </Th>
-                <Th w="10%"></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {!(meetings === null) &&
-                meetings.map((meeting: Meetings) => {
-                  return (
-                    <Tr key={meeting.id}>
-                      <Td>{meeting.title}</Td>
-                      <Td>
-                        <PrimaryButton2
-                          text="Start"
-                          onclick={async () => {
-                            history.push(`/timer/${meeting.id}`);
-                          }}
-                        />
-                      </Td>
 
-                      <Td>
-                        <HStack float="right">
-                          <SubButton
-                            text="Fix"
+        <Center>
+          <Box w="80%" minW="80%" box-sizing="border-box">
+            <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
+              <TableCaption>Your Meeting is here</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>Meeting Title</Th>
+                  <Th w="5%"> </Th>
+                  <Th w="10%" isNumeric>
+                    <PrimaryButton
+                      text="new"
+                      onclick={() => history.push("/setup-agenda")}
+                    />
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {!(meetings === null) &&
+                  meetings.map((meeting: Meetings) => {
+                    return (
+                      <Tr key={meeting.id}>
+                        <Td>{meeting.title}</Td>
+                        <Td>
+                          <PrimaryButton2
+                            text="Start"
                             onclick={async () => {
-                              history.push(`/fix-agenda/${meeting.id}`);
+                              history.push(`/timer/${meeting.id}`);
                             }}
                           />
-                          <SubButton
-                            text="Delete"
-                            onclick={() => deleteMeeting(meeting.id)}
-                          />
-                        </HStack>
-                      </Td>
-                    </Tr>
-                  );
-                })}
-            </Tbody>
-          </Table>
-        </Box>
+                        </Td>
+
+                        <Td>
+                          <HStack float="right">
+                            <SubButton
+                              text="Fix"
+                              onclick={async () => {
+                                history.push(`/fix-agenda/${meeting.id}`);
+                              }}
+                            />
+                            <SubButton
+                              text="Delete"
+                              onclick={() => deleteMeeting(meeting.id)}
+                            />
+                          </HStack>
+                        </Td>
+                      </Tr>
+                    );
+                  })}
+              </Tbody>
+            </Table>
+          </Box>
+        </Center>
       </Box>
     </>
   );
