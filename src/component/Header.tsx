@@ -30,15 +30,17 @@ const Header = () => {
 
   return (
     <>
-      <Box>
-        <HStack p="2" bg="brand.100">
+      <Box bg="brand.100" w="100%" minW="100%">
+        <Flex p="2" alignItems="center">
           <IconButton
             aria-label="home"
             icon={<AiFillHome />}
             bg="brand.300"
             onClick={() => history.push("/")}
           />
-          <Heading as="h1" size="md" color="brand.300">
+          <Spacer></Spacer>
+
+          <Heading as="h1" size="md" color="brand.300" wordBreak="break-all">
             TimeKeep App
           </Heading>
           <Spacer />
@@ -57,7 +59,7 @@ const Header = () => {
               </MenuItem>
             </MenuList>
           </Menu>
-        </HStack>
+        </Flex>
       </Box>
     </>
   );

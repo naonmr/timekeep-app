@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "./Button";
 import Circular from "./Circular";
-// import useSound from "use-sound";
-import { Center, HStack, Text, VStack } from "@chakra-ui/react";
-// const sound = require("../../public/end.mp3");
+import { Center, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 
 type TimerProps = {
   currentIndex: number;
@@ -51,8 +49,6 @@ export default function Timer(props: TimerProps) {
 
   const switchNextAgenda = () => {
     // TODO 音を鳴らす
-    // const [play] = useSound(sound);
-    // play();
 
     if (timeList.length <= currentIndexRef.current + 1) {
       // 全てのアジェンダが終了したら実行される処理
@@ -109,7 +105,7 @@ export default function Timer(props: TimerProps) {
             </Text>
           </HStack>
 
-          <HStack>
+          <Flex>
             <Circular
               value={percentage}
               text={`${minute}:${seconds}`}
@@ -121,7 +117,7 @@ export default function Timer(props: TimerProps) {
               text={`${minuteOfTotal}:${secondsOfTotal}`}
               color="#c79139"
             />
-          </HStack>
+          </Flex>
         </VStack>
       </Center>
 

@@ -1,3 +1,4 @@
+import { Box, Center } from "@chakra-ui/react";
 import axios from "axios";
 import { useHistory, withRouter } from "react-router-dom";
 import Header from "../component/Header";
@@ -25,11 +26,13 @@ const SetupAgenda = () => {
   return (
     <>
       <Header />
-      <InputAgenda
-        defaultAgenda={defaultAgenda}
-        defaultMtgTitle={defaultMtgTitle}
-        onSubmit={onSubmit}
-      />
+      <Box>
+        <InputAgenda
+          defaultAgenda={defaultAgenda}
+          defaultMtgTitle={defaultMtgTitle}
+          onSubmit={onSubmit}
+        />
+      </Box>
     </>
   );
 };

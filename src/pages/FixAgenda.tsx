@@ -62,6 +62,7 @@ const FixAgenda: any = () => {
   return (
     <>
       <Header />
+      <br></br>
       <InputAgenda
         defaultAgenda={currentAgendas}
         defaultMtgTitle={currentMeetingTitle}
