@@ -117,7 +117,7 @@ const SignUp = () => {
                   {errors.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
-              <PrimaryButton text="Sign Up" type="submit" mt={3} />
+              <PrimaryButton text="Signup" type="submit" mt={3} />
             </form>
           </Center>
           <Box mt={2}>
