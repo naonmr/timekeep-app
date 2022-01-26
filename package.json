@@ -1,6 +1,7 @@
 {
   "name": "timekeep-app",
   "version": "0.1.0",
+  "homepage": "./",
   "engines": {
     "node": "16.13.1"
   },
