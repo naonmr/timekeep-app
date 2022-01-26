@@ -144,7 +144,7 @@ export default function Timer(props: TimerProps) {
       </Center>
 
       {isEnd ? (
-        <PrimaryButton2 onclick={() => history.push("")} text="pause" />
+        <PrimaryButton2 onclick={() => history.push("/mypage")} text="pause" />
       ) : isWorking ? (
         <PrimaryButton onclick={pause} text="pause" />
       ) : (

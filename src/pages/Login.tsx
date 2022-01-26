@@ -37,7 +37,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       await onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
-      history.push("/");
+      history.push("/mypage");
     } catch (error) {
       if (
         String(error) === "FirebaseError: Firebase: Error (auth/missing-email)."
