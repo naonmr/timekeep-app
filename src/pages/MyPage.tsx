@@ -18,6 +18,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
+import Meetinglist from "../component/MeetingList";
 
 type MyPageProps = {
   meetingId?: number | undefined;
@@ -40,17 +41,18 @@ const MyPage = (props: MyPageProps) => {
   const getMeetingList = async () => {
     try {
       const res = await axios.get(`/api/meetings/${currentUser}`);
-      await setMeetings(res.data);
+      setMeetings(res.data);
       console.log(res.data);
       console.log(meetings);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
-    getMeetingList();
-  }, []);
+    if (currentUser) {
+      getMeetingList();
+    }
+  }, [currentUser]);
 
   const deleteMeeting = async (id: number) => {
     try {
@@ -66,7 +68,6 @@ const MyPage = (props: MyPageProps) => {
       <Box w="100%">
         <Header />
         <br></br>
-
         <Center>
           <Box w="80%" minW="80%" box-sizing="border-box">
             <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
@@ -84,6 +85,9 @@ const MyPage = (props: MyPageProps) => {
                 </Tr>
               </Thead>
               <Tbody>
+                {console.log(meetings)}
+                {/* <Meetinglist meetings={meetings} /> */}
+
                 {meetings.map((meeting: Meetings) => {
                   return (
                     <Tr key={meeting.id}>
