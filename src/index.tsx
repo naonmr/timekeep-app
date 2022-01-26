@@ -55,11 +55,11 @@ const theme = extendTheme({
 });
 
 ReactDOM.render(
-  <BrowserRouter>
+  <React.StrictMode>
     <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
-  </BrowserRouter>,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
