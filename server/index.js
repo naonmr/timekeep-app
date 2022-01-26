@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 app.get("/*", function (req, res) {
-  res.sendFile(path.join("https://timekeep-app.herokuapp.com"), function (err) {
+  res.sendFile(__dirname + "../public/index.html", function (err) {
     if (err) {
       res.status(500).send(err);
     }
