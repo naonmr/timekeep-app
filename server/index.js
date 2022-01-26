@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 app.get("/*", function (req, res) {
-  res.sendFile(__dirname + "../public/index.html", function (err) {
+  res.sendFile("index.html", { root: __dirname }, function (err) {
     if (err) {
       res.status(500).send(err);
     }
