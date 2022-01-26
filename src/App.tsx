@@ -17,7 +17,7 @@ const App: React.FC = () => {
     <>
       <div className="App">
         <AuthProvider>
-          <HashRouter>
+          <BrowserRouter>
             <Switch>
               <Route path="/signup" component={SignUp} />
               <Route path="/is-register" component={IsRegister} />
@@ -31,7 +31,7 @@ const App: React.FC = () => {
               />
               <PrivateRoute path="/timer/:meetindId" children={<TimerPage />} />
             </Switch>
-          </HashRouter>
+          </BrowserRouter>
         </AuthProvider>
       </div>
     </>
