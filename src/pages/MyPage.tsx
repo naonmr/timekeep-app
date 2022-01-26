@@ -31,7 +31,9 @@ type Meetings = {
 };
 
 const MyPage = (props: MyPageProps) => {
-  const [meetings, setMeetings] = useState<Meetings[] | null>(null);
+  const [meetings, setMeetings] = useState<Meetings[]>([
+    { authorId: "", id: 1, title: "" },
+  ]);
   const { currentUser } = useAuthContext();
   const history = useHistory();
 
@@ -82,37 +84,36 @@ const MyPage = (props: MyPageProps) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {meetings &&
-                  meetings.map((meeting: Meetings) => {
-                    return (
-                      <Tr key={meeting.id}>
-                        <Td>{meeting.title}</Td>
-                        <Td>
-                          <PrimaryButton2
-                            text="Start"
+                {meetings.map((meeting: Meetings) => {
+                  return (
+                    <Tr key={meeting.id}>
+                      <Td>{meeting.title}</Td>
+                      <Td>
+                        <PrimaryButton2
+                          text="Start"
+                          onclick={async () => {
+                            history.push(`/timer/${meeting.id}`);
+                          }}
+                        />
+                      </Td>
+
+                      <Td>
+                        <HStack float="right">
+                          <SubButton
+                            text="Fix"
                             onclick={async () => {
-                              history.push(`/timer/${meeting.id}`);
+                              history.push(`/fix-agenda/${meeting.id}`);
                             }}
                           />
-                        </Td>
-
-                        <Td>
-                          <HStack float="right">
-                            <SubButton
-                              text="Fix"
-                              onclick={async () => {
-                                history.push(`/fix-agenda/${meeting.id}`);
-                              }}
-                            />
-                            <SubButton
-                              text="Delete"
-                              onclick={() => deleteMeeting(meeting.id)}
-                            />
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    );
-                  })}
+                          <SubButton
+                            text="Delete"
+                            onclick={() => deleteMeeting(meeting.id)}
+                          />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  );
+                })}
               </Tbody>
             </Table>
           </Box>
