@@ -17,21 +17,21 @@ const App: React.FC = () => {
     <>
       <div className="App">
         <AuthProvider>
-          <BrowserRouter>
-            <Switch>
-              <Route path="/signup" component={SignUp} />
-              <Route path="/is-register" component={IsRegister} />
-              <Route path="/login" component={Login} />
+          {/* <BrowserRouter> */}
+          <Switch>
+            <Route path="/signup" component={SignUp} />
+            <Route path="/is-register" component={IsRegister} />
+            <Route path="/login" component={Login} />
 
-              <PrivateRoute exact path="/" children={<MyPage />} />
-              <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
-              <PrivateRoute
-                path="/fix-agenda/:meetindId"
-                children={<FixAgenda />}
-              />
-              <PrivateRoute path="/timer/:meetindId" children={<TimerPage />} />
-            </Switch>
-          </BrowserRouter>
+            <PrivateRoute exact path="/" children={<MyPage />} />
+            <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
+            <PrivateRoute
+              path="/fix-agenda/:meetindId"
+              children={<FixAgenda />}
+            />
+            <PrivateRoute path="/timer/:meetindId" children={<TimerPage />} />
+          </Switch>
+          {/* </BrowserRouter> */}
         </AuthProvider>
       </div>
     </>
