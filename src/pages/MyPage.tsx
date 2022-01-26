@@ -39,6 +39,8 @@ const MyPage = (props: MyPageProps) => {
     try {
       const res = await axios.get(`/api/meetings/${currentUser}`);
       await setMeetings(res.data);
+      console.log(res.data);
+      console.log(meetings);
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +82,7 @@ const MyPage = (props: MyPageProps) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {!(meetings === null) &&
+                {meetings &&
                   meetings.map((meeting: Meetings) => {
                     return (
                       <Tr key={meeting.id}>
