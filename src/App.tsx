@@ -24,7 +24,7 @@ const App: React.FC = () => {
             <Route path="/is-register" component={IsRegister} />
             <Route path="/login" component={Login} />
 
-            <PrivateRoute exact path="/mypage" children={<MyPage />} />
+            <PrivateRoute path="/mypage" children={<MyPage />} />
             <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
             <PrivateRoute
               path="/fix-agenda/:meetindId"
