@@ -9,20 +9,20 @@ import TimerPage from "./pages/TimerPage";
 
 import PrivateRoute from "./firebase/PrivateRoute";
 import { AuthProvider } from "./firebase/AuthContext";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Router } from "react-router-dom";
 import IsRegister from "./pages/IsRegister";
 
 const App: React.FC = () => {
   return (
     <>
       <AuthProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Switch>
             <Route path="/signup" component={SignUp} />
             <Route path="/is-register" component={IsRegister} />
             <Route path="/login" component={Login} />
 
-            <PrivateRoute exact path="/" children={<MyPage />} />
+            <PrivateRoute children={<MyPage />} />
             <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
             <PrivateRoute
               path="/fix-agenda/:meetindId"
