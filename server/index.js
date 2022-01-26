@@ -13,6 +13,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
+app.get("/*", (req, res) => res.send("Index Page"));
+
 app.post("/api/user/:uid", async (req, res) => {
   const data = req.body;
   console.log(data);
