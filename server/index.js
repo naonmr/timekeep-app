@@ -13,13 +13,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
-app.get("/*", function (req, res) {
-  res.sendFile("index.html", { root: __dirname }, function (err) {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
-});
+// app.get("/*", function (req, res) {
+//   res.sendFile("index.html", { root: __dirname }, function (err) {
+//     if (err) {
+//       res.status(500).send(err);
+//     }
+//   });
+// });
 
 app.post("/api/user/:uid", async (req, res) => {
   const data = req.body;
