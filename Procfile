@@ -1,1 +1,1 @@
-release:npx prisma migrate dev && node prisma/seed.js
+release: npx prisma migrate dev && node prisma/seed.js
