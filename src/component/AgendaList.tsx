@@ -6,6 +6,7 @@ import {
   Th,
   Td,
   TableCaption,
+  Center,
 } from "@chakra-ui/react";
 
 type Agenda = {
@@ -19,25 +20,27 @@ const AgendaList = (props: any) => {
   return (
     <>
       <></>
-      <Table variant="simple" size="sm" w="80%" minW="80%">
-        <TableCaption>{currentMeetingTitle}</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>Agenda Title</Th>
-            <Th>time</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {agendas.map((agenda: Agenda) => {
-            return (
-              <Tr key={agenda.title}>
-                <Td>{agenda.title}</Td>
-                <Td>{agenda.time}min</Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+      <Center>
+        <Table variant="simple" size="sm" w="80%" minW="80%">
+          <TableCaption>{currentMeetingTitle}</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Agenda Title</Th>
+              <Th>time</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {agendas.map((agenda: Agenda) => {
+              return (
+                <Tr key={agenda.title}>
+                  <Td>{agenda.title}</Td>
+                  <Td>{agenda.time}min</Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Center>
     </>
   );
 };
