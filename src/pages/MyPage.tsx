@@ -18,6 +18,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../firebase/AuthContext";
+import Meetinglist from "../component/MeetingList";
 
 type MyPageProps = {
   meetingId?: number | undefined;
@@ -31,22 +32,27 @@ type Meetings = {
 };
 
 const MyPage = (props: MyPageProps) => {
-  const [meetings, setMeetings] = useState<Meetings[] | null>(null);
+  const [meetings, setMeetings] = useState<Meetings[]>([
+    { authorId: "", id: 1, title: "" },
+  ]);
   const { currentUser } = useAuthContext();
   const history = useHistory();
 
   const getMeetingList = async () => {
     try {
       const res = await axios.get(`/api/meetings/${currentUser}`);
-      await setMeetings(res.data);
+      setMeetings(res.data);
+      console.log(res.data);
+      console.log(meetings);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
-    getMeetingList();
-  }, []);
+    if (currentUser) {
+      getMeetingList();
+    }
+  }, [currentUser]);
 
   const deleteMeeting = async (id: number) => {
     try {
@@ -62,10 +68,9 @@ const MyPage = (props: MyPageProps) => {
       <Box w="100%">
         <Header />
         <br></br>
-
         <Center>
           <Box w="80%" minW="80%" box-sizing="border-box">
-            <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
+            {/* <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
               <TableCaption>Your Meeting is here</TableCaption>
               <Thead>
                 <Tr>
@@ -79,40 +84,41 @@ const MyPage = (props: MyPageProps) => {
                   </Th>
                 </Tr>
               </Thead>
-              <Tbody>
-                {!(meetings === null) &&
-                  meetings.map((meeting: Meetings) => {
-                    return (
-                      <Tr key={meeting.id}>
-                        <Td>{meeting.title}</Td>
-                        <Td>
-                          <PrimaryButton2
-                            text="Start"
+              <Tbody> */}
+            <Meetinglist meetings={meetings} />
+
+            {/* {meetings.map((meeting: Meetings) => {
+                  return (
+                    <Tr key={meeting.id}>
+                      <Td>{meeting.title}</Td>
+                      <Td>
+                        <PrimaryButton2
+                          text="Start"
+                          onclick={async () => {
+                            history.push(`/timer/${meeting.id}`);
+                          }}
+                        />
+                      </Td>
+
+                      <Td>
+                        <HStack float="right">
+                          <SubButton
+                            text="Fix"
                             onclick={async () => {
-                              history.push(`/timer/${meeting.id}`);
+                              history.push(`/fix-agenda/${meeting.id}`);
                             }}
                           />
-                        </Td>
-
-                        <Td>
-                          <HStack float="right">
-                            <SubButton
-                              text="Fix"
-                              onclick={async () => {
-                                history.push(`/fix-agenda/${meeting.id}`);
-                              }}
-                            />
-                            <SubButton
-                              text="Delete"
-                              onclick={() => deleteMeeting(meeting.id)}
-                            />
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    );
-                  })}
-              </Tbody>
-            </Table>
+                          <SubButton
+                            text="Delete"
+                            onclick={() => deleteMeeting(meeting.id)}
+                          />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  );
+                })} */}
+            {/* </Tbody>
+            </Table> */}
           </Box>
         </Center>
       </Box>

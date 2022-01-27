@@ -20,7 +20,7 @@ const SetupAgenda = () => {
   const defaultMtgTitle = "";
   const onSubmit = async (data: Contents) => {
     await axios.post(`/api/meetings/${currentUser}`, data);
-    history.push("/");
+    history.push("/mypage");
   };
   return (
     <>

@@ -56,7 +56,7 @@ const FixAgenda: any = () => {
       await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
     };
     await putMeeting();
-    history.push("/");
+    history.push("/mypage");
   };
 
   return (
