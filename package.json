@@ -1,6 +1,7 @@
 {
   "name": "timekeep-app",
   "version": "0.1.0",
+  "homepage": "https://timekeep-app.herokuapp.com/",
   "engines": {
     "node": "16.13.1"
   },
