@@ -65,7 +65,13 @@ const MyPage = (props: MyPageProps) => {
 
         <Center>
           <Box w="80%" minW="80%" box-sizing="border-box">
-            <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
+            <Table
+              variant="simple"
+              size="sm"
+              w="80%"
+              minW="80%"
+              box-sizing="border-box"
+            >
               <TableCaption>Your Meeting is here</TableCaption>
               <Thead>
                 <Tr>
