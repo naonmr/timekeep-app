@@ -6,6 +6,7 @@ import MyPage from "./pages/MyPage";
 import SetupAgenda from "./pages/SetupAgenda";
 import FixAgenda from "./pages/FixAgenda";
 import TimerPage from "./pages/TimerPage";
+import Home from "./pages/Home";
 
 import PrivateRoute from "./firebase/PrivateRoute";
 import { AuthProvider } from "./firebase/AuthContext";
@@ -19,12 +20,13 @@ const App: React.FC = () => {
         <AuthProvider>
           <BrowserRouter>
             <Switch>
+              <Route exact path="/" children={<Home />} />
               <Route path="/signup" component={SignUp} />
               <Route path="/is-register" component={IsRegister} />
               <Route path="/login" component={Login} />
 
-              <PrivateRoute exact path="/" children={<MyPage />} />
-              <PrivateRoute path="/setup-agenda/" children={<SetupAgenda />} />
+              <PrivateRoute exact path="/mypage" children={<MyPage />} />
+              <PrivateRoute path="/setup-agenda" children={<SetupAgenda />} />
               <PrivateRoute
                 path="/fix-agenda/:meetindId"
                 children={<FixAgenda />}
