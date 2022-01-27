@@ -70,7 +70,7 @@ const MyPage = (props: MyPageProps) => {
         <br></br>
         <Center>
           <Box w="80%" minW="80%" box-sizing="border-box">
-            <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
+            {/* <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
               <TableCaption>Your Meeting is here</TableCaption>
               <Thead>
                 <Tr>
@@ -84,11 +84,10 @@ const MyPage = (props: MyPageProps) => {
                   </Th>
                 </Tr>
               </Thead>
-              <Tbody>
-                {console.log(meetings)}
-                {/* <Meetinglist meetings={meetings} /> */}
+              <Tbody> */}
+            <Meetinglist meetings={meetings} />
 
-                {meetings.map((meeting: Meetings) => {
+            {/* {meetings.map((meeting: Meetings) => {
                   return (
                     <Tr key={meeting.id}>
                       <Td>{meeting.title}</Td>
@@ -117,9 +116,9 @@ const MyPage = (props: MyPageProps) => {
                       </Td>
                     </Tr>
                   );
-                })}
-              </Tbody>
-            </Table>
+                })} */}
+            {/* </Tbody>
+            </Table> */}
           </Box>
         </Center>
       </Box>

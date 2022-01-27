@@ -163,6 +163,9 @@ app.get("/api/agendas/:uid", async (req, res) => {
   res.json(resData);
 });
 
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server ready at ${PORT}`);

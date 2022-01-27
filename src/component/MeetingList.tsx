@@ -27,37 +27,55 @@ type Meetings = {
 
 const Meetinglist = (props: any) => {
   const { meetings } = props;
+  const history = useHistory();
 
   return (
     <>
       {meetings.map((meeting: Meetings) => {
         return (
-          <Tr key={meeting.id}>
-            <Td>{meeting.title}</Td>
-            <Td>
-              <PrimaryButton2
-                text="Start"
-                // onclick={async () => {
-                //   history.push(`/timer/${meeting.id}`);
-                // }}
-              />
-            </Td>
+          <Table variant="simple" size="sm" w="100%" box-sizing="border-box">
+            <TableCaption>Your Meeting is here</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Meeting Title</Th>
+                <Th w="5%"> </Th>
+                <Th w="10%" isNumeric>
+                  <PrimaryButton
+                    text="new"
+                    onclick={() => history.push("/setup-agenda")}
+                  />
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr key={meeting.id}>
+                <Td>{meeting.title}</Td>
+                <Td>
+                  <PrimaryButton2
+                    text="Start"
+                    // onclick={async () => {
+                    //   history.push(`/timer/${meeting.id}`);
+                    // }}
+                  />
+                </Td>
 
-            <Td>
-              <HStack float="right">
-                <SubButton
-                  text="Fix"
-                  // onclick={async () => {
-                  //   history.push(`/fix-agenda/${meeting.id}`);
-                  // }}
-                />
-                <SubButton
-                  text="Delete"
-                  // onclick={() => deleteMeeting(meeting.id)}
-                />
-              </HStack>
-            </Td>
-          </Tr>
+                <Td>
+                  <HStack float="right">
+                    <SubButton
+                      text="Fix"
+                      // onclick={async () => {
+                      //   history.push(`/fix-agenda/${meeting.id}`);
+                      // }}
+                    />
+                    <SubButton
+                      text="Delete"
+                      // onclick={() => deleteMeeting(meeting.id)}
+                    />
+                  </HStack>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
         );
       })}
     </>
