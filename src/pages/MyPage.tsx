@@ -45,8 +45,10 @@ const MyPage = (props: MyPageProps) => {
   };
 
   useEffect(() => {
-    getMeetingList();
-  }, []);
+    if (currentUser) {
+      getMeetingList();
+    }
+  }, [currentUser]);
 
   const deleteMeeting = async (id: number) => {
     try {

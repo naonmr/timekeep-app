@@ -35,7 +35,7 @@ const Header = () => {
             aria-label="home"
             icon={<AiFillHome />}
             bg="brand.300"
-            onClick={() => history.push("/")}
+            onClick={() => history.push("/mypage")}
           />
           <Spacer></Spacer>
 
