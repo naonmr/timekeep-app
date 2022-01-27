@@ -31,7 +31,7 @@ type Meetings = {
 };
 
 const MyPage = (props: MyPageProps) => {
-  const [meetings, setMeetings] = useState<Meetings[] | null>(null);
+  const [meetings, setMeetings] = useState<Meetings[]>([]);
   const { currentUser } = useAuthContext();
   const history = useHistory();
 
