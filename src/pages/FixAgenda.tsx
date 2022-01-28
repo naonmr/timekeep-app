@@ -35,15 +35,21 @@ const FixAgenda: any = () => {
           `/api/agendas/${currentUser}?meetingId=${meetingId}`
         );
 
-        const agendas = res.data.agendas.map((agenda: any) => {
-          return { title: agenda.title, time: agenda.time };
-        });
+        console.log("statu", res);
+        if (res.status === 200) {
+          const agendas = res.data.agendas.map((agenda: any) => {
+            return { title: agenda.title, time: agenda.time };
+          });
 
-        setCurrentMeetingTitle(res.data.title);
-        setCurrentAgendas(() => agendas);
-        console.log(currentMeetingTitle, currentAgendas);
+          setCurrentMeetingTitle(res.data.title);
+          setCurrentAgendas(() => agendas);
+          console.log(currentMeetingTitle, currentAgendas);
+        }
+        console.log(res.status);
       } catch (error) {
         console.log(error);
+
+        history.push("/mypage");
       }
     };
 

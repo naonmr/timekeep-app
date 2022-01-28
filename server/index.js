@@ -141,26 +141,34 @@ app.get("/api/agendas/:uid", async (req, res) => {
     },
   });
 
-  let agendas = await prisma.agenda.findMany({
-    where: {
-      meetingId: meetingId,
-    },
-  });
+  if (meetingInfo) {
+    let agendas = await prisma.agenda.findMany({
+      where: {
+        meetingId: meetingId,
+      },
+    });
 
-  console.log("🐵", agendas);
-  // getした情報を並び替える;
-  for (let outer = 0; outer < agendas.length - 1; outer++) {
-    for (let i = agendas.length - 1; i > outer; i--) {
-      if (agendas[i].order < agendas[i - 1].order) {
-        let tmp = agendas[i];
-        agendas[i] = agendas[i - 1];
-        agendas[i - 1] = tmp;
+    if (agendas.length > 0) {
+      console.log("🐵", agendas);
+      // getした情報を並び替える;
+      for (let outer = 0; outer < agendas.length - 1; outer++) {
+        for (let i = agendas.length - 1; i > outer; i--) {
+          if (agendas[i].order < agendas[i - 1].order) {
+            let tmp = agendas[i];
+            agendas[i] = agendas[i - 1];
+            agendas[i - 1] = tmp;
+          }
+        }
       }
+      const resData = { title: meetingInfo.title, agendas: agendas };
+      console.log(resData);
+      res.status(200).json(resData);
     }
   }
-  const resData = { title: meetingInfo.title, agendas: agendas };
-  console.log(resData);
-  res.json(resData);
+  if (!meetingInfo) {
+    console.log("違う");
+    res.status(403).json("not auther");
+  }
 });
 
 app.get("/*", function (req, res) {
