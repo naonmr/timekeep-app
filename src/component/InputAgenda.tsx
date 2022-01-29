@@ -17,7 +17,7 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
-import { CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { CloseIcon, DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 type InputAgendaProps = {
   defaultAgenda: { title: String; time: Number }[];
@@ -120,7 +120,7 @@ const InputAgenda = (props: InputAgendaProps) => {
                               <Spacer></Spacer>
                               <Spacer></Spacer>
 
-                              <CloseIcon
+                              <DeleteIcon
                                 type="button"
                                 onClick={() => remove(index)}
                               />
@@ -174,7 +174,7 @@ const InputAgenda = (props: InputAgendaProps) => {
                           <VStack>
                             <Spacer></Spacer>
 
-                            <CloseIcon
+                            <DeleteIcon
                               type="button"
                               onClick={() => remove(index)}
                             />
