@@ -1,12 +1,17 @@
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import axios from "axios";
+
+import firebase from "../firebase/firebaseConfig";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
+
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
-import firebase from "../firebase/firebaseConfig";
 
 import {
   FormControl,
@@ -17,12 +22,10 @@ import {
   FormErrorMessage,
   Link,
   Heading,
-  useEditable,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import axios from "axios";
+
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { useEffect } from "react";
+
 const SignUp = () => {
   const {
     handleSubmit,

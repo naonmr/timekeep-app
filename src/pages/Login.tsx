@@ -22,7 +22,6 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { type } from "os";
 import { useEffect } from "react";
 
 const Login = () => {
