@@ -1,32 +1,34 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useAuthContext } from "../firebase/AuthContext";
+import axios from "axios";
+
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
-import { useAuthContext } from "../firebase/AuthContext";
 
-type Contents = {
+type Agenda = {
   title: string;
-  agendas: {
-    title: string;
-    time: number;
-    meetingId?: any;
-  }[];
+  time: number;
 };
 
-const FixAgenda: any = () => {
+type MeetingContents = {
+  title: string;
+  agendas: Agenda[];
+};
+
+const FixAgenda = () => {
   const { currentUser } = useAuthContext();
 
-  const [currentMeetingTitle, setCurrentMeetingTitle] = useState("");
-  const [currentAgendas, setCurrentAgendas] = useState([
+  const [currentMeetingTitle, setCurrentMeetingTitle] = useState<string>("");
+  const [currentAgendas, setCurrentAgendas] = useState<Agenda[]>([
     { title: "", time: 1 },
   ]);
 
   const history = useHistory();
-  //　paramからmeeeting Idをget
 
-  let params: any = useParams();
-  let id: number = params.meetindId;
+  //　paramからmeeeting Idをget
+  const params: any = useParams();
+  const id: number = params.meetindId;
 
   useEffect(() => {
     const getAgendaList = async (meetingId: number) => {
@@ -35,17 +37,14 @@ const FixAgenda: any = () => {
           `/api/agendas/${currentUser}?meetingId=${meetingId}`
         );
 
-        console.log("statu", res);
         if (res.status === 200) {
-          const agendas = res.data.agendas.map((agenda: any) => {
+          const agendas = res.data.agendas.map((agenda: Agenda) => {
             return { title: agenda.title, time: agenda.time };
           });
 
           setCurrentMeetingTitle(res.data.title);
           setCurrentAgendas(() => agendas);
-          console.log(currentMeetingTitle, currentAgendas);
         }
-        console.log(res.status);
       } catch (error) {
         console.log(error);
 
@@ -56,12 +55,12 @@ const FixAgenda: any = () => {
     getAgendaList(id);
   }, []);
 
-  // TODO orderを追加
-  const onSubmit = async (data: Contents) => {
-    const putMeeting = async () => {
-      await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
-    };
-    await putMeeting();
+  const putMeeting = async (data: MeetingContents) => {
+    await axios.put(`/api/meetings/${currentUser}?meetingId=${id}`, data);
+  };
+
+  const onSubmit = async (data: MeetingContents) => {
+    await putMeeting(data);
     history.push("/mypage");
   };
 
