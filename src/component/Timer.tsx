@@ -10,6 +10,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Heading,
   HStack,
   Switch,
   Text,
@@ -17,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 
 type TimerProps = {
+  currentMeetingTitle: string;
   currentIndex: number;
   setCurrentIndex: any;
   timeList: number[];
@@ -31,7 +33,14 @@ type Agenda = {
 
 export default function Timer(props: TimerProps) {
   const history = useHistory();
-  const { currentIndex, setCurrentIndex, timeList, totalTime, agendas } = props;
+  const {
+    currentMeetingTitle,
+    currentIndex,
+    setCurrentIndex,
+    timeList,
+    totalTime,
+    agendas,
+  } = props;
 
   // アジェンダタイマーの残り時間state
   const [secondsLeft, setSecondsLeft] = useState<number>(25 * 60);
@@ -152,32 +161,37 @@ export default function Timer(props: TimerProps) {
   };
 
   return (
-    <div className="App">
-      <Center mt="4" mb="2">
-        <VStack>
-          <HStack spacing="3">
-            <Text fontSize="sm" w="120px">
-              "{agendas[currentIndex].title}" 残り
-            </Text>
-            <Text fontSize="sm" w="120px">
-              会議 残り
-            </Text>
-          </HStack>
+    <Box>
+      <Center mt="2" mb="2">
+        <Box borderWidth="1px" borderRadius="lg" p={4} m={2} w="md">
+          <VStack>
+            <Heading fontSize="lg" as="u">
+              {currentMeetingTitle}
+            </Heading>
+            <HStack spacing="3">
+              <Circular
+                value={percentage}
+                text={`${minute}:${seconds}`}
+                color="brand.400"
+              />
 
-          <HStack spacing="3">
-            <Circular
-              value={percentage}
-              text={`${minute}:${seconds}`}
-              color="brand.400"
-            />
+              <Circular
+                value={percentageOfTotal}
+                text={`${minuteOfTotal}:${secondsOfTotal}`}
+                color="brand.500"
+              />
+            </HStack>
 
-            <Circular
-              value={percentageOfTotal}
-              text={`${minuteOfTotal}:${secondsOfTotal}`}
-              color="brand.500"
-            />
-          </HStack>
-        </VStack>
+            <HStack spacing="3">
+              <Text fontSize="sm" w="120px">
+                "{agendas[currentIndex].title}" 残り
+              </Text>
+              <Text fontSize="sm" w="120px">
+                会議 残り
+              </Text>
+            </HStack>
+          </VStack>
+        </Box>
       </Center>
 
       {isEnd ? (
@@ -189,7 +203,7 @@ export default function Timer(props: TimerProps) {
       )}
 
       <Center>
-        <Box mt="4" mb="2">
+        <Box mt="2" mb="4">
           <FormControl display="flex" alignItems="center">
             <FormLabel htmlFor="email-alerts" mb="0">
               sound off ⇄ on?
@@ -203,6 +217,6 @@ export default function Timer(props: TimerProps) {
           </FormControl>
         </Box>
       </Center>
-    </div>
+    </Box>
   );
 }

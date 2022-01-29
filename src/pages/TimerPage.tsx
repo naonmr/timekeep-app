@@ -7,7 +7,7 @@ import AgendaList from "../component/AgendaList";
 import Header from "../component/Header";
 import Timer from "../component/Timer";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 type Agenda = {
   title: string;
@@ -18,7 +18,7 @@ const TimerPage = () => {
   const { currentUser } = useAuthContext();
   const history = useHistory();
 
-  const [currentMeetingTitle, setCurrentMeetingTitle] = useState<String>("");
+  const [currentMeetingTitle, setCurrentMeetingTitle] = useState<string>("");
   const [agendas, setAgendas] = useState<Agenda[]>([{ title: "", time: 1 }]);
   const [timeList, setTimeList] = useState<number[]>([]);
   const [totalTime, setTotaltime] = useState<number>(0);
@@ -76,10 +76,8 @@ const TimerPage = () => {
     <>
       <Header />
       <Box mt="4">
-        <Text fontSize="lg" as="u">
-          {currentMeetingTitle}
-        </Text>
         <Timer
+          currentMeetingTitle={currentMeetingTitle}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
           timeList={timeList}
