@@ -1,10 +1,8 @@
-const { Prisma, PrismaClient } = require("@prisma/client");
-const { create } = require("domain");
+const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 // const { request } = require("http");
 const morgan = require("morgan");
 const path = require("path");
-const { title } = require("process");
 const {
   postNewUser,
   getMeetings,

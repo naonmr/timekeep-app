@@ -1,10 +1,3 @@
-export const postNewUser = async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  const newUser = await prisma.user.create({ data: data });
-  res.json(newUser);
-};
-
 export const getMeetings = async (req, res) => {
   const uid = req.params.uid;
   const meetings = await prisma.meeting.findMany({
@@ -23,6 +16,47 @@ export const getMeetings = async (req, res) => {
     }
   }
   res.json(meetings);
+};
+export const getAgendas = async (req, res) => {
+  const meetingId = Number(req.query.meetingId);
+
+  const meetingInfo = await prisma.meeting.findUnique({
+    where: {
+      id: meetingId,
+    },
+  });
+
+  if (meetingInfo) {
+    let agendas = await prisma.agenda.findMany({
+      where: {
+        meetingId: meetingId,
+      },
+    });
+
+    if (agendas.length > 0) {
+      // getした情報を並び替える;
+      for (let outer = 0; outer < agendas.length - 1; outer++) {
+        for (let i = agendas.length - 1; i > outer; i--) {
+          if (agendas[i].order < agendas[i - 1].order) {
+            let tmp = agendas[i];
+            agendas[i] = agendas[i - 1];
+            agendas[i - 1] = tmp;
+          }
+        }
+      }
+      const resData = { title: meetingInfo.title, agendas: agendas };
+      res.status(200).json(resData);
+    }
+  }
+  if (!meetingInfo) {
+    res.status(403).json("not auther");
+  }
+};
+
+export const postNewUser = async (req, res) => {
+  const data = req.body;
+  const newUser = await prisma.user.create({ data: data });
+  res.json(newUser);
 };
 
 export const postMeeting = async (req, res) => {
@@ -49,23 +83,6 @@ export const postMeeting = async (req, res) => {
   };
   const createMeeting = await prisma.meeting.create({ data: newMeeting });
   res.json(createMeeting);
-};
-
-export const deleteMeeting = async (req, res) => {
-  const meetingId = Number(req.query.meetingId);
-
-  const deleteAgenda = await prisma.agenda.deleteMany({
-    where: {
-      meetingId: meetingId,
-    },
-  });
-  const deleteMeeting = await prisma.meeting.delete({
-    where: {
-      id: meetingId,
-    },
-  });
-
-  res.json(deleteAgenda);
 };
 
 export const putMeeting = async (req, res) => {
@@ -110,38 +127,19 @@ export const putMeeting = async (req, res) => {
   res.json(putMeeting);
 };
 
-export const getAgendas = async (req, res) => {
+export const deleteMeeting = async (req, res) => {
   const meetingId = Number(req.query.meetingId);
 
-  const meetingInfo = await prisma.meeting.findUnique({
+  const deleteAgenda = await prisma.agenda.deleteMany({
+    where: {
+      meetingId: meetingId,
+    },
+  });
+  const deleteMeeting = await prisma.meeting.delete({
     where: {
       id: meetingId,
     },
   });
 
-  if (meetingInfo) {
-    let agendas = await prisma.agenda.findMany({
-      where: {
-        meetingId: meetingId,
-      },
-    });
-
-    if (agendas.length > 0) {
-      // getした情報を並び替える;
-      for (let outer = 0; outer < agendas.length - 1; outer++) {
-        for (let i = agendas.length - 1; i > outer; i--) {
-          if (agendas[i].order < agendas[i - 1].order) {
-            let tmp = agendas[i];
-            agendas[i] = agendas[i - 1];
-            agendas[i - 1] = tmp;
-          }
-        }
-      }
-      const resData = { title: meetingInfo.title, agendas: agendas };
-      res.status(200).json(resData);
-    }
-  }
-  if (!meetingInfo) {
-    res.status(403).json("not auther");
-  }
+  res.json(deleteAgenda);
 };
