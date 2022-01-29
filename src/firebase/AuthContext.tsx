@@ -13,9 +13,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<string | null | undefined>(
     undefined
   );
+
   useEffect(() => {
     const auth = getAuth(firebase);
-
     onAuthStateChanged(auth, (user) => {
       const userInfo: string | null = user ? user?.uid : null;
       setCurrentUser(user?.uid);

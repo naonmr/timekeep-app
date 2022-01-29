@@ -11,11 +11,11 @@ const PrivateRoute: React.VFC<RouteProps> = ({ children, ...rest }) => {
 
   useEffect(() => {
     const auth = getAuth(firebase);
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user.uid);
       }
-
       setAuthChecked(true);
     });
   }, []);
