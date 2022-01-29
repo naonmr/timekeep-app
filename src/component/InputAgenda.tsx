@@ -1,5 +1,8 @@
-import { useForm, useFieldArray } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+
+import { PrimaryButton, SubButton } from "./Button";
+
 import {
   FormLabel,
   FormControl,
@@ -15,9 +18,14 @@ import {
   ListIcon,
 } from "@chakra-ui/react";
 import { CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-import { PrimaryButton, SubButton } from "./Button";
 
-const InputAgenda: React.VFC<any> = (props) => {
+type InputAgendaProps = {
+  defaultAgenda: { title: String; time: Number }[];
+  defaultMtgTitle: String;
+  onSubmit: any;
+};
+
+const InputAgenda = (props: InputAgendaProps) => {
   const [focusIndex, setFocusIndex] = useState(0);
   const { defaultAgenda, defaultMtgTitle, onSubmit } = props;
 
@@ -49,7 +57,6 @@ const InputAgenda: React.VFC<any> = (props) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl isInvalid={errors.title}>
                 <FormLabel pl="1">Meeting Title</FormLabel>
-                {/* input部分 */}
                 <Input
                   variant="filled"
                   size="sm"
@@ -59,7 +66,7 @@ const InputAgenda: React.VFC<any> = (props) => {
               </FormControl>
 
               {fields.map((field: any, index) => {
-                // 一個目だけラベルをつける
+                // 一個目のInputBarのみラベルをつける
                 if (index === 0) {
                   return (
                     <div key={field.id}>
@@ -107,6 +114,8 @@ const InputAgenda: React.VFC<any> = (props) => {
 
                             <VStack>
                               <Text></Text>
+
+                              {/* TODO 2個目以降のInputバーと高さを揃えるより良い方法を考える */}
                               <Spacer></Spacer>
                               <Spacer></Spacer>
                               <Spacer></Spacer>
@@ -122,6 +131,8 @@ const InputAgenda: React.VFC<any> = (props) => {
                     </div>
                   );
                 }
+
+                // ここから2個目以降のInputバー
                 return (
                   <div key={field.id}>
                     <Box display="flex" alignItems={"center"}>
@@ -137,7 +148,6 @@ const InputAgenda: React.VFC<any> = (props) => {
                                 required: true,
                               })}
                               defaultValue={field.title}
-                              errorBorderColor="red.300"
                               onFocus={() => setFocusIndex(index)}
                             />
                           </FormControl>
@@ -157,11 +167,7 @@ const InputAgenda: React.VFC<any> = (props) => {
                                   message: "1以上の数字を入力してください",
                                 },
                               })}
-                              // className={
-                              //   errors?.agendas?.[index]?.time ? "error" : ""
-                              // }
                               defaultValue={field.time}
-                              errorBorderColor="red.300"
                               onFocus={() => setFocusIndex(index)}
                             />
                           </FormControl>

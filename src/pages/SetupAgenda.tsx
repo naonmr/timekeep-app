@@ -1,10 +1,11 @@
-import axios from "axios";
 import { useHistory, withRouter } from "react-router-dom";
-import Header from "../component/Header";
-import InputAgenda from "../component/InputAgenda";
+import axios from "axios";
 import { useAuthContext } from "../firebase/AuthContext";
 
-type Contents = {
+import Header from "../component/Header";
+import InputAgenda from "../component/InputAgenda";
+
+type MeetingContents = {
   title: string;
   agendas: {
     title: string;
@@ -16,9 +17,12 @@ const SetupAgenda = () => {
   const { currentUser } = useAuthContext();
   let history = useHistory();
 
+  //　空のデフォルト値を用意
   const defaultAgenda = [{ title: "", time: 1 }];
   const defaultMtgTitle = "";
-  const onSubmit = async (data: Contents) => {
+
+  const onSubmit = async (data: MeetingContents) => {
+    console.log(data);
     await axios.post(`/api/meetings/${currentUser}`, data);
     history.push("/mypage");
   };
