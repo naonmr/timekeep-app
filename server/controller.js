@@ -1,4 +1,8 @@
-export const getMeetings = async (req, res) => {
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
+
+const getMeetings = async (req, res) => {
   const uid = req.params.uid;
   const meetings = await prisma.meeting.findMany({
     where: {
@@ -17,7 +21,7 @@ export const getMeetings = async (req, res) => {
   }
   res.json(meetings);
 };
-export const getAgendas = async (req, res) => {
+const getAgendas = async (req, res) => {
   const meetingId = Number(req.query.meetingId);
 
   const meetingInfo = await prisma.meeting.findUnique({
@@ -53,13 +57,13 @@ export const getAgendas = async (req, res) => {
   }
 };
 
-export const postNewUser = async (req, res) => {
+const postNewUser = async (req, res) => {
   const data = req.body;
   const newUser = await prisma.user.create({ data: data });
   res.json(newUser);
 };
 
-export const postMeeting = async (req, res) => {
+const postMeeting = async (req, res) => {
   const data = req.body;
   const uid = req.params.uid;
 
@@ -85,7 +89,7 @@ export const postMeeting = async (req, res) => {
   res.json(createMeeting);
 };
 
-export const putMeeting = async (req, res) => {
+const putMeeting = async (req, res) => {
   const meetingId = Number(req.query.meetingId);
   const data = req.body;
 
@@ -127,7 +131,7 @@ export const putMeeting = async (req, res) => {
   res.json(putMeeting);
 };
 
-export const deleteMeeting = async (req, res) => {
+const deleteMeeting = async (req, res) => {
   const meetingId = Number(req.query.meetingId);
 
   const deleteAgenda = await prisma.agenda.deleteMany({
@@ -142,4 +146,13 @@ export const deleteMeeting = async (req, res) => {
   });
 
   res.json(deleteAgenda);
+};
+
+module.exports = {
+  postNewUser,
+  getMeetings,
+  postMeeting,
+  deleteMeeting,
+  putMeeting,
+  getAgendas,
 };
