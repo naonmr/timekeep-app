@@ -184,10 +184,10 @@ export default function Timer(props: TimerProps) {
 
             <HStack spacing="3">
               <Text fontSize="sm" w="120px">
-                "{agendas[currentIndex].title}" 残り
+                {agendas[currentIndex].title}
               </Text>
               <Text fontSize="sm" w="120px">
-                会議 残り
+                会議残り時間
               </Text>
             </HStack>
           </VStack>
