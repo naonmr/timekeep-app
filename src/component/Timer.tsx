@@ -189,7 +189,7 @@ export default function Timer(props: TimerProps) {
       )}
 
       <Center>
-        <Box mt="4">
+        <Box mt="4" mb="2">
           <FormControl display="flex" alignItems="center">
             <FormLabel htmlFor="email-alerts" mb="0">
               sound off ⇄ on?
