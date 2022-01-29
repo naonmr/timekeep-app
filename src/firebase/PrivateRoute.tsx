@@ -2,6 +2,7 @@ import { RouteProps, Route, Redirect } from "react-router-dom";
 import { useAuthContext } from "./AuthContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
+import firebase from "./firebaseConfig";
 
 const PrivateRoute: React.VFC<RouteProps> = ({ children, ...rest }) => {
   const { currentUser, setCurrentUser } = useAuthContext();
@@ -9,7 +10,7 @@ const PrivateRoute: React.VFC<RouteProps> = ({ children, ...rest }) => {
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    const auth = getAuth();
+    const auth = getAuth(firebase);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user.uid);

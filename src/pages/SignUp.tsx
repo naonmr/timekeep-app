@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,7 +7,6 @@ import {
 import { PrimaryButton } from "../component/Button";
 import { useAuthContext } from "../firebase/AuthContext";
 import firebase from "../firebase/firebaseConfig";
-import { useHistory } from "react-router-dom";
 
 import {
   FormControl,
@@ -17,10 +17,12 @@ import {
   FormErrorMessage,
   Link,
   Heading,
+  useEditable,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
 const SignUp = () => {
   const {
     handleSubmit,
@@ -60,10 +62,16 @@ const SignUp = () => {
     }
   };
 
+  useEffect(() => {
+    if (currentUser) {
+      history.push("/mypage");
+    }
+  }, [currentUser]);
+
   return (
     <>
       <Center p={3}>
-        <Box borderWidth="1px" borderRadius="lg" p={4} m={2}>
+        <Box borderWidth="1px" borderRadius="lg" p={4} m={2} w="xl">
           <Heading as="h3" size="lg">
             SignUp
           </Heading>

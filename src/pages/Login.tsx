@@ -1,11 +1,15 @@
+import { useHistory, withRouter } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useAuthContext } from "../firebase/AuthContext";
+
+import firebase from "../firebase/firebaseConfig";
 import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useHistory, withRouter } from "react-router-dom";
-import { useAuthContext } from "../firebase/AuthContext";
-import firebase from "../firebase/firebaseConfig";
+
+import { PrimaryButton } from "../component/Button";
 
 import {
   FormControl,
@@ -17,20 +21,20 @@ import {
   Link,
   Heading,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-
-import { PrimaryButton } from "../component/Button";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { type } from "os";
+import { useEffect } from "react";
 
 const Login = () => {
+  const { currentUser, setCurrentUser } = useAuthContext();
+  const history = useHistory();
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const history = useHistory();
-  const { setCurrentUser } = useAuthContext();
   const onSubmit = async (data: any) => {
     const auth = getAuth(firebase);
 
@@ -39,19 +43,34 @@ const Login = () => {
       await onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
       history.push("/mypage");
     } catch (error) {
+      console.log(String(error));
       if (
-        String(error) === "FirebaseError: Firebase: Error (auth/missing-email)."
+        String(error) ===
+          "FirebaseError: Firebase: Error (auth/missing-email)." ||
+        String(error) ===
+          "FirebaseError: Firebase: Error (auth/wrong-password)."
       ) {
-        alert("ご入力いただいたアドレスまたはパスワードは間違っています");
+        alert("ご入力いただいたメールアドレスまたはパスワードは間違っています");
+      }
+      if (
+        String(error) ===
+        "FirebaseError: Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+      ) {
+        alert("しばらく経ってからログインしてください。");
       }
     }
   };
 
+  useEffect(() => {
+    if (currentUser) {
+      history.push("/mypage");
+    }
+  }, [currentUser]);
+
   return (
     <>
-      {/* TODO 左右対称にする */}
       <Center p={3}>
-        <Box borderWidth="1px" borderRadius="lg" p={4} m={2}>
+        <Box borderWidth="1px" borderRadius="lg" p={4} m={2} w="xl">
           <Heading as="h3" size="lg">
             Login
           </Heading>
@@ -100,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default withRouter(Login);
+export default Login;
