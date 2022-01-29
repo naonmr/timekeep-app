@@ -59,65 +59,61 @@ const MyPage = () => {
 
   return (
     <>
-      <Box w="100%">
+      <Box w="100%" maxW="100%">
         <Header />
         <br></br>
 
         <Center>
-          <Box w="80%" minW="80%" box-sizing="border-box">
-            <Table
-              variant="simple"
-              size="sm"
-              w="80%"
-              minW="80%"
-              box-sizing="border-box"
-            >
-              <TableCaption>Your Meeting is here</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>Meeting Title</Th>
-                  <Th w="5%"> </Th>
-                  <Th w="10%" isNumeric>
-                    <PrimaryButton
-                      text="new"
-                      onclick={() => history.push("/setup-agenda")}
-                    />
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {meetings.map((meeting: Meetings) => {
-                  return (
-                    <Tr key={meeting.id}>
-                      <Td>{meeting.title}</Td>
-                      <Td>
-                        <PrimaryButton2
-                          text="Start"
-                          onclick={async () => {
-                            history.push(`/timer/${meeting.id}`);
-                          }}
-                        />
-                      </Td>
-
-                      <Td>
-                        <HStack float="right">
-                          <SubButton
-                            text="Fix"
+          <Box box-sizing="border-box" w="100%">
+            <Center>
+              <Table variant="simple" size="sm" w="80%" box-sizing="border-box">
+                <TableCaption>Your Meeting is here</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Meeting Title</Th>
+                    <Th w="5%"> </Th>
+                    <Th w="10%" isNumeric>
+                      <PrimaryButton
+                        text="new"
+                        onclick={() => history.push("/setup-agenda")}
+                      />
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {meetings.map((meeting: Meetings) => {
+                    return (
+                      <Tr key={meeting.id}>
+                        <Td>{meeting.title}</Td>
+                        <Td>
+                          <PrimaryButton2
+                            text="Start"
                             onclick={async () => {
-                              history.push(`/fix-agenda/${meeting.id}`);
+                              history.push(`/timer/${meeting.id}`);
                             }}
                           />
-                          <SubButton
-                            text="Delete"
-                            onclick={() => deleteMeeting(meeting.id)}
-                          />
-                        </HStack>
-                      </Td>
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
+                        </Td>
+
+                        <Td>
+                          <HStack float="right">
+                            <SubButton
+                              text="Fix"
+                              onclick={async () => {
+                                history.push(`/fix-agenda/${meeting.id}`);
+                              }}
+                            />
+                            <SubButton
+                              text="Delete"
+                              onclick={() => deleteMeeting(meeting.id)}
+                            />
+                          </HStack>
+                        </Td>
+                      </Tr>
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            </Center>
           </Box>
         </Center>
       </Box>
