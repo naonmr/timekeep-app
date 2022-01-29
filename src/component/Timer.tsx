@@ -141,11 +141,9 @@ export default function Timer(props: TimerProps) {
 
   // 音をONOFF設定関数
   const soundOnOff = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("e:", e.target.checked);
     if (e.target.checked === true) {
       soundRef.current = true;
       setSound(soundRef.current);
-      console.log(soundRef.current);
     }
     if (e.target.checked === false) {
       soundRef.current = false;
