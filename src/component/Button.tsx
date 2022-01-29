@@ -72,3 +72,22 @@ export const MiniButton: React.VFC<ButtonProps> = (props) => (
     </Button>
   </>
 );
+
+export const BigButton: React.VFC<ButtonProps> = (props) => {
+  return (
+    <Button
+      color="brand.300"
+      bg="brand.200"
+      size="lg"
+      w={70}
+      variant="solid"
+      type={props.type}
+      onClick={props.onclick}
+      mt={props.mt}
+      mr={props.mr}
+      shadow="base"
+    >
+      {props.text}
+    </Button>
+  );
+};
