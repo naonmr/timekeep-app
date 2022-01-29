@@ -17,7 +17,10 @@ import {
   Box,
   HStack,
   Center,
+  IconButton,
 } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
+import { async } from "@firebase/util";
 
 type Meetings = {
   authorId: string;
@@ -49,6 +52,34 @@ const MyPage = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // ミーティング内容をクリップボードにコピーする
+  const copyTextToClipboard = async (meetingId: number) => {
+    const res = await axios.get(
+      `/api/agendas/${currentUser}?meetingId=${meetingId}`
+    );
+    console.log(res.data);
+
+    const data = res.data;
+
+    const meetingTitle = `【会議タイトル】${data.title}\n`;
+    let agendaList: string = `【アジェンダ】\n`;
+    data.agendas.map((agenda: any) => {
+      agendaList =
+        agendaList + `(${agenda.order}) ${agenda.title} <${agenda.time}分>\n`;
+    });
+
+    const copyData = meetingTitle + agendaList;
+
+    navigator.clipboard.writeText(copyData).then(
+      function () {
+        console.log("Copying to clipboard was successful!");
+      },
+      function (err) {
+        console.error("Could not copy text: ", err);
+      }
+    );
   };
 
   useEffect(() => {
@@ -86,12 +117,20 @@ const MyPage = () => {
                       <Tr key={meeting.id}>
                         <Td>{meeting.title}</Td>
                         <Td>
-                          <PrimaryButton2
-                            text="Start"
-                            onclick={async () => {
-                              history.push(`/timer/${meeting.id}`);
-                            }}
-                          />
+                          <HStack>
+                            <PrimaryButton2
+                              text="Start"
+                              onclick={async () => {
+                                history.push(`/timer/${meeting.id}`);
+                              }}
+                            />
+                            <IconButton
+                              icon={<CopyIcon />}
+                              aria-label="copy"
+                              variant="unstyled"
+                              onClick={() => copyTextToClipboard(meeting.id)}
+                            />
+                          </HStack>
                         </Td>
 
                         <Td>
