@@ -14,7 +14,12 @@ type Agenda = {
   time: number;
 };
 
-const AgendaList = (props: any) => {
+type AgendaListProps = {
+  agendas: any;
+  currentMeetingTitle: String;
+};
+
+const AgendaList = (props: AgendaListProps) => {
   const { agendas, currentMeetingTitle } = props;
 
   return (
