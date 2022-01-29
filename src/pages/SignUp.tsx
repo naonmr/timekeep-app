@@ -33,19 +33,17 @@ const SignUp = () => {
   const history = useHistory();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const auth = getAuth(firebase);
 
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       await onAuthStateChanged(auth, async (user) => {
         setCurrentUser(user?.uid);
-
-        console.log("🌹");
       });
     } catch (error) {
-      console.log(String(error));
+      // バリデーション
 
+      console.log(String(error));
       if (
         String(error) ===
         "FirebaseError: Firebase: Error (auth/email-already-in-use)."
@@ -54,7 +52,6 @@ const SignUp = () => {
       }
     }
 
-    console.log(currentUser);
     if (currentUser) {
       const newUser = { uid: currentUser, name: data.userName, meetings: {} };
       await axios.post(`/api/user/${currentUser}`, newUser);

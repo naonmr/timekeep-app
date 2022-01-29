@@ -43,6 +43,7 @@ const Login = () => {
       await onAuthStateChanged(auth, (user) => setCurrentUser(user?.uid));
       history.push("/mypage");
     } catch (error) {
+      // バリデーション
       console.log(String(error));
       if (
         String(error) ===
