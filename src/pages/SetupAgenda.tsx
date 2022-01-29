@@ -5,12 +5,14 @@ import { useAuthContext } from "../firebase/AuthContext";
 import Header from "../component/Header";
 import InputAgenda from "../component/InputAgenda";
 
+type Agenda = {
+  title: string;
+  time: number;
+};
+
 type MeetingContents = {
   title: string;
-  agendas: {
-    title: string;
-    time: number;
-  }[];
+  agendas: Agenda[];
 };
 
 const SetupAgenda = () => {
