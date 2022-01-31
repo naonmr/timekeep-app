@@ -41,7 +41,18 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       await onAuthStateChanged(auth, async (user) => {
-        setCurrentUser(user?.uid);
+        if (user) {
+          setCurrentUser(user?.uid);
+          const newUser = {
+            uid: user?.uid,
+            name: data.userName,
+            meetings: {},
+          };
+          const res = await axios.post(`/api/users/${user?.uid}`, newUser);
+          if (res.status === 200) {
+            history.push("/is-register");
+          }
+        }
       });
     } catch (error) {
       // バリデーション
@@ -53,12 +64,6 @@ const SignUp = () => {
       ) {
         alert("ご入力いただいたアドレスは既に使用されています");
       }
-    }
-
-    if (currentUser) {
-      const newUser = { uid: currentUser, name: data.userName, meetings: {} };
-      await axios.post(`/api/user/${currentUser}`, newUser);
-      history.push("/is-register");
     }
   };
 
