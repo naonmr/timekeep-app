@@ -1,12 +1,10 @@
 # Timekeep App⏰
 
-<!-- ![ライセンスバッジ](https://img.shields.io/badge/license-MIT-green) -->
-
 アジェンダごとに時間を測ってくれる、ありそうでなかった会議用タイマー！
 
-  <!-- <br>
+  <br>
 
-## デモ
+<!-- ## デモ
 
 - ログイン時
   <br>
@@ -42,14 +40,12 @@
 
 <br>
 
-## 環境
+## 環境 -->
 
-- Node: 14.18.1
-- yarn: 1.22.17（npm: 8.1.0）
-- npx: 8.1.0
-- psql (PostgreSQL): 13.3
-- Git: 2.32.0
-- heroku: heroku/7.59.2 darwin-x64 node-v12.21.0
+- Node: 16.13.1
+- npm: 8.1.2
+- psql (PostgreSQL): 14.1
+- Git: 2.30.1
 - firebase のアカウント必須
 - Heroku にデプロイする場合は、Heroku のアカウント必須
 
@@ -57,11 +53,9 @@
 
 ## Scripts（実行コマンド） の紹介
 
-- npm を使用する場合は、`yarn`の部分を`npm run`に変更して実行してください
-
 ```bash
-# 本番環境でのサーバー起動
-npm run  start
+# サーバー起動
+npm run start
 
 
 # ビルドファイル作成
@@ -69,27 +63,16 @@ npm run build
 
 
 # 本番環境でのマイグレーション実行
-npm run migrate
+npm run migrate {{ファイル名}}
 
 
 # seedingの実行
-yarn seed
-
-
-# 開発環境（ローカル）でのサーバー起動
-yarn dev
+node prisma/seed.js
 
 
 # 開発環境（ローカル）でのフロントエンド起動
-yarn react
+npm run hack
 
-
-# 開発環境（ローカル）でのマイグレーション実行
-yarn migrate:dev
-
-
-# マイグレーションのリセット
-yarn migrate:reset
 ```
 
 <br>
@@ -107,14 +90,14 @@ cd PATH
 
 <br>
 
-### 2. GitHub 上から、team-task-manager リポジトリをクローン
+### 2. GitHub 上から、timekeep-app リポジトリをクローン
 
 ```bash
 # HTTPSの場合
-git clone https://github.com/Maho-Miyazawa/team-task-manager.git
+git clone https://github.com/naonmr/timekeep-app.git
 
 # SSH の場合
-git clone git@github.com:Maho-Miyazawa/team-task-manager.git
+git clone git@github.com:naonmr/timekeep-app.git
 ```
 
 <br>
@@ -122,7 +105,7 @@ git clone git@github.com:Maho-Miyazawa/team-task-manager.git
 ### 3. クローンした team-task-manager プロジェクト内に移動
 
 ```bash
-cd team-task-manager
+cd timekeep-app
 ```
 
 <br>
@@ -130,12 +113,7 @@ cd team-task-manager
 ### 4. 必要なパッケージをインストール
 
 ```bash
-# yarnの場合
-yarn install
-
-# npmの場合
 npm i
-rm yarn.lock  # yarn.lockファイルは削除
 ```
 
 <br>
@@ -147,7 +125,7 @@ rm yarn.lock  # yarn.lockファイルは削除
 psql
 
 # team_task_managerデータベースを作成
-create database team_task_manager;
+create database timekeep_app;
 
 # PostgreSQLとの接続を終了
 \q
@@ -155,7 +133,9 @@ create database team_task_manager;
 
 <br>
 
-### 6. Auth0（認証機能）の設定
+以下執筆中
+
+<!-- ### 6. firebase auth（認証機能）の設定
 
 - [Auth0](https://auth0.com/jp)にログインし、新規アプリを作成
   - アプリ名（例: team-task-manager）を設定
@@ -303,14 +283,10 @@ npm run react # Reactを起動
 - [Auth0](https://auth0.com/jp) - 誰でも簡単に導入できる認証・認可プラットフォーム
 - [Heroku](https://jp.heroku.com/) - アプリケーションの開発から実行、運用までのすべてをクラウドで完結できる PaaS（サービスとしてのプラットフォーム）
 
-<br>
+<br> -->
 
 ## 執筆者
 
-- Maho Miyazawa
+- Nao ( naonmr )
 
 <br>
-
-## ライセンス
-
-- This project is licensed under the MIT License - see the LICENSE file for details -->
