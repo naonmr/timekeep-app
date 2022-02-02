@@ -118,7 +118,7 @@ npm i
 
 <br>
 
-### 5. PostgreSqL にデータベース（team_task_manager）を作成
+### 5. PostgreSqL にデータベース（timekeep_app）を作成
 
 ```bash
 # PostgreSQLに接続
