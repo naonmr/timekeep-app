@@ -59,7 +59,6 @@ const getAgendas = async (req, res) => {
 
 const postNewUser = async (req, res) => {
   const data = req.body;
-  console.log(data);
   const newUser = await prisma.user.create({ data: data });
   res.status(200).json(newUser);
 };
