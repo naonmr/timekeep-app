@@ -108,7 +108,7 @@ const putMeeting = async (req, res) => {
     },
   });
 
-  const putMeeting = await prisma.meeting.update({
+  const updateMeeting = await prisma.meeting.update({
     where: {
       id: meetingId,
     },

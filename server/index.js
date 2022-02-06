@@ -56,52 +56,54 @@ app.post("/api/users/:uid", postNewUser);
 //   const createMeeting = await prisma.meeting.create({ data: newMeeting });
 //   res.json(newMeeting);
 // });
-app.post("/api/meetings/:uid", postMessage);
+app.post("/api/meetings/:uid", postMeeting);
 
-app.put("/api/meetings/:uid", async (req, res) => {
-  const meetingId = Number(req.query.meetingId);
-  const data = req.body;
+// app.put("/api/meetings/:uid", async (req, res) => {
+//   const meetingId = Number(req.query.meetingId);
+//   const data = req.body;
 
-  let count = 1;
-  const agendas = data.agendas.map((agenda) => {
-    agenda.order = count;
-    count++;
-    return agenda;
-  });
+//   let count = 1;
+//   const agendas = data.agendas.map((agenda) => {
+//     agenda.order = count;
+//     count++;
+//     return agenda;
+//   });
 
-  console.log("😭", agendas);
+//   console.log("😭", agendas);
 
-  const deleteAgenda = await prisma.agenda.deleteMany({
-    where: {
-      meetingId: meetingId,
-    },
-  });
+//   const deleteAgenda = await prisma.agenda.deleteMany({
+//     where: {
+//       meetingId: meetingId,
+//     },
+//   });
 
-  const putMeeting = await prisma.meeting.update({
-    where: {
-      id: meetingId,
-    },
-    data: { title: data.title },
-  });
+//   const putMeeting = await prisma.meeting.update({
+//     where: {
+//       id: meetingId,
+//     },
+//     data: { title: data.title },
+//   });
 
-  data.agendas.map(async (agenda) => {
-    const createNewAgenda = await prisma.agenda.create({
-      data: {
-        title: agenda.title,
-        time: agenda.time,
-        order: agenda.order,
-        meeting: {
-          connect: {
-            id: meetingId,
-          },
-        },
-      },
-    });
-    console.log("🐱", createNewAgenda);
-  });
+//   data.agendas.map(async (agenda) => {
+//     const createNewAgenda = await prisma.agenda.create({
+//       data: {
+//         title: agenda.title,
+//         time: agenda.time,
+//         order: agenda.order,
+//         meeting: {
+//           connect: {
+//             id: meetingId,
+//           },
+//         },
+//       },
+//     });
+//     console.log("🐱", createNewAgenda);
+//   });
 
-  res.json(putMeeting);
-});
+//   res.json(putMeeting);
+// });
+
+app.put("/api/meetings/:uid", putMeeting);
 
 app.delete("/api/meetings/:uid", deleteMeeting);
 
