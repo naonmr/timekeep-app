@@ -165,7 +165,7 @@ export default function Timer(props: TimerProps) {
       <Center mt="2" mb="2">
         <Box borderWidth="1px" borderRadius="lg" p={4} m={2} w="md">
           <VStack>
-            <Heading fontSize="lg" as="u">
+            <Heading fontSize="lg" as="u" wordBreak="break-all">
               {currentMeetingTitle}
             </Heading>
             <HStack spacing="3">
@@ -187,7 +187,7 @@ export default function Timer(props: TimerProps) {
                 {agendas[currentIndex].title}
               </Text>
               <Text fontSize="sm" w="120px">
-                会議残り時間
+                全体残り時間
               </Text>
             </HStack>
           </VStack>

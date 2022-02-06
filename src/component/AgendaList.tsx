@@ -38,7 +38,7 @@ const AgendaList = (props: AgendaListProps) => {
             {agendas.map((agenda: Agenda) => {
               return (
                 <Tr key={agenda.title}>
-                  <Td>{agenda.title}</Td>
+                  <Td wordBreak="break-all">{agenda.title}</Td>
                   <Td>{agenda.time}min</Td>
                 </Tr>
               );

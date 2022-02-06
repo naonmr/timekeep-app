@@ -95,9 +95,15 @@ const MyPage = () => {
         <br></br>
 
         <Center>
-          <Box box-sizing="border-box" w="100%">
+          <Box w="100%">
             <Center>
-              <Table variant="simple" size="sm" w="80%" box-sizing="border-box">
+              <Table
+                variant="simple"
+                size="xs"
+                w={{ base: "80%", md: "80%" }}
+                minW={"80%"}
+                box-sizing="border-box"
+              >
                 <TableCaption>Your Meeting is here</TableCaption>
                 <Thead>
                   <Tr>
@@ -115,7 +121,7 @@ const MyPage = () => {
                   {meetings.map((meeting: Meetings) => {
                     return (
                       <Tr key={meeting.id}>
-                        <Td>{meeting.title}</Td>
+                        <Td wordBreak="break-all">{meeting.title}</Td>
                         <Td>
                           <HStack>
                             <PrimaryButton2
