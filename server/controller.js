@@ -58,15 +58,13 @@ const getAgendas = async (req, res) => {
 };
 
 const postNewUser = async (req, res) => {
-  console.log(req.body);
   const data = req.body;
+  console.log(data);
   const newUser = await prisma.user.create({ data: data });
-  res.json(newUser);
+  res.status(200).json(newUser);
 };
 
 const postMeeting = async (req, res) => {
-  console.log(req.boby);
-
   const data = req.body;
   const uid = req.params.uid;
 
@@ -88,8 +86,9 @@ const postMeeting = async (req, res) => {
       create: agendas,
     },
   };
-  // const createMeeting = await prisma.meeting.create({ data: newMeeting });
-  // res.json(createMeeting);
+
+  const createMeeting = await prisma.meeting.create({ data: newMeeting });
+  res.json(createMeeting);
 };
 
 const putMeeting = async (req, res) => {
