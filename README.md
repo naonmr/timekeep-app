@@ -63,11 +63,7 @@ npm run build
 
 
 # 本番環境でのマイグレーション実行
-npm run migrate {{ファイル名}}
-
-
-# seedingの実行
-node prisma/seed.js
+npm run migrate ファイル名
 
 
 # 開発環境（ローカル）でのフロントエンド起動
@@ -133,20 +129,14 @@ create database timekeep_app;
 
 <br>
 
-以下執筆中
+### 6. Firebase Authentication（認証機能）の設定
 
-<!-- ### 6. firebase auth（認証機能）の設定
-
-- [Auth0](https://auth0.com/jp)にログインし、新規アプリを作成
-  - アプリ名（例: team-task-manager）を設定
-  - Single Page Web Applications を選択
-- team-task-manager アプリの setting > Application URIs の設定（下記を入力）
-  - Allowed Callback URLs
-    - http://localhost:3000/signup
-  - Allowed Logout URLs
-    - http://localhost:3000/
-  - Allowed Web Origins
-    - http://localhost:3000/
+- [Firebase Authentication](https://firebase.google.com)にログインし、新規プロジェクトを作成
+  - プロジェクト名（例: timekeep-app）を設定
+  - 設定 > プロジェクトの設定 > アプリを追加 を設定する
+  - アプリ設定後に表示される API key などを環境変数に設定（詳細は[8. env ファイルの設定](#8-env-ファイルの設定)を参照）
+- timekeep-app プロジェクトの Authentication を選択し「始める」をクリック
+  - ログイン方法に「メール/パスワード」を選択
 
 <br>
 
@@ -174,22 +164,24 @@ touch .env
 # パスワードを設定している場合は、PASSWORDの部分を変更（設定していない場合は、PASSWORDの文字を削除）
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/team_task_manager?schema=public"
 
-# Auth0の設定
-# Auth0のドメイン、Auth0のクライアントIDの部分は、自分のAuth0のデータに変更
-REACT_APP_AUTH_DOMAIN="Auth0のドメイン"
-REACT_APP_AUTH_CLIENT_ID="Auth0のクライアントID"
+# Firebase Authenticationの設定
+# Firebase Authenticationのコンソールを参照
+REACT_APP_FIREBASE_APIKEY="APIKEY"
+FIREBASE_AUTH_DOMAIN="AUTH DOMAIN"
+FIREBASE_PROJECT_ID="PROJECT ID"
+FIREBASE_STORAGE_BUCKET="STORAGE BUCKET"
+FIREBASE_MESSAGING_SENDER_ID="MESSAGING SENDER ID"
+FIREBASE_APPID="APP ID"
+FIREBASE_MEASUREMENT_ID="MEASUREMENT ID"
 ```
 
 <br>
 
-### 9. マイグレーションを実行（users, teams, tasks, progress, priorities の 5 つのテーブルを作成）
+### 9. マイグレーションを実行（Agenda,Meeting,User の 3 つのテーブルを作成）
 
 ```bash
-# yarnの場合
-yarn migrate:dev
-
 # npmの場合
-npm run migrate:dev
+npm run migrate 任意のファイル名
 ```
 
 <br>
@@ -197,11 +189,8 @@ npm run migrate:dev
 ### 10. seed を実行（上記で作成したテーブルにデータを挿入）
 
 ```bash
-# yarnの場合
-yarn seed
-
-# npmの場合
-npm run seed
+# seedingの実行
+node prisma/seed.js
 ```
 
 <br>
@@ -209,38 +198,19 @@ npm run seed
 ### 11. ローカルサーバーを立ち上げる（ターミナルを 2 つ立ち上げ、下記の 2 つのコマンドをそれぞれ実行）
 
 ```bash
-# yarnの場合
-yarn dev      # serverを起動
-yarn react    # Reactを起動
-
-# npmの場合
-npm run dev   # serverを起動
-npm run react # Reactを起動
+npm run start  # serverを起動
+npm run hack # Reactを起動
 ```
-
-### 12. デモ画面を参考に実際の画面を操作
-
-- 注: 追加機能や、修正がある場合は、実際の画面と異なる場合があります
 
 <br>
 
 ## デプロイ
 
-- team-task-manager > prisma > seed > index.js ファイルを開き、下記のように変更
-  - そのまま
-    - teamSeeding
-    - progressSeeding
-    - prioritiesSeeding
-  - コメントアウト(or 削除)
-    - usersSeeding
-    - tasksSeeding
-- GitHub 上の自分のローカルリポジトリに、今回 clone した team-task-manager リポジトリを追加
+- GitHub 上の自分のローカルリポジトリに、今回 clone した timekeep-app リポジトリを追加
 - Heroku を立ち上げ、GitHub と連携し、パイプラインを作成
   - Resources の Add-ons に、Heroku Postgres を選択
   - Setting の Config Vars に、環境変数の設定
-    - `PGSSLMODE=no-verify`
-    - `REACT_APP_AUTH_CLIENT_ID=Auth0のドメイン(envファイルの設定と同じ)`
-    - `REACT_APP_AUTH_DOMAIN=Auth0のクライアントID(envファイルの設定と同じ)`
+    - `PGSSLMODE=no-verify` も追加する
 - Heroku で react-router を使用するための設定
 
   - Heroku CLI を設定していない場合は、[こちら](https://devcenter.heroku.com/ja/articles/heroku-cli)を参考に設定
@@ -252,19 +222,9 @@ npm run react # Reactを起動
   heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
   ```
 
-- Auth0 の Application URIs の設定
-
-  - team-task-manager アプリの setting > Application URIs にカンマ区切りで下記を追加
-  - Allowed Callback URLs
-    - `デプロイ先のURL/signup`
-  - Allowed Logout URLs
-    - `デプロイ先のURL/`
-  - Allowed Web Origins
-    - `デプロイ先のURL/`
-
 - Heroku でデプロイ
   - Deploy から、Manual deploy の中の Deploy Branch ボタンをクリック
-  - More > Run console > `yarn seed` と入力して seeding を実行
+  - More > Run console > `npx prisma migrate deploy` `node prisma/seed.js` を入力して seeding を実行
 - デプロイ完了
 
 <br>
@@ -274,16 +234,15 @@ npm run react # Reactを起動
 - [React](https://ja.reactjs.org/) - ユーザインターフェース構築のための JavaScript ライブラリ
 - [Node.js](https://nodejs.org/ja/) - Chrome の V8 JavaScript エンジン で動作する JavaScript 環境
 - [Express](https://expressjs.com/ja/) - Node.js のための高速で、革新的な、最小限の Web フレームワーク
-- [apollo-server-express](https://www.apollographql.com/docs/apollo-server/integrations/middleware/#apollo-server-express) - The Apollo Server package for Express, the most popular Node.js web framework
-- [GraphQL](https://graphql.org/) - A query language for your API
 - [Prisma](https://www.prisma.io/) - Next-generation Node.js and TypeScript ORM
 - [PostgreSQL](https://www.postgresql.org/) - The World's Most Advanced Open Source Relational Database
-- [ MUI](https://mui.com/) - The React UI library you always wanted
+- [Chakra UI](https://chakra-ui.com/) - UI コンポーネントライブラリ
 - [React Hook Form](https://react-hook-form.com/jp/) - 高性能で柔軟かつ拡張可能な使いやすいフォームバリデーションライブラリ
-- [Auth0](https://auth0.com/jp) - 誰でも簡単に導入できる認証・認可プラットフォーム
+- [react-route-dom](https://v5.reactrouter.com/) - a lightweight, fully-featured routing library for the React JavaScript library.
+
 - [Heroku](https://jp.heroku.com/) - アプリケーションの開発から実行、運用までのすべてをクラウドで完結できる PaaS（サービスとしてのプラットフォーム）
 
-<br> -->
+<br>
 
 ## 執筆者
 
