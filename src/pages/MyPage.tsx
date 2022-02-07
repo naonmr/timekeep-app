@@ -1,5 +1,6 @@
-import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useAuthContext } from "../firebase/AuthContext";
 
@@ -20,7 +21,6 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
-import { async } from "@firebase/util";
 
 type Meetings = {
   authorId: string;

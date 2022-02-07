@@ -17,7 +17,7 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
-import { CloseIcon, DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 type InputAgendaProps = {
   defaultAgenda: { title: String; time: Number }[];

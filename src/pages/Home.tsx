@@ -1,6 +1,8 @@
-import { Box, Center, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { BigButton, PrimaryButton } from "../component/Button";
+
+import { BigButton } from "../component/Button";
+
+import { Box, Center, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
 const topPageImg = require("../image/top-page-image.png");
 
 const Home = () => {

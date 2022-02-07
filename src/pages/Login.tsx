@@ -1,6 +1,5 @@
 import { useHistory, withRouter } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuthContext } from "../firebase/AuthContext";
 
 import firebase from "../firebase/firebaseConfig";
 import {
@@ -8,6 +7,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useAuthContext } from "../firebase/AuthContext";
 
 import { PrimaryButton } from "../component/Button";
 

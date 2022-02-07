@@ -1,3 +1,8 @@
+import { useHistory } from "react-router-dom";
+
+import { getAuth, signOut } from "firebase/auth";
+import firebase from "../firebase/firebaseConfig";
+
 import {
   Menu,
   MenuButton,
@@ -11,9 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { AiFillHome } from "react-icons/ai";
 import { HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
-import { useHistory } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
-import firebase from "../firebase/firebaseConfig";
 
 const Header = () => {
   const history = useHistory();

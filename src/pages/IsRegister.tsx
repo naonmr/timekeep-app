@@ -1,5 +1,6 @@
 import { Box, Text, Link } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+
 const IsRegister = () => {
   return (
     <>

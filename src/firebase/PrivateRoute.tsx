@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { RouteProps, Route, Redirect } from "react-router-dom";
 import { useAuthContext } from "./AuthContext";
+
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
 import firebase from "./firebaseConfig";
 
 const PrivateRoute: React.VFC<RouteProps> = ({ children, ...rest }) => {

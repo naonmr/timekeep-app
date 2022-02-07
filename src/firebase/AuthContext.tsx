@@ -1,5 +1,6 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "./firebaseConfig";
 
 type AuthContextProps = {
