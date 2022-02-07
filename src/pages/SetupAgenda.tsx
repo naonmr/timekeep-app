@@ -25,7 +25,6 @@ const SetupAgenda = () => {
   const defaultMtgTitle = "";
 
   const onSubmit = async (data: MeetingContents) => {
-    console.log(data);
     await axios.post(`/api/meetings/${currentUser}`, data);
     history.push("/mypage");
   };

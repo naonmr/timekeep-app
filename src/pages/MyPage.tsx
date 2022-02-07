@@ -59,8 +59,6 @@ const MyPage = () => {
     const res = await axios.get(
       `/api/agendas/${currentUser}?meetingId=${meetingId}`
     );
-    console.log(res.data);
-
     const data = res.data;
 
     const meetingTitle = `【会議タイトル】${data.title}\n`;

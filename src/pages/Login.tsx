@@ -43,7 +43,6 @@ const Login = () => {
       history.push("/mypage");
     } catch (error) {
       // バリデーション
-      console.log(String(error));
       if (
         String(error) ===
           "FirebaseError: Firebase: Error (auth/missing-email)." ||

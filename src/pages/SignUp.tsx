@@ -56,8 +56,6 @@ const SignUp = () => {
       });
     } catch (error) {
       // バリデーション
-
-      console.log(String(error));
       if (
         String(error) ===
         "FirebaseError: Firebase: Error (auth/email-already-in-use)."
