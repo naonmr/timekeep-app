@@ -27,9 +27,9 @@ const FixAgenda = () => {
 
   const history = useHistory();
 
-  //　paramからmeeeting Idをget
+  //　paramからmeeting Idをget
   const params: any = useParams();
-  const id: number = params.meetindId;
+  const id: number = params.meetingId;
 
   useEffect(() => {
     const getAgendaList = async (meetingId: number) => {
