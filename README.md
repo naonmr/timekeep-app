@@ -162,7 +162,7 @@ touch .env
 ```bash
 # USERの部分は自分のPCのユーザー名に変更
 # パスワードを設定している場合は、PASSWORDの部分を変更（設定していない場合は、PASSWORDの文字を削除）
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/team_task_manager?schema=public"
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/timekeep_app?schema=public"
 
 # Firebase Authenticationの設定
 # Firebase Authenticationのコンソールを参照
